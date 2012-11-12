@@ -1,0 +1,48 @@
+body {
+	padding: 60px 0 20px 0;
+}
+
+#findRouteProgress {
+	display: none;
+	font-style: italic;
+}
+
+#map {
+	height: 500px;
+}
+
+.navbar .input-append .btn {
+	margin-left: -1px;
+	margin-right: 0px;
+	margin-bottom: 0;
+}
+
+.navbar .input-append input,
+.navbar .input-append .add-on {
+	margin-top: 5px;
+}
+
+.removeVehicle {
+	cursor: pointer;
+	opacity: 0.2;
+}
+
+.removeVehicle:hover {
+	opacity: 0.4;
+}
+
+.label-offduty {
+	background-color: #63878A;
+}
+
+.label-driving {
+	background-color: #A8DBA8;
+}
+
+.label-onduty {
+	background-color: #FF6B6B;
+}
+
+.label-sleeper {
+	background-color: #0B486B;
+}

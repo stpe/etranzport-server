@@ -1,0 +1,28 @@
+body {
+	padding: 60px 0 20px 0;
+}
+
+a.disabled-link,
+a.disabled-link:visited,
+a.disabled-link:active,
+a.disabled-link:hover {
+    color: #ccc !important;
+    pointer-events: none;
+}
+
+.cell-id,
+.cell-routes {
+	width: 20px;
+}
+
+.cell-name {
+	width: 160px;
+}
+
+.cell-location {
+	width: 16px;
+}
+
+.cell-distance {
+	width: 60px;
+}
