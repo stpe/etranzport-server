@@ -12,9 +12,16 @@ require '../libs/Slim/Slim.php';
 require_once('../decodePolylineToArray.php');
 
 require_once '../libs/Idiorm/idiorm.php';
-ORM::configure('mysql:host=etranz-158379.mysql.binero.se;dbname=158379-etranz');
-ORM::configure('username', '158379_dkcq056');
-ORM::configure('password', 'Z67KCjga43');
+
+if ($_SERVER['HTTP_HOST'] == 'etranzport.local') {
+    ORM::configure('mysql:host=localhost;dbname=etranzport');
+    ORM::configure('username', 'root');
+} else {
+    ORM::configure('mysql:host=etranz-158379.mysql.binero.se;dbname=158379-etranz');
+    ORM::configure('username', '158379_dkcq056');
+    ORM::configure('password', 'Z67KCjga43');    
+}
+
 ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
 
 ORM::configure('logging', true); // only for debugging; echo ORM::get_last_query();
