@@ -38,9 +38,9 @@
 							Content
 							<b class="caret"></b>
 						</a>
-						<ul class="dropdown-menu">
-							<a href="#cities">Cities</a>
-							<!--a href="#">Cargo</a-->
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#cities">Cities</a></li>
+							<!--li><a href="#cargo" class="disabled">Cargo</a></li-->
 						</ul>
 					</li>
 				</ul>
