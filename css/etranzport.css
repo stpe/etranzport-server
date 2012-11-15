@@ -11,15 +11,8 @@ body {
 	height: 500px;
 }
 
-.navbar .input-append .btn {
-	margin-left: -1px;
-	margin-right: 0px;
-	margin-bottom: 0;
-}
-
-.navbar .input-append input,
-.navbar .input-append .add-on {
-	margin-top: 5px;
+.navbar-control {
+	padding-top: 5px;
 }
 
 .removeVehicle {
