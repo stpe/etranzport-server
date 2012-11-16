@@ -2,6 +2,16 @@
 
 eTransport Server, including front-end and REST JSON back-end API.
 
+## Staging
+
+* [Current @ codetouch.com](http://www.codetouch.com/etranzport2)
+ * [Admin](http://www.codetouch.com/etranzport2/admin)
+* [Old @ codetouch.com](http://www.codetouch.com/etranzport)
+
+## Infrastructure
+
+* [DeployHQ](https://etranzport.deployhq.com/)
+
 ## 3rd Party Components
 
 ### Front-End
