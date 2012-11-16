@@ -4,7 +4,7 @@ eTransport Server, including front-end and REST JSON back-end API.
 
 ## Staging
 
-* [Auto deploy @ codetouch.com](http://www.codetouch.com/etranzport)
+* [Test (deployed using DeployHQ) @ codetouch.com](http://www.codetouch.com/etranzport)
  * [Admin](http://www.codetouch.com/etranzport/admin)
 * [Dev @ codetouch.com](http://www.codetouch.com/etranzport2)
  * [Admin](http://www.codetouch.com/etranzport2/admin)
