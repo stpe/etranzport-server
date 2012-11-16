@@ -385,7 +385,6 @@ window.et = _.extend(window.et || {}, {
 					prevCurrent = v.current;
 
 					// move through as many points as possible
-					console.log(distanceSinceLastUpdate, distanceToNextPoint);
 					while (distanceSinceLastUpdate >= distanceToNextPoint && v.current < len) {
 						// add to traveled distance
 						v.traveled += distanceToNextPoint;
@@ -402,9 +401,11 @@ window.et = _.extend(window.et || {}, {
 						}
 
 						v.current++;
-						console.log(v.current + '/' + v.route.length);
-console.log(v.marker.getLatLng());
-console.log(v.route[v.current]);
+						if (v.current >= len) {
+							// reached destination
+							continue;
+						}
+
 						distanceToNextPoint = v.marker.getLatLng().distanceTo(v.route[v.current]);
 					}
 
