@@ -148,7 +148,7 @@ window.et = _.extend(window.et || {}, {
 	 
 	    render: function(eventName) {
 	    	var data = this.model.toJSON();
-	    	
+
 	    	// calculate estimation of real distance since polyline is optimized
 	    	var traveled = this.model.get("map").get("distance") ? this.getDistanceString((this.model.get("map").get("traveled") / this.model.get("map").get("distance")) * data.distance) : '';
 
@@ -244,7 +244,9 @@ window.et = _.extend(window.et || {}, {
 					var vehicle = new Vehicle();
 					vehicle.set({
 						origin: route.get("origin"),
+						origin_name: route.get("origin_name"),
 						destination: route.get("destination"),
+						destination_name: route.get("destination_name"),
 						distance: route.get("distance"),
 						duration: route.get("distance") / speed,
 						speed: speed,
