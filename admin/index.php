@@ -5,36 +5,28 @@
 	<td class="cell-id"><%= id %></td>
 	<td class="cell-destination"><%= name %></td>
 	<td class="cell-distance"><%= distance %></td>
-	<td class="cell-actions">
+	<td class="cell-actions right-align">
 		<button class="btn btn-mini map">Map</button>
 		<button class="btn btn-mini btn-danger remove" data-id="<%= id %>">Remove</button>
 	</td>
 </script>
 
+<script type="text/template" id="tpl-non-existing-route-list-item">
+	<td class="cell-id"><%= id %></td>
+	<td class="cell-destination"><%= name %></td>
+	<td class="cell-distance"><%= distance %></td>
+	<td class="cell-actions right-align">
+		<button class="btn btn-mini map">Map</button>
+		<button class="btn btn-mini btn-info add" data-id="<%= id %>">Add</button>
+	</td>
+</script>
+
 <script type="text/template" id="tpl-routes-listview">
 	<table id="routes" class="table table-condensed">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>Destination</th>
-				<th>Distance</th>
-				<th>&nbsp;</th>
-			</tr>
-		</thead>
 		<tbody>
 		</tbody>
 	</table>
-
-	<div class="btn-group">
-		<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-			<span id="cities-no-route-label" class="dropdown-label">City</span>
-			<span class="caret"></span>
-		</a>
-		<ul class="dropdown-menu" id="cities-no-route">
-		</ul>
-	</div>
 </script>
-
 
 <script type="text/template" id="tpl-route-edit">
 	<form class="form-horizontal modal" id="editroutes">
@@ -42,7 +34,14 @@
 			<button type="button" class="close" data-dismiss="modal">×</button>
 			<h3>Edit Routes</h3>
 		</div>
-		<div id="routeslist">
+		<div class="modal-body">
+			<h4>Existing Routes</h4>
+			<div id="routeslist">
+			</div>
+
+			<h4>Add New Routes</h4>
+			<div id="nonexistingrouteslist">
+			</div>
 		</div>
 		<div class="modal-footer">
 			<a href="#" class="btn" data-dismiss="modal">Close</a>

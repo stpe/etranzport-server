@@ -254,6 +254,7 @@ $app->get('/routes/:id', function($id) {
     ResponseOk(ormAsArray($routes));
 });
 
+// list of cities where there is no route to from given city
 $app->get('/routes/nonexisting/:id', function($id) {
     $routes =
         ORM::for_table('cities')

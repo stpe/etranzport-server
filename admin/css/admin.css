@@ -26,3 +26,7 @@ a.disabled-link:hover {
 .cell-distance {
 	width: 60px;
 }
+
+td.right-align {
+	text-align: right;
+}

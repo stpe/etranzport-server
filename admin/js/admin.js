@@ -1,6 +1,5 @@
 window.et = _.extend(window.et || {}, {
-	citiesList: null,
-	routeCityId: null
+	citiesList: null
 });
 
 (function($) {
@@ -33,12 +32,18 @@ window.et = _.extend(window.et || {}, {
 	window.RouteCollection = Backbone.Collection.extend({
 		model: Route,
 
-		initialize: function() {
-			this.cityId = et.routeCityId;
+		initialize: function(models, options) {
+			this.cityId = options.cityId;
+			this.nonExisting = !!options.nonExisting;
 		},
 
 		url: function() {
-			console.log('route col url');
+			if (this.nonExisting) {
+				// get routes that does NOT exist from city
+				return "../api/routes/nonexisting/" + this.cityId;
+			}
+
+			// get existing routes
 			return "../api/routes/" + this.cityId;
 		}
 	});
@@ -111,13 +116,24 @@ window.et = _.extend(window.et || {}, {
 
 	    routes: function(e) {
 	    	console.log("routes");
-	    	// would be better to pass this as an init
-	    	// value to RouteCollection...
-	    	window.et.routeCityId = this.model.get('id');
 
-	    	var routesList = new RouteCollection();
+	    	var routesList = new RouteCollection({}, {
+	    		cityId: this.model.get('id')
+	    	});
+
+	    	var nonExistingRoutesList = new RouteCollection({}, {
+	    		nonExisting: true,
+	    		cityId: this.model.get('id')
+	    	});
+
+	    	var routes = new Backbone.Model();
+	    	routes.set({
+	    		routes: routesList,
+	    		nonExistingRoutes: nonExistingRoutesList
+	    	});
+
 	    	var routesView = new RouteEditView({
-	    		model: routesList
+	    		model: routes
 	    	});
 	    },
 
@@ -169,7 +185,7 @@ window.et = _.extend(window.et || {}, {
 			if (that.model.get('id') == null) {
 				console.log('trying to create new');
 				if (!window.et.citiesList.create(that.model)) {
-					alert('fail');
+					alert('Failed at creating new city.');
 				}
 			} else {
 				// save model
@@ -246,18 +262,18 @@ window.et = _.extend(window.et || {}, {
 	    },
 
 	    create: function(e) {
-	    	console.log('create route');
+	    	alert("Create route: Not yet implemented.");
 	    },
 
 	    map: function(e) {
-	    	console.log("map route");
+	    	alert("Map route: Not yet implemented.");
 	    },
 
 	    remove: function() {
 	    	this.$el.remove();
 	    	this.model.destroy();
 	    },
-	 
+
 	    render: function(eventName) {
 	    	var data = this.model.toJSON();
 	    	
@@ -274,6 +290,77 @@ window.et = _.extend(window.et || {}, {
 	});
 
 
+	window.NonExistingRoutesListView = Backbone.View.extend({
+	    id: "routes",
+	 
+	    template: _.template($('#tpl-routes-listview').html()),
+
+	    initialize: function() {
+			this.model.on("reset", this.render, this);
+			this.model.on("add", this.render, this);
+	    },
+
+	    events: {
+	    	"click .remove": "remove",
+	    },
+
+	    remove: function(e) {
+	    	var id = $(e.target).attr('data-id');
+	   		var route = this.model.get(id);
+	   		this.model.remove(route);
+	    },
+
+	    render: function(eventName) {
+	    	$(this.el).html(this.template());
+
+	    	var tbody = $(this.el).find('tbody');
+
+	    	_.each(this.model.models, function(route) {
+	            tbody.append(new NonExistingRoutesListItemView({model: route}).render().el);
+	        }, this);
+
+	        return this;
+	    }
+	});
+
+	window.NonExistingRoutesListItemView = Backbone.View.extend({
+	    tagName: "tr",
+	 
+	    template: _.template($('#tpl-non-existing-route-list-item').html()),
+
+	    initialize: function() {
+	    	this.model.on("change", this.render, this);
+	    },
+
+	    events: {
+	    	"click .add": "add",
+	    	"click .create": "create",
+	    	"click .map": "map"
+	    },
+
+	    create: function(e) {
+	    	alert('Create route: Not yet implemented.');
+	    },
+
+	    map: function(e) {
+	    	alert("Map route: Not yet implemented.");
+	    },
+
+	    add: function() {
+	    	alert("Add route: Not yet implemented.");
+	    },
+
+	    render: function(eventName) {
+	    	var data = this.model.toJSON();
+	    	
+	        $(this.el).
+	        	attr('id', 'route-data-' + this.model.get('id')).
+	        	html(this.template(data));
+
+	        return this;
+	    }
+	});
+
 	window.RouteEditView = Backbone.View.extend({
 
 		template: _.template($('#tpl-route-edit').html()),
@@ -281,10 +368,21 @@ window.et = _.extend(window.et || {}, {
 	    initialize: function() {
 	    	this.render();
 
-	        this.routesListView = new RoutesListView({model: this.model});
-	        this.model.fetch();
-	        $('#routeslist').append(this.routesListView.render().el);
+	        // all cities
+			var citiesList = window.et.citiesList;
+			var citiesWithNoRoute = "";
 
+	    	// list of cities with routes to
+	    	var routeModels = this.model.get("routes");
+	        this.routesListView = new RoutesListView({model: routeModels});
+	        routeModels.fetch();
+
+	        var nonExistingRoutesModel = this.model.get("nonExistingRoutes");
+	        this.nonExistingRoutesListView = new NonExistingRoutesListView({model: nonExistingRoutesModel});
+	        nonExistingRoutesModel.fetch();
+
+	        $('#routeslist').append(this.routesListView.render().el);
+	        $('#nonexistingrouteslist').append(this.nonExistingRoutesListView.render().el);
 	    },
 
 		events: {
