@@ -28,7 +28,7 @@
 			<div class="nav-collapse">
 				<ul class="nav">
 					<li class="active">
-						<a href="#">Home</a>
+						<a href="/admin">Home</a>
 					</li>
 					<!--li>
 						<a href="#" class="disabled-link">Users</a>
@@ -39,8 +39,17 @@
 							<b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#cities">Cities</a></li>
+							<li><a href="/admin/#cities">Cities</a></li>
 							<!--li><a href="#cargo" class="disabled">Cargo</a></li-->
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							Server
+							<b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="sysinfo.php">Server Info</a></li>
 						</ul>
 					</li>
 				</ul>
