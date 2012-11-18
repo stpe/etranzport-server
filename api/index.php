@@ -8,6 +8,7 @@
  * or update this file path as needed.
  */
 require '../libs/Slim/Slim.php';
+\Slim\Slim::registerAutoloader();
 
 require_once('../decodePolylineToArray.php');
 
@@ -33,7 +34,7 @@ ORM::configure('logging', true); // only for debugging; echo ORM::get_last_query
  * However, we could also pass a key-value array of settings.
  * Refer to the online documentation for available settings.
  */
-$app = new Slim();
+$app = new \Slim\Slim();
 
 /**
  * Step 3: Define the Slim application routes
@@ -48,8 +49,6 @@ $app = new Slim();
  * $app = new Slim();
  * $app->get('/hello/:name', 'myFunction');
  * function myFunction($name) { echo "Hello, $name"; }
- *
- * The routes below work with PHP >= 5.3.
  */
 
 function ResponseOk($data = null) {
@@ -110,8 +109,7 @@ function populateRecord($record, $fields) {
  * Routes
  */
 
-$app->get('/vehicles', 'vehicles');
-function vehicles() {
+$app->get('/vehicles', function() {
     global $app;
 
     $vehicles =
@@ -124,10 +122,9 @@ function vehicles() {
             ->find_many();
 
     ResponseOk(ormAsArray($vehicles));
-}
+});
 
-$app->post('/vehicles', 'createVehicle');
-function createVehicle() {
+$app->post('/vehicles', function() {
     global $app;
 
     $env = $app->environment();
@@ -148,23 +145,20 @@ function createVehicle() {
 
 //echo ORM::get_last_query();
     ResponseOk($vehicle->as_array());
-}
+});
 
-$app->delete('/vehicles/:id', 'deleteVehicle');
-function deleteVehicle($id) {
+$app->delete('/vehicles/:id', function($id) {
     $vehicle = ORM::for_table('vehicles')->find_one($id);
     $vehicle->delete();
-}
+});
 
-$app->get('/cities', 'cities');
-function cities() {
+$app->get('/cities', function() {
     $cities = ORM::for_table('cities')->find_many();
 
     ResponseOk(ormAsArray($cities));
-}
+});
 
-$app->post('/cities', 'createCity');
-function createCity() {
+$app->post('/cities', function() {
     global $app;
 
     $city = ORM::for_table('cities')->create();
@@ -173,19 +167,17 @@ function createCity() {
     populateRecord($city, $fields);
 
     $city->save();
-}
+});
 
-$app->delete('/cities/:id', 'deleteCity');
-function deleteCity($id) {
+$app->delete('/cities/:id', function($id) {
     $city = ORM::for_table('cities')
         ->where('id', $id)
         ->find_one();
 
     $city->delete();
-}
+});
 
-$app->put('/cities/:id', 'saveCity');
-function saveCity($id) {
+$app->put('/cities/:id', function($id) {
     global $app;
 
     $city = ORM::for_table('cities')
@@ -201,10 +193,9 @@ function saveCity($id) {
     populateRecord($city, $fields);
 
     $city->save();
-}
+});
 
-$app->get('/routes/:origin/:destination', 'route')->conditions(array('origin' => '\d+', 'destination' => '\d+'));
-function route($origin, $destination) {
+$app->get('/routes/:origin/:destination', function($origin, $destination) {
     $reverse = false;
     if ($destination < $origin) {
         $reverse = $origin;
@@ -234,11 +225,10 @@ function route($origin, $destination) {
     $response['points'] = $points;
 
     ResponseOk($response);
-}
+})->conditions(array('origin' => '\d+', 'destination' => '\d+'));
 
 
-$app->delete('/routes/:origin/:destination', 'deleteRoute');
-function deleteRoute($origin, $destination) {
+$app->delete('/routes/:origin/:destination', function($origin, $destination) {
     $reverse = false;
     if ($destination < $origin) {
         $reverse = $origin;
@@ -253,40 +243,26 @@ function deleteRoute($origin, $destination) {
             ->find_one();
 
 //    $route->delete();
-}
+});
 
-$app->get('/routes/:id', 'routes');
-function routes($id) {
+$app->get('/routes/:id', function($id) {
     $routes =
         ORM::for_table('routes')
             ->raw_query('SELECT routes.id, cities.id AS name, cities.name, cities.location, routes.distance, routes.polyline FROM routes LEFT JOIN cities ON cities.id=IF(origin = :id, destination, origin) WHERE routes.origin = :id OR routes.destination = :id', array(':id' => $id))
             ->find_many();
 
     ResponseOk(ormAsArray($routes));
-}
+});
 
-$app->get('/routes/nonexisting/:id', 'routesNonExisting');
-function routesNonExisting($id) {
+$app->get('/routes/nonexisting/:id', function($id) {
     $routes =
         ORM::for_table('cities')
             ->raw_query('SELECT id, name FROM cities WHERE id != :id AND id NOT IN (SELECT IF(origin = :id, destination, origin) AS id FROM routes WHERE origin = :id OR destination = :id)', array(':id' => $id))
             ->find_many();
 
     ResponseOk(ormAsArray($routes));
-}
-
-/*
-
-//PUT route
-$app->put('/put', function () {
-    echo 'This is a PUT route';
 });
 
-//DELETE route
-$app->delete('/delete', function () {
-    echo 'This is a DELETE route';
-});
-*/
 /**
  * Step 4: Run the Slim application
  *
