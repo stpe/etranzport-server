@@ -207,7 +207,6 @@ window.et = _.extend(window.et || {}, {
 	});
 
 	window.RouteSearchView = Backbone.View.extend({
-
 		events: {
 			"click #findRouteButton": "findRoute"
 		},
@@ -337,20 +336,6 @@ window.et = _.extend(window.et || {}, {
 				traveled: 0,
 				distanceLeftOver: 0
 			});
-/*
-			var truck = {
-				id: et.routeId++,
-				marker: marker,
-				route: latlngs,
-				current: 0,
-				distancePoints: distancePoints,
-				traveledPoints: 0,
-				follow: false,
-				speed: speed ? speed : 25, // 25 m/s = 90 km/h
-				updated: (new Date).getTime(),
-				distanceLeftOver: 0
-			}
-*/
 
 			this.start();
 	 	},
@@ -362,7 +347,6 @@ window.et = _.extend(window.et || {}, {
 					that.update.call(that);
 				}, et.tick);
 			}
-
 	 	},
 
 	 	update: function() {
@@ -549,212 +533,3 @@ window.et = _.extend(window.et || {}, {
 	Backbone.history.start();
 
 })(jQuery);
-
-
-
-
-/*
-
-var et = {
-
-	tick: 1000,
-	timeDelta: 0,	// seconds elapsed per update (calulated in init function)
-	timeFactor: 40,	// factor time is sped up with
-
-	map: null,
-	apikey: 'BC9A493B41014CAABB98F0471D759707', // '9990e43c062744c58347d5c013ff8739';
-	routes: [],
-	latestRoute: null,
-	timer: null,
-	routeId: 0,
-
-	truckIcon: L.Icon.extend({
-		iconUrl: 'gfx/lorry-icon-32x32.png',
-		shadowUrl: null,
-		iconSize: new L.Point(32, 32),
-		iconAnchor: new L.Point(16, 16),
-		popupAnchor: new L.Point(0, -16)
-	}),
-
-	initMap: function() {
-		var map = new L.Map('map');
-		et.map = map;
-
-		var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/' + et.apikey + '/997/256/{z}/{x}/{y}.png', {
-			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-			maxZoom: 18
-		});
-
-		map.addLayer(cloudmade);
-		map.setView(new L.LatLng(34.705, -97.73), 5);
-
-		et.timeDelta = 1000 / et.tick;
-		$('#timeFactor').val(et.timeFactor);
-	},
-
-	addRoute: function(data, speed) {
-		var map = et.map,
-		    points = data.points;
-
-		// convert points into leaflet polyline format and calculate
-		// distance between points (which is shorter than IRL distance)
-		var latlngs = [],
-			latlng,
-		    distancePoints = 0;
-		for (var i = 0; i < points.length; i++) {
-			latlng = new L.LatLng(points[i][0], points[i][1]);
-
-			if (i > 0) {
-				distancePoints += latlngs[i-1].distanceTo(latlng);
-			}
-
-			latlngs.push(latlng);
-		}
-
-		// create a red polyline from an arrays of LatLng points
-		var polyline = new L.Polyline(latlngs, {color: 'red'});
-
-		// zoom the map to the polyline
-		map.fitBounds(new L.LatLngBounds(latlngs));
-
-		// add the polyline to the map
-		map.addLayer(polyline);
-
-		var marker = new L.Marker(latlngs[0], {icon: new et.truckIcon()});
-		map.addLayer(marker);
-
-		var truck = {
-			id: et.routeId++,
-			marker: marker,
-			origin: data.origin,
-			destination: data.destination,
-			distance: data.distance,
-			googleDuration: data.duration,
-			route: latlngs,
-			current: 0,
-			distancePoints: distancePoints,
-			traveledPoints: 0,
-			follow: false,
-			speed: speed ? speed : 25, // 25 m/s = 90 km/h
-			updated: (new Date).getTime(),
-			distanceLeftOver: 0
-		}
-
-		truck.duration = truck.distance / truck.speed;
-
-		et.routes.push(truck);
-
-		et.addRouteToTable(et.routes[et.routes.length-1]);
-
-		et.start();
-	},
-
-	addRouteToTable: function(route) {
-		$('#routes > tbody').append(
-			'<tr id="truck-data-' + route.id + '">' +
-			'<td class="cell-id">' + route.id + '</td>' +
-			'<td class="cell-origin">' + route.origin + '</td>' +
-			'<td class="cell-dest">' + route.destination + '</td>' +
-			'<td class="cell-distance">' + et.getDistanceString(route.distance) + '</td>' +
-			'<td class="cell-duration" title="Google estimated duration: ' + route.googleDuration + '">' + et.getDurationString(route.duration) + '</td>' +
-			'<td class="cell-traveled"></td>' +
-			'<td class="cell-speed">' + et.getSpeedString(route.speed) + '</td>' +
-			'</tr>'
-		);
-
-		// if first added route, show table
-		if (route.id == 0) {
-			$('#routes').show();
-		}
-	},
-
-	updateRouteInfo: function(route) {
-		var row = $('#truck-data-' + route.id);
-
-		// calculate estimate of IRL traveled distance
-		var traveled = (route.traveledPoints / route.distancePoints) * route.distance;
-
-		row.find('.cell-traveled').text(et.getDistanceString(traveled));
-	},
-
-	start: function() {
-		if (!et.timer) {
-			et.timer = setInterval(et.step, et.tick);
-		}
-	},
-
-	step: function() {
-		var truck, i, now, timeSinceLastUpdate, distanceSinceLastUpdate, distanceToNextPoint;
-
-		now = (new Date).getTime();
-
-		for (i = 0; i < et.routes.length; i++) {
-			truck = et.routes[i];
-
-			if (truck.current < truck.route.length) {
-
-				timeSinceLastUpdate = (now - truck.updated) / 1000; // in ms
-				distanceSinceLastUpdate = timeSinceLastUpdate * truck.speed * et.timeFactor + truck.distanceLeftOver;
-
-				distanceToNextPoint = truck.marker.getLatLng().distanceTo(truck.route[truck.current]);
-
-				// move through as many points as possible
-				while (distanceSinceLastUpdate >= distanceToNextPoint) {
-					// add to traveled distance
-					truck.traveledPoints += distanceToNextPoint;
-
-					distanceSinceLastUpdate -= distanceToNextPoint;
-					truck.distanceLeftOver = distanceSinceLastUpdate;
-
-					// update position
-					truck.marker.setLatLng(truck.route[truck.current]);
-
-					// update table info
-					et.updateRouteInfo(truck);
-
-					// pan map to make car visible
-					if (truck.follow && !et.map.getBounds().contains(truck.marker.getLatLng())) {
-						et.map.panTo(truck.marker.getLatLng());
-					}
-
-					truck.updated = now;
-					truck.current++;
-
-					distanceToNextPoint = truck.marker.getLatLng().distanceTo(truck.route[truck.current]);
-				}
-			}
-		}
-	},
-
-	stop: function() {
-		if (et.timer) {
-			clearInterval(et.timer);
-			et.timer = null;
-		}
-	}
-};
-
-$(document).ready(function() {
-
-	$('#timeFactorDec').on('click', function(e) {
-		e.preventDefault();
-
-		et.timeFactor = et.timeFactor - 1 >= 0 ? et.timeFactor - 1 : 0;
-		$('#timeFactor').val(et.timeFactor);
-	});
-
-	$('#timeFactorInc').on('click', function(e) {
-		e.preventDefault();
-
-		et.timeFactor = et.timeFactor + 1;
-		$('#timeFactor').val(et.timeFactor);
-	});
-
-	// hide alerts on close (bootstrap default is to remove from dom)
-	$('.close').on('click', function(e) {
-		e.preventDefault();
-		$(this).parent().hide();
-	});
-});
-
-*/
