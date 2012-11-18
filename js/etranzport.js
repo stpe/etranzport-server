@@ -4,7 +4,7 @@ window.et = _.extend(window.et || {}, {
 
 	tick: 1000,
 	timeDelta: 0,	// seconds elapsed per update (calulated in init function)
-	timeFactor: 1000,	// factor time is sped up with
+	timeFactor: 500,	// factor time is sped up with
 
 	map: null,
 
@@ -25,7 +25,7 @@ window.et = _.extend(window.et || {}, {
 		popupAnchor: new L.Point(0, -16)
 	}),
 
-	latestRoute: null
+	latestRoute: null,
 });
 
 
@@ -198,47 +198,6 @@ window.et = _.extend(window.et || {}, {
 
 		template: _.template($('#tpl-route-search-found').html()),
 
-		events: {
-			"click #addRouteButton": "addRoute"
-		},
-
-		addRoute: function(e) {
-			var that = this;
-			var speed = this.convertMph($('#setVehicleSpeed').val());
-			var route = et.latestRoute;
-
-			var vehicle = new Vehicle();
-			vehicle.set({
-				origin: route.get("origin"),
-				destination: route.get("destination"),
-				distance: route.get("distance"),
-				duration: route.get("distance") / speed,
-				speed: speed,
-				state: et.truckStates.DRIVING
-			});
-
-			vehicle.save(null, {
-				success: function(model, response) {
-					et.vehicleList.add(model);
-					that.remove();
-				},
-				error: function(model, response) {
-					alert('Failed to save!');
-				}
-			});
-		},
-
-		render: function(eventName) {
-			$(this.el).html(this.template(this.model.toJSON()));
-			return this;
-		}
-	});
-
-	window.RouteSearchError = Backbone.View.extend({
-		el: $('#alert'),
-		
-		template: _.template($('#tpl-route-search-error').html()),
-
 		render: function(eventName) {
 			$(this.el).html(this.template(this.model.toJSON()));
 			return this;
@@ -262,23 +221,58 @@ window.et = _.extend(window.et || {}, {
 			});
 
 			route.on("change", function() {
+				et.latestRoute = this;
+
 				var alertFound = new RouteSearchFound({model: new Backbone.Model({
 					origin: this.get("origin_name"),
 					destination: this.get("destination_name"),
 					distance: that.getDistanceString(this.get("distance"))
 				})});
-				alertFound.render();
 
-				et.latestRoute = this;
+				var modal = new Backbone.BootstrapModal({
+					title: "Route found!",
+					content: alertFound,
+					okText: "Add Route"
+				}).open();
+
+				modal.on("ok", function() {
+					var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
+					var route = et.latestRoute;
+
+					var vehicle = new Vehicle();
+					vehicle.set({
+						origin: route.get("origin"),
+						destination: route.get("destination"),
+						distance: route.get("distance"),
+						duration: route.get("distance") / speed,
+						speed: speed,
+						state: et.truckStates.DRIVING
+					});
+
+					vehicle.save(null, {
+						success: function(model, response) {
+							et.vehicleList.add(model);
+						},
+						error: function(model, response) {
+							alert('Failed to save!');
+						}
+					});
+
+					alertFound.remove();
+				});
+				modal.on("cancel", function() {
+					alertFound.remove();
+				})
+
 			}, route);
 
 			route.fetch({
 				error: function(model, response) {
-					var alertError = new RouteSearchError({model: new Backbone.Model({
-						error: "Fetching route failed. Probably doesn't exist in database."
-					})});
-					alertError.render();
-					return;
+					var modal = new Backbone.BootstrapModal({
+						title: "Could not find route",
+						content: "Fetching route failed. Probably doesn't exist in database.",
+						allowCancel: false
+					}).open();
 				}
 			});
 		}
@@ -292,7 +286,7 @@ window.et = _.extend(window.et || {}, {
 			et.map = map;
 
 			var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/' + et.apikey + '/997/256/{z}/{x}/{y}.png', {
-				attribution: 'Data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, <a href="http://cloudmade.com">CloudMade</a>',
+				attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, <a href="http://cloudmade.com">CloudMade</a>',
 				maxZoom: 18
 			});
 

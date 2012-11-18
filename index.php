@@ -38,9 +38,7 @@
 </script>
 
 <script type="text/template" id="tpl-route-search-found">
-	<div id="routeFoundAlert" class="alert alert-block">
-		<a class="close" data-dismiss="alert" href="#">&times;</a>
-		<h4 class="alert-heading">Route found!</h4>
+	<div id="routeFoundAlert">
 		<p>
 			From <strong id="add-origin"><%= origin %></strong> to <strong id="add-destination"><%= destination %></strong>.<br>
 			Distance: <strong id="add-distance"><%= distance %></strong>.
@@ -51,17 +49,6 @@
 				<input type="text" class="input-small" id="setVehicleSpeed" value="55"><span class="add-on">mph</span>
 			</div>
 		</p>
-		<p>
-			<button id="addRouteButton" class="btn btn-primary">Add Route</button>
-		</p>
-	</div>
-</script>
-
-<script type="text/template" id="tpl-route-search-error">
-	<div id="routeErrorAlert" class="alert alert-error alert-block">
-		<a class="close" data-dismiss="alert" href="#">&times;</a>
-		<h4 class="alert-heading">Could not find any route</h4>
-		<%= error %>
 	</div>
 </script>
 
@@ -119,6 +106,8 @@
 <script src="js/libs/underscore/underscore.js"></script>
 <script src="js/libs/backbone/backbone.js"></script>
 <script src="js/libs/bootstrap/js/bootstrap.js"></script>
+<script src="js/libs/backbone/addons/backbone.bootstrap-modal.js"></script>
+
 <script src="js/libs/leaflet/leaflet.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/etranzport.js"></script>
