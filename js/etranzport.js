@@ -18,11 +18,13 @@ window.et = _.extend(window.et || {}, {
 	truckStateCss: ['label-offduty', 'label-driving', 'label-onduty', 'label-sleeper'],
 
 	truckIcon: L.Icon.extend({
-		iconUrl: 'gfx/lorry-icon-32x32.png',
-		shadowUrl: null,
-		iconSize: new L.Point(32, 32),
-		iconAnchor: new L.Point(16, 16),
-		popupAnchor: new L.Point(0, -16)
+		options: {
+			iconUrl: 'gfx/lorry-icon-32x32.png',
+			shadowUrl: null,
+			iconSize: new L.Point(32, 32),
+			iconAnchor: new L.Point(16, 16),
+			popupAnchor: new L.Point(0, -16)
+		}
 	}),
 
 	latestRoute: null,
