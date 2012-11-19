@@ -1,4 +1,6 @@
 window.et = _.extend(window.et || {}, {
+	apikey: 'BC9A493B41014CAABB98F0471D759707', // '9990e43c062744c58347d5c013ff8739';
+
 	citiesList: null
 });
 
@@ -115,8 +117,6 @@ window.et = _.extend(window.et || {}, {
 	    },
 
 	    routes: function(e) {
-	    	console.log("routes");
-
 	    	var routesList = new RouteCollection({}, {
 	    		cityId: this.model.get('id')
 	    	});
@@ -266,7 +266,9 @@ window.et = _.extend(window.et || {}, {
 	    },
 
 	    map: function(e) {
-	    	alert("Map route: Not yet implemented.");
+	    	var map = new MapView({
+	    		model: this.model
+	    	});
 	    },
 
 	    remove: function() {
@@ -384,6 +386,59 @@ window.et = _.extend(window.et || {}, {
 	        $('#routeslist').append(this.routesListView.render().el);
 	        $('#nonexistingrouteslist').append(this.nonExistingRoutesListView.render().el);
 	    },
+
+		events: {
+			"hidden": "hidden"
+		},
+
+		hidden: function(e) {
+			this.remove();
+		},
+
+		render: function(eventName) {
+			$(this.el).html(this.template()).modal();
+
+			return this;
+		}
+	});
+
+
+	window.MapView = Backbone.View.extend({
+	 	
+		template: _.template($('#tpl-map-view').html()),
+
+	 	initialize: function(options) {
+	 		this.render();
+
+	        var mapOptions = {
+	          center: new google.maps.LatLng(-34.397, 150.644),
+	          zoom: 8,
+	          mapTypeId: google.maps.MapTypeId.ROADMAP,
+	          zoomControlOptions: {
+	          	style: google.maps.ZoomControlStyle.SMALL
+	          }
+	        };
+	        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+	        // decode and create path out of encoded polyline
+			var decodedPath = google.maps.geometry.encoding.decodePath(this.model.get("polyline"));
+			var routePath = new google.maps.Polyline({
+			    path: decodedPath,
+			    strokeColor: "#FF0000",
+			    strokeOpacity: 1.0,
+			    strokeWeight: 2
+			});
+			routePath.setMap(map);
+
+			// calculate bounds of polyline
+			var bounds = new google.maps.LatLngBounds();
+			decodedPath.forEach(function(e) {
+				bounds.extend(e);
+			});
+
+			// move and zoom map to contain route
+			map.fitBounds(bounds);
+	 	},
 
 		events: {
 			"hidden": "hidden"

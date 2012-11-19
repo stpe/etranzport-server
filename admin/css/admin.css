@@ -30,3 +30,8 @@ a.disabled-link:hover {
 td.right-align {
 	text-align: right;
 }
+
+#map {
+	width: 560px;
+	height: 400px;
+}
