@@ -112,7 +112,7 @@
 			<div class="control-group">
 			  <label class="control-label" for="name">Location</label>
 			  <div class="controls">
-			    <input type="text" class="input-xlarge" id="location" value="<%= location %>">
+			    <input type="text" class="input-xlarge" name="location" id="location" value="<%= location %>">
 			    <p class="help-block">In <a href="https://developers.google.com/maps/documentation/utilities/polylineutility" target="_blank">encoded polyline</a> format</p>
 			  </div>
 			</div>

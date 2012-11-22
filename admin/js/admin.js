@@ -233,7 +233,6 @@ window.et = _.extend(window.et || {}, {
 				path.push(place.geometry.location);
 
 				var encodedPos = google.maps.geometry.encoding.encodePath(path);
-				that.model.set("location", encodedPos);
 				$("#location").val(encodedPos);
 			});
 	    },
@@ -262,7 +261,7 @@ window.et = _.extend(window.et || {}, {
 				}
 			} else {
 				// save model
-				that.model.save({
+				that.model.save({}, {
 					success: function(model, response) {
 						that.$el.modal("hide");
 					},
