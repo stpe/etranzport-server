@@ -110,14 +110,17 @@
 			<div class="control-group" id="citymap">
 			</div>
 			<div class="control-group">
-			  <label class="control-label" for="name">Location</label>
+			  <label class="control-label" for="location">Location</label>
 			  <div class="controls">
-			    <input type="text" class="input-xlarge" name="location" id="location" value="<%= location %>">
-			    <p class="help-block">In <a href="https://developers.google.com/maps/documentation/utilities/polylineutility" target="_blank">encoded polyline</a> format</p>
+			    <input type="text" class="input-small" name="location" id="location" value="<%= location %>">
+			    <span class="help-inline">In <a href="https://developers.google.com/maps/documentation/utilities/polylineutility" target="_blank">encoded polyline</a> format</span>
 			  </div>
 			</div>
 			<div class="control-group">
-				<span class="help-block">Note that changing position of an <strong>existing</strong> city will make current routes to city end up in the wrong place.</span>
+			  <label class="control-label" for="country">Country</label>
+			  <div class="controls">
+			    <input type="text" class="input-small" name="country" id="country" value="<%= country %>">
+			  </div>
 			</div>
 		</fieldset>
 		<div class="modal-footer">

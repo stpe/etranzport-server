@@ -11,7 +11,8 @@ window.et = _.extend(window.et || {}, {
 		defaults: {
 			"id": null,
 			"name": "",
-			"location": ""
+			"location": "",
+			"country": ""
 		}
 	});
 
@@ -213,6 +214,15 @@ window.et = _.extend(window.et || {}, {
 					console.log("No result found.");
 					return;
 				}
+
+				// get country
+				var country = "";
+				place.address_components.forEach(function(addr) {
+					if (addr.types[0] == "country") {
+						country = addr.short_name;
+					}
+				});
+				$("#country").val(country);
 
 				if (that.marker === null) {
 					// if no marker, create it
