@@ -35,3 +35,20 @@ td.right-align {
 	width: 560px;
 	height: 400px;
 }
+
+.pac-container {
+	z-index: 20;
+}
+
+.modal {
+	z-index: 20;
+}
+
+.modal-backdrop {
+	z-index: 10;
+}
+
+#citymap {
+	height: 200px;
+	border: 1px solid #ccc;
+}

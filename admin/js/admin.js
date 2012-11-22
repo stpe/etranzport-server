@@ -163,6 +163,79 @@ window.et = _.extend(window.et || {}, {
 
 	    initialize: function() {
 	    	this.render();
+
+	    	// Use Google Places API to autocomplete city name
+	    	//   https://developers.google.com/maps/documentation/javascript/places#places_autocomplete
+			var autocomplete = new google.maps.places.Autocomplete(
+				$("#city-name").get(0),
+				{
+					types: ['(cities)']
+				}
+			);
+
+			// default map position
+			var pos = new google.maps.LatLng(-34.397, 150.644);
+
+			// get latlng of current location and if so, use it
+	        if (this.model.get("location")) {
+	        	pos = google.maps.geometry.encoding.decodePath(this.model.get("location"))[0];
+	        }
+
+			// init map
+	        var mapOptions = {
+	          center: pos,
+	          zoom: 8,
+	          mapTypeId: google.maps.MapTypeId.ROADMAP,
+	          zoomControlOptions: {
+	          	style: google.maps.ZoomControlStyle.SMALL
+	          }
+	        };
+	        this.map = new google.maps.Map(document.getElementById("citymap"), mapOptions);
+
+	        // add marker to current city position
+	        this.marker = null;
+	        if (this.model.get("location")) {
+					this.marker = new google.maps.Marker({
+						position: pos,
+						map: this.map,
+						title: "City location"
+					});	        	
+	        }
+
+	        var that = this;
+
+			// listen to user selecting a city
+			google.maps.event.addListener(autocomplete, "place_changed", function() {
+				var place = autocomplete.getPlace();
+				console.log(place);
+
+				if (!place.geometry) {
+					console.log("No result found.");
+					return;
+				}
+
+				if (that.marker === null) {
+					// if no marker, create it
+					that.marker = new google.maps.Marker({
+						position: place.geometry.location,
+						map: that.map,
+						title: "City location"
+					});
+				} else {
+					// if marker exists, update position of marker
+					that.marker.setPosition(place.geometry.location);
+				}
+
+				that.map.setCenter(place.geometry.location);
+
+				// get encoded position (polyline with only one coordinate)
+				var path = new google.maps.Polyline().getPath();
+				path.push(place.geometry.location);
+
+				var encodedPos = google.maps.geometry.encoding.encodePath(path);
+				that.model.set("location", encodedPos);
+				$("#location").val(encodedPos);
+			});
 	    },
 
 		events: {

@@ -104,9 +104,10 @@
 			<div class="control-group">
 			  <label class="control-label" for="name">Name</label>
 			  <div class="controls">
-			    <input type="text" class="input-xlarge" name="name" value="<%= name %>">
-			    <p class="help-block">Supporting help text</p>
+			    <input type="text" id="city-name" class="input-xlarge" name="name" value="<%= name %>">
 			  </div>
+			</div>
+			<div class="control-group" id="citymap">
 			</div>
 			<div class="control-group">
 			  <label class="control-label" for="name">Location</label>
@@ -114,6 +115,9 @@
 			    <input type="text" class="input-xlarge" id="location" value="<%= location %>">
 			    <p class="help-block">In <a href="https://developers.google.com/maps/documentation/utilities/polylineutility" target="_blank">encoded polyline</a> format</p>
 			  </div>
+			</div>
+			<div class="control-group">
+				<span class="help-block">Note that changing position of an <strong>existing</strong> city will make current routes to city end up in the wrong place.</span>
 			</div>
 		</fieldset>
 		<div class="modal-footer">
