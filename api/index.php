@@ -213,6 +213,11 @@ $app->get('/routes/:origin/:destination', function($origin, $destination) {
             ->where('destination', $destination)
             ->find_one();
 
+    if (!$route) {
+        ResponseNotFound("Cannot find route from ". $origin ." to ". $destination);
+        return;
+    }
+
     $response = $route->as_array();
 
     // decode and (if necessary) reverse order of polyline points
