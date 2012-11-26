@@ -314,11 +314,17 @@ window.et = _.extend(window.et || {}, {
 
 			this.model.on("reset", this.render, this);
 			this.model.on("add", this.render, this);
+
+			Backbone.EventBroker.on("route:add", this.routeAdded, this);
 	    },
 
 	    events: {
 	    	"click .remove": "remove",
 	    },
+
+		routeAdded: function(route) {
+			this.model.add(route);
+		},
 
 	    remove: function(e) {
 	    	var id = $(e.target).attr('data-id');
@@ -442,7 +448,17 @@ window.et = _.extend(window.et || {}, {
 	 			origin: this.cityId,
 	 			destination: this.model.get("id")
 	 		});
-	 		route.save();
+
+	 		route.save({}, {
+	 			success: function(route) {
+	 				route.fetch({
+	 					// fetch from server to get full model
+	 					success: function(route) {
+					 		Backbone.EventBroker.trigger("route:add", route);
+	 					}
+	 				});
+	 			}
+	 		});
 
 	 		this.remove();
 		},
