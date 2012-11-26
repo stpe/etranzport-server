@@ -2,11 +2,11 @@
 
 
 <script type="text/template" id="tpl-route-list-item">
-	<td class="cell-destination" data-route-id="<%= id %>"><%= name %></td>
+	<td class="cell-destination" data-route-id="<%= destination %>"><%= destination_name %></td>
 	<td class="cell-distance"><%= distance %></td>
 	<td class="cell-actions right-align">
 		<button class="btn btn-mini map">Map</button>
-		<button class="btn btn-mini btn-danger remove" data-id="<%= id %>">Remove</button>
+		<button class="btn btn-mini btn-danger remove" data-id="<%= destination %>">Remove</button>
 	</td>
 </script>
 
@@ -30,7 +30,7 @@
 	<div class="modal" id="editroutes">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Edit Routes</h3>
+			<h3>Edit Routes: <%= name %></h3>
 		</div>
 		<div class="modal-body">
 			<h4>Existing Routes</h4>

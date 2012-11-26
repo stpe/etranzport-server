@@ -289,7 +289,7 @@ $app->delete('/routes/:origin/:destination', function($origin, $destination) {
 $app->get('/routes/:id', function($id) {
     $routes =
         ORM::for_table('routes')
-            ->raw_query('SELECT routes.id, cities.id AS name, cities.name, cities.location, routes.distance, routes.polyline FROM routes LEFT JOIN cities ON cities.id=IF(origin = :id, destination, origin) WHERE routes.origin = :id OR routes.destination = :id', array(':id' => $id))
+            ->raw_query('SELECT routes.id, :id AS origin, cities.id AS destination, cities.name AS destination_name, routes.distance, routes.polyline FROM routes LEFT JOIN cities ON cities.id=IF(origin = :id, destination, origin) WHERE routes.origin = :id OR routes.destination = :id', array(':id' => $id))
             ->find_many();
 
     ResponseOk(ormAsArray($routes));

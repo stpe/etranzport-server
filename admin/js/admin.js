@@ -24,11 +24,15 @@ window.et = _.extend(window.et || {}, {
 	window.Route = Backbone.Model.extend({
 		defaults: {
 			"id": null,
-			"city": null,
-			"name": null,
-			"location": 0,
+			"origin": null,
+			"destination": null,
 			"distance": 0,
-			"polyline": ""
+			"polyline": "",
+			"origin_name": "",
+			"destination_name": ""
+		},
+		url: function() {
+			return "../api/routes/" + this.get("origin") + "/" + this.get("destination");
 		}
 	});
 
@@ -133,9 +137,15 @@ window.et = _.extend(window.et || {}, {
 	    		nonExistingRoutes: nonExistingRoutesList
 	    	});
 
-	    	var routesView = new RouteEditView({
-	    		model: routes
-	    	});
+	    	var routesView = new RouteEditView(
+	    		{
+	    			model: routes,
+	    		},
+	    		{
+	    			name: this.model.get('name'),
+	    			cityId: this.model.get('id')
+	    		}
+	    	);
 	    },
 
 	    remove: function() {
@@ -208,7 +218,6 @@ window.et = _.extend(window.et || {}, {
 			// listen to user selecting a city
 			google.maps.event.addListener(autocomplete, "place_changed", function() {
 				var place = autocomplete.getPlace();
-				console.log(place);
 
 				if (!place.geometry) {
 					console.log("No result found.");
@@ -300,7 +309,9 @@ window.et = _.extend(window.et || {}, {
 	 
 	    template: _.template($('#tpl-routes-listview').html()),
 
-	    initialize: function() {
+	    initialize: function(model, options) {
+	    	this.cityId = options.cityId;
+
 			this.model.on("reset", this.render, this);
 			this.model.on("add", this.render, this);
 	    },
@@ -321,7 +332,7 @@ window.et = _.extend(window.et || {}, {
 	    	var tbody = $(this.el).find('tbody');
 
 	    	_.each(this.model.models, function(route) {
-	            tbody.append(new RoutesListItemView({model: route}).render().el);
+	            tbody.append(new RoutesListItemView({model: route}, {cityId: this.cityId}).render().el);
 	        }, this);
 
 	        return this;
@@ -333,7 +344,9 @@ window.et = _.extend(window.et || {}, {
 	 
 	    template: _.template($('#tpl-route-list-item').html()),
 
-	    initialize: function() {
+	    initialize: function(model, options) {
+	    	this.cityId = options.cityId;
+
 	    	this.model.on("change", this.render, this);
 	    },
 
@@ -379,9 +392,12 @@ window.et = _.extend(window.et || {}, {
 	 
 	    template: _.template($('#tpl-routes-listview').html()),
 
-	    initialize: function() {
+	    initialize: function(model, options) {
+	    	this.cityId = options.cityId;
+
 			this.model.on("reset", this.render, this);
 			this.model.on("add", this.render, this);
+			this.model.on("destroy", this.render, this);
 	    },
 
 	    events: {
@@ -400,7 +416,7 @@ window.et = _.extend(window.et || {}, {
 	    	var tbody = $(this.el).find('tbody');
 
 	    	_.each(this.model.models, function(route) {
-	            tbody.append(new NonExistingRoutesListItemView({model: route}).render().el);
+	            tbody.append(new NonExistingRoutesListItemView({model: route}, {cityId: this.cityId}).render().el);
 	        }, this);
 
 	        return this;
@@ -412,27 +428,24 @@ window.et = _.extend(window.et || {}, {
 	 
 	    template: _.template($('#tpl-non-existing-route-list-item').html()),
 
-	    initialize: function() {
+	    initialize: function(model, options) {
+	    	this.cityId = options.cityId;
 	    	this.model.on("change", this.render, this);
 	    },
 
 	    events: {
-	    	"click .add": "add",
-	    	"click .create": "create",
-	    	"click .map": "map"
-	    },
-
-	    create: function(e) {
-	    	alert('Create route: Not yet implemented.');
-	    },
-
-	    map: function(e) {
-	    	alert("Map route: Not yet implemented.");
+	    	"click .add": "add"
 	    },
 
 	    add: function() {
-	    	alert("Add route: Not yet implemented.");
-	    },
+	 		var route = new Route({
+	 			origin: this.cityId,
+	 			destination: this.model.get("id")
+	 		});
+	 		route.save();
+
+	 		this.remove();
+		},
 
 	    render: function(eventName) {
 	    	var data = this.model.toJSON();
@@ -449,20 +462,20 @@ window.et = _.extend(window.et || {}, {
 
 		template: _.template($('#tpl-route-edit').html()),
 
-	    initialize: function() {
-	    	this.render();
+	    initialize: function(model, options) {
+	    	this.cityId = options.cityId;
+	    	this.cityName = options.name;
 
-	        // all cities
-			var citiesList = window.et.citiesList;
-			var citiesWithNoRoute = "";
+	    	this.render();
 
 	    	// list of cities with routes to
 	    	var routeModels = this.model.get("routes");
-	        this.routesListView = new RoutesListView({model: routeModels});
+	        this.routesListView = new RoutesListView({model: routeModels}, {cityId: this.cityId});
 	        routeModels.fetch();
 
+	        // list of cities with no routes to
 	        var nonExistingRoutesModel = this.model.get("nonExistingRoutes");
-	        this.nonExistingRoutesListView = new NonExistingRoutesListView({model: nonExistingRoutesModel});
+	        this.nonExistingRoutesListView = new NonExistingRoutesListView({model: nonExistingRoutesModel}, {cityId: this.cityId});
 	        nonExistingRoutesModel.fetch();
 
 	        $('#routeslist').append(this.routesListView.render().el);
@@ -478,7 +491,9 @@ window.et = _.extend(window.et || {}, {
 		},
 
 		render: function(eventName) {
-			$(this.el).html(this.template()).modal();
+			$(this.el).html(this.template({
+				name: this.cityName
+			})).modal();
 
 			return this;
 		}
@@ -489,7 +504,7 @@ window.et = _.extend(window.et || {}, {
 	 	
 		template: _.template($('#tpl-map-view').html()),
 
-	 	initialize: function(options) {
+	 	initialize: function() {
 	 		this.render();
 
 	        var mapOptions = {
