@@ -326,12 +326,6 @@ window.et = _.extend(window.et || {}, {
 			this.model.add(route);
 		},
 
-	    remove: function(e) {
-	    	var id = $(e.target).attr('data-id');
-	   		var route = this.model.get(id);
-	   		this.model.remove(route);
-	    },
-
 	    render: function(eventName) {
 	    	$(this.el).html(this.template());
 
