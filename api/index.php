@@ -278,7 +278,7 @@ $app->delete('/routes/:origin/:destination', function($origin, $destination) {
             ->where('destination', $destination)
             ->find_one();
 
-//    $route->delete();
+    $route->delete();
 });
 
 $app->get('/routes/:id', function($id) {
