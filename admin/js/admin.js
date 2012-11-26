@@ -449,6 +449,8 @@ window.et = _.extend(window.et || {}, {
 	 			destination: this.model.get("id")
 	 		});
 
+	 		var that = this;
+
 	 		route.save({}, {
 	 			success: function(route) {
 	 				route.fetch({
@@ -457,10 +459,13 @@ window.et = _.extend(window.et || {}, {
 					 		Backbone.EventBroker.trigger("route:add", route);
 	 					}
 	 				});
+
+	 				that.remove();
+	 			},
+	 			error: function(route) {
+	 				alert("Unable to generate route between city " + route.get("origin") + " and " + route.get("destination") + ".");
 	 			}
 	 		});
-
-	 		this.remove();
 		},
 
 	    render: function(eventName) {
