@@ -198,9 +198,8 @@ $app->put('/cities/:id', function($id) {
 $app->get('/routes/:origin/:destination', function($origin, $destination) {
     $reverse = false;
     if ($destination < $origin) {
-        $reverse = $origin;
-        $origin = $destination;
-        $destination = $origin;
+        $reverse = true;
+        list($origin, $destination) = array($destination, $origin);
     } 
 
     $route = 
@@ -270,9 +269,8 @@ $app->post('/routes/:origin/:destination', function($origin, $destination) {
 $app->delete('/routes/:origin/:destination', function($origin, $destination) {
     $reverse = false;
     if ($destination < $origin) {
-        $reverse = $origin;
-        $origin = $destination;
-        $destination = $origin;
+        $reverse = true;
+        list($origin, $destination) = array($destination, $origin);
     } 
 
     $route = 
