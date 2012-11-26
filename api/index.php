@@ -217,7 +217,6 @@ $app->get('/routes/:origin/:destination', function($origin, $destination) {
 
     // decode and (if necessary) reverse order of polyline points
     // note: this should be moved to front-end
-    $points = decodePolylineToArray($response['polyline']);
     $points = DirectionsAPI::decodePolylineToArray($route->polyline);
     if ($reverse) {
         $points = array_reverse($points);
