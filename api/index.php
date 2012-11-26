@@ -10,7 +10,7 @@
 require '../libs/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
-require_once('../decodePolylineToArray.php');
+require_once('../admin/api/google.php');
 
 require_once '../libs/Idiorm/idiorm.php';
 
@@ -219,6 +219,7 @@ $app->get('/routes/:origin/:destination', function($origin, $destination) {
     // decode and (if necessary) reverse order of polyline points
     // note: this should be moved to front-end
     $points = decodePolylineToArray($response['polyline']);
+    $points = DirectionsAPI::decodePolylineToArray($route->polyline);
     if ($reverse) {
         $points = array_reverse($points);
     }
@@ -227,6 +228,44 @@ $app->get('/routes/:origin/:destination', function($origin, $destination) {
     ResponseOk($response);
 })->conditions(array('origin' => '\d+', 'destination' => '\d+'));
 
+$app->post('/routes/:origin/:destination', function($origin, $destination) {
+    $reverse = false;
+    if ($destination < $origin) {
+        $reverse = true;
+        list($origin, $destination) = array($destination, $origin);
+    } 
+
+    // fetch from db
+    $cities = ORM::for_table('cities')
+        ->where_raw('(`id` = ? OR `id` = ?)', array($origin, $destination))
+        ->order_by_asc('id')
+        ->find_array();
+
+    if (count($cities) != 2) {
+        ResponseNotFound($origin .", ". $destination);
+        return;
+    }
+
+    $origin_str = $cities[0]["name"];
+    $destination_str = $cities[1]["name"];
+
+    $dir = new DirectionsAPI();
+    $polyline = $dir->getOverviewPolyline($origin_str, $destination_str);
+
+    if (!empty($polyline["error"])) {
+        ResponseNotFound("Could not generate route.");
+        return;
+    }
+
+    $route = ORM::for_table('routes')->create();
+
+    $route->origin = $origin;
+    $route->destination = $destination;
+    $route->distance = $polyline['distance'];
+    $route->polyline = $polyline['polyline'];
+
+    $route->save();
+})->conditions(array('origin' => '\d+', 'destination' => '\d+'));
 
 $app->delete('/routes/:origin/:destination', function($origin, $destination) {
     $reverse = false;
