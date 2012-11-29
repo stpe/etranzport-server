@@ -34,7 +34,7 @@
 	<td class="cell-duration"><%= duration %></td>
 	<td class="cell-traveled"><%= traveled %></td>
 	<td class="cell-speed"><%= speed %></td>
-	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
+	<td class="cell-actions"><i class="icon-remove removeTrip" data-id="<%= id %>"></i></td>
 </script>
 
 <script type="text/template" id="tpl-route-search-found">

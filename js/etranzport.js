@@ -47,8 +47,8 @@ window.et = _.extend(window.et || {}, {
 	});
 
 	// Models
-	window.Vehicle = Backbone.Model.extend({
-		urlRoot: "api/vehicles",
+	window.Trip = Backbone.Model.extend({
+		urlRoot: "api/trips",
 		defaults: {
 			"id": null,
 			"state": 0,
@@ -69,9 +69,9 @@ window.et = _.extend(window.et || {}, {
 		}
 	});
 
-	window.VehicleCollection = Backbone.Collection.extend({
-	    model: Vehicle,
-	    url: "api/vehicles"
+	window.TripCollection = Backbone.Collection.extend({
+	    model: Trip,
+	    url: "api/trips"
 	});
 
 	window.City = Backbone.Model.extend({
@@ -113,20 +113,20 @@ window.et = _.extend(window.et || {}, {
 	    },
 
 	    events: {
-	    	"click .removeVehicle": "removeVehicle"
+	    	"click .removeTrip": "removeTrip"
 	    },
 
-	    removeVehicle: function(e) {
+	    removeTrip: function(e) {
 	    	var id = $(e.target).attr('data-id');
-	   		var vehicle = this.model.get(id);
-	   		this.model.remove(vehicle);
-	   		vehicle.destroy();
+	   		var trip = this.model.get(id);
+	   		this.model.remove(trip);
+	   		trip.destroy();
 	    },
 	 
 	    render: function(eventName) {
 	    	$(this.el).empty();
-	    	_.each(this.model.models, function(vehicle) {
-	            $(this.el).append(new VehicleListItemView({model: vehicle}).render().el);
+	    	_.each(this.model.models, function(trip) {
+	            $(this.el).append(new VehicleListItemView({model: trip}).render().el);
 	        }, this);
 	        return this;
 	    }
@@ -163,7 +163,7 @@ window.et = _.extend(window.et || {}, {
 	    	});
 
 	        $(this.el).
-	        	attr('id', 'truck-data-' + this.model.get('id')).
+	        	attr('id', 'trip-data-' + this.model.get('id')).
 	        	html(this.template(data));
 	        return this;
 	    }
@@ -240,8 +240,8 @@ window.et = _.extend(window.et || {}, {
 					var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
 					var route = et.latestRoute;
 
-					var vehicle = new Vehicle();
-					vehicle.set({
+					var trip = new Trip();
+					trip.set({
 						origin: route.get("origin"),
 						origin_name: route.get("origin_name"),
 						destination: route.get("destination"),
@@ -252,7 +252,7 @@ window.et = _.extend(window.et || {}, {
 						state: et.truckStates.DRIVING
 					});
 
-					vehicle.save(null, {
+					trip.save(null, {
 						success: function(model, response) {
 							et.vehicleList.add(model);
 						},
@@ -297,11 +297,6 @@ window.et = _.extend(window.et || {}, {
 			map.setView(new L.LatLng(34.705, -97.73), 5);
 
 			options.vehicles.on("add", this.vehicleAdd, this);
-			options.vehicles.on("reset", function(vehicles) {
-				vehicles.each(function(vehicle) {
-					// that.vehicleAdd(vehicle);
-				});
-			}, this);
 
 			this.vehicles = options.vehicles;
 
@@ -429,7 +424,7 @@ window.et = _.extend(window.et || {}, {
 	    	this.destinationCityListView = new CitiesView({el: $("#destination-city"), collection: this.cityList});
 	    	this.cityList.fetch();
 
-	        this.vehicleList = new VehicleCollection();
+	        this.vehicleList = new TripCollection();
 	        this.vehicleListView = new VehicleListView({model: this.vehicleList});
 	        this.vehicleList.fetch();
 	        $('#routes').append(this.vehicleListView.render().el);

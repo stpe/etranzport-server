@@ -109,47 +109,47 @@ function populateRecord($record, $fields) {
  * Routes
  */
 
-$app->get('/vehicles', function() {
+$app->get('/trips', function() {
     global $app;
 
-    $vehicles =
-        ORM::for_table('vehicles')
-            ->select('vehicles.*')
+    $trips =
+        ORM::for_table('trips')
+            ->select('trips.*')
             ->select('origin_city.name', 'origin_name')
             ->select('destination_city.name', 'destination_name')
-            ->join('cities', array('origin_city.id', '=', 'vehicles.origin'), 'origin_city')
-            ->join('cities', array('destination_city.id', '=', 'vehicles.destination'), 'destination_city')
+            ->join('cities', array('origin_city.id', '=', 'trips.origin'), 'origin_city')
+            ->join('cities', array('destination_city.id', '=', 'trips.destination'), 'destination_city')
             ->find_many();
 
-    ResponseOk(ormAsArray($vehicles));
+    ResponseOk(ormAsArray($trips));
 });
 
-$app->post('/vehicles', function() {
+$app->post('/trips', function() {
     global $app;
 
     $env = $app->environment();
 
     $data = json_decode($env['slim.input'], true);
 
-    $vehicle = ORM::for_table('vehicles')->create();
+    $trip = ORM::for_table('trips')->create();
 
-    $vehicle->state = $data['state'];
-    $vehicle->origin = $data['origin'];
-    $vehicle->destination = $data['destination'];
-    $vehicle->distance = $data['distance'];
-    $vehicle->duration = $data['duration'];
-    $vehicle->speed = $data['speed'];
-    $vehicle->startts = time();
+    $trip->state = $data['state'];
+    $trip->origin = $data['origin'];
+    $trip->destination = $data['destination'];
+    $trip->distance = $data['distance'];
+    $trip->duration = $data['duration'];
+    $trip->speed = $data['speed'];
+    $trip->startts = time();
 
-    $vehicle->save();
+    $trip->save();
 
 //echo ORM::get_last_query();
-    ResponseOk($vehicle->as_array());
+    ResponseOk($trip->as_array());
 });
 
-$app->delete('/vehicles/:id', function($id) {
-    $vehicle = ORM::for_table('vehicles')->find_one($id);
-    $vehicle->delete();
+$app->delete('/trips/:id', function($id) {
+    $trip = ORM::for_table('trips')->find_one($id);
+    $trip->delete();
 });
 
 $app->get('/cities', function() {
