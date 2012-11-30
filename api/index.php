@@ -170,11 +170,17 @@ $app->post('/cities', function() {
 });
 
 $app->delete('/cities/:id', function($id) {
+    // delete city
     $city = ORM::for_table('cities')
         ->where('id', $id)
         ->find_one();
 
     $city->delete();
+
+    // delete all routes to/from city
+    $routes = ORM::for_table('routes')
+        ->where_raw('(`destination` = ? OR `origin` = ?)', array($id, $id))
+        ->delete_many();
 });
 
 $app->put('/cities/:id', function($id) {
