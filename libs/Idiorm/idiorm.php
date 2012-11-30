@@ -256,6 +256,24 @@
         }
 
         /**
+         * Executes a raw query as a wrapper for PDOStatement::execute.
+         * Useful for queries that can't be accomplished through Idiorm,
+         * particularly those using engine-specific features.
+         * @example raw_execute('SELECT `name`, AVG(`order`) FROM `customer` GROUP BY `name` HAVING AVG(`order`) > 10')
+         * @example raw_execute('INSERT OR REPLACE INTO `widget` (`id`, `name`) SELECT `id`, `name` FROM `other_table`')
+         * @param string $query The raw SQL query
+         * @param array  $parameters Optional bound parameters
+         * @return bool Success
+         */
+        public static function raw_execute($query, $parameters = array()) {
+            self::_setup_db();
+
+            self::_log_query($query, $parameters);
+            $statement = self::$_db->prepare($query);
+            return $statement->execute($parameters);
+        }
+
+        /**
          * Add a query to the internal query log. Only works if the
          * 'logging' config option is set to true.
          *
@@ -1226,6 +1244,15 @@
             $this->_set_orm_property($key, $value);
         }
 
+        /**
+         * Set a property to a particular value on this object.
+         * To set multiple properties at once, pass an associative array
+         * as the first parameter and leave out the second parameter.
+         * Flags the properties as 'dirty' so they will be saved to the
+         * database when save() is called. 
+         * @param string|array $key
+         * @param string|null $value
+         */
         public function set_expr($key, $value = null) {
             $this->_set_orm_property($key, $value, true);
         }
@@ -1257,6 +1284,14 @@
          */
         public function is_dirty($key) {
             return isset($this->_dirty_fields[$key]);
+        }
+
+        /**
+         * Check whether the model was the result of a call to create() or not
+         * @return bool
+         */
+        public function is_new() {
+            return $this->_is_new;
         }
 
         /**
@@ -1360,6 +1395,7 @@
                 $this->_quote_identifier($this->_table_name),
                 $this->_build_where(),
             ));
+            self::_log_query($query, $this->_values);
             $statement = self::$_db->prepare($query);
             return $statement->execute($this->_values);
         }
@@ -1417,7 +1453,7 @@
          * @return string
          */
         public static function str_replace_outside_quotes($search, $replace, $subject) {
-            return static::value($subject)->replace_outside_quotes($search, $replace);
+            return self::value($subject)->replace_outside_quotes($search, $replace);
         }
 
         /**
