@@ -167,6 +167,8 @@ $app->post('/cities', function() {
     populateRecord($city, $fields);
 
     $city->save();
+
+    ResponseOk($city->as_array());
 });
 
 $app->delete('/cities/:id', function($id) {

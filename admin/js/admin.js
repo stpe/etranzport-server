@@ -1,7 +1,5 @@
 window.et = _.extend(window.et || {}, {
 	apikey: 'BC9A493B41014CAABB98F0471D759707', // '9990e43c062744c58347d5c013ff8739';
-
-	citiesList: null
 });
 
 (function($) {
@@ -64,28 +62,24 @@ window.et = _.extend(window.et || {}, {
 	    initialize: function() {
 			this.model.on("reset", this.render, this);
 			this.model.on("add", this.render, this);
+
+			Backbone.EventBroker.on("city:add", this.cityAdded, this);
 	    },
 
 	    events: {
-	    	"click .remove": "remove",
 	    	"click .newcity": "newcity"
 	    },
 
-	    remove: function(e) {
-	    	var id = $(e.target).attr('data-id');
-	   		var city = this.model.get(id);
-	   		this.model.remove(city);
-//	   		city.destroy();
-	    },
-
 	 	newcity: function() {
-	 		console.log("new");
-
 	 		var city = new City();
 	 		var editView = new CityEditView({
 	 			model: city
 	 		});
 	 	},
+
+		cityAdded: function(city) {
+			this.model.create(city);
+		},
 
 	    render: function(eventName) {
 	    	$(this.el).html(this.template());
@@ -263,7 +257,6 @@ window.et = _.extend(window.et || {}, {
 
 		save: function(e) {
 			e.preventDefault();
-			console.log('save');
 
 			var that = this;
 
@@ -274,10 +267,7 @@ window.et = _.extend(window.et || {}, {
 			});
 
 			if (that.model.get('id') == null) {
-				console.log('trying to create new');
-				if (!window.et.citiesList.create(that.model)) {
-					alert('Failed at creating new city.');
-				}
+				Backbone.EventBroker.trigger("city:add", that.model);
 			} else {
 				// save model
 				that.model.save({}, {
@@ -582,7 +572,6 @@ window.et = _.extend(window.et || {}, {
 
 	    cities: function() {
 	    	this.citiesList = new CityCollection();
-	    	window.et.citiesList = this.citiesList;
 	        this.citiesListView = new CitiesListView({model: this.citiesList});
 	        this.citiesList.fetch();
 	        $('#main').append(this.citiesListView.render().el);
