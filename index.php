@@ -24,7 +24,7 @@
 	</div>
 </div>
 
-<script type="text/template" id="tpl-vehicle-list-item">
+<script type="text/template" id="tpl-trip-list-item">
 	<td class="cell-id"><%= id %></td>
 	<td class="cell-state"><span class="label <%= stateCss %>"><%= state %></span></td>
 	<td class="cell-origin"><%= origin_name %></td>
@@ -107,6 +107,7 @@
 <script src="js/libs/backbone/backbone.js"></script>
 <script src="js/libs/bootstrap/js/bootstrap.js"></script>
 <script src="js/libs/backbone/addons/backbone.bootstrap-modal.js"></script>
+<script src="js/libs/backbone/addons/backbone-eventbroker.js"></script>
 
 <script src="js/libs/leaflet/leaflet.js"></script>
 <script src="js/utils.js"></script>

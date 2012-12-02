@@ -71,6 +71,15 @@ window.et = _.extend(window.et || {}, {
 
 	window.TripCollection = Backbone.Collection.extend({
 	    model: Trip,
+
+	    initialize: function() {
+	    	var that = this;
+
+			Backbone.EventBroker.on("trip:add", function(trip) {
+				that.add(trip);
+			}, this);
+	    },
+
 	    url: "api/trips"
 	});
 
@@ -103,9 +112,9 @@ window.et = _.extend(window.et || {}, {
 	});
 
 	// Views
-	window.VehicleListView = Backbone.View.extend({
+	window.TripListView = Backbone.View.extend({
 	    tagName: 'tbody',
-	    id: "vehicleList",
+	    id: "tripList",
 	 
 	    initialize: function() {
 			this.model.on("reset", this.render, this);
@@ -126,16 +135,16 @@ window.et = _.extend(window.et || {}, {
 	    render: function(eventName) {
 	    	$(this.el).empty();
 	    	_.each(this.model.models, function(trip) {
-	            $(this.el).append(new VehicleListItemView({model: trip}).render().el);
+	            $(this.el).append(new TripListItemView({model: trip}).render().el);
 	        }, this);
 	        return this;
 	    }
 	});
 
-	window.VehicleListItemView = Backbone.View.extend({
+	window.TripListItemView = Backbone.View.extend({
 	    tagName: "tr",
 	 
-	    template: _.template($('#tpl-vehicle-list-item').html()),
+	    template: _.template($('#tpl-trip-list-item').html()),
 
 	    initialize: function() {
 	    	this.model.on("remove", this.remove, this);
@@ -252,9 +261,10 @@ window.et = _.extend(window.et || {}, {
 						state: et.truckStates.DRIVING
 					});
 
+
 					trip.save(null, {
 						success: function(model, response) {
-							et.vehicleList.add(model);
+							Backbone.EventBroker.trigger("trip:add", model);
 						},
 						error: function(model, response) {
 							alert('Failed to save!');
@@ -424,14 +434,12 @@ window.et = _.extend(window.et || {}, {
 	    	this.destinationCityListView = new CitiesView({el: $("#destination-city"), collection: this.cityList});
 	    	this.cityList.fetch();
 
-	        this.vehicleList = new TripCollection();
-	        this.vehicleListView = new VehicleListView({model: this.vehicleList});
-	        this.vehicleList.fetch();
-	        $('#routes').append(this.vehicleListView.render().el);
+	        this.tripList = new TripCollection();
+	        this.tripListView = new TripListView({model: this.tripList});
+	        this.tripList.fetch();
+	        $('#routes').append(this.tripListView.render().el);
 
-	        et.vehicleList = this.vehicleList;
-
-	        this.map = new MapView({el: $('#map'), vehicles: this.vehicleList});
+	        this.map = new MapView({el: $('#map'), vehicles: this.tripList});
 	        et.mapView = this.map;
 
 	        this.routeSearch = new RouteSearchView({ el: $("#route-search") });
