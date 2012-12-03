@@ -109,6 +109,8 @@ function populateRecord($record, $fields) {
  * Routes
  */
 
+// Trips
+
 $app->get('/trips', function() {
     global $app;
 
@@ -143,7 +145,6 @@ $app->post('/trips', function() {
 
     $trip->save();
 
-//echo ORM::get_last_query();
     ResponseOk($trip->as_array());
 });
 
@@ -151,6 +152,42 @@ $app->delete('/trips/:id', function($id) {
     $trip = ORM::for_table('trips')->find_one($id);
     $trip->delete();
 });
+
+
+// Vehicles
+
+$app->get('/vehicles', function() {
+    global $app;
+
+    $vehicles = ORM::for_table('vehicles')->find_many();
+
+    ResponseOk(ormAsArray($vehicles));
+});
+
+
+$app->post('/vehicles', function() {
+    global $app;
+
+    $vehicle = ORM::for_table('vehicles')->create();
+
+    $fields = json_decode($app->request()->getBody());
+    populateRecord($vehicle, $fields);
+
+    $vehicle->save();
+
+    ResponseOk($vehicle->as_array());
+});
+
+$app->delete('/vehicles/:id', function($id) {
+    // delete vehicle
+    $vehicle = ORM::for_table('vehicles')
+        ->where('id', $id)
+        ->find_one();
+
+    $vehicle->delete();
+});
+
+// Cities
 
 $app->get('/cities', function() {
     $cities = ORM::for_table('cities')->find_many();
