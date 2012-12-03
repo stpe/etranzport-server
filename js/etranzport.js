@@ -47,6 +47,20 @@ window.et = _.extend(window.et || {}, {
 	});
 
 	// Models
+	window.Vehicle = Backbone.Model.extend({
+		urlRoot: "api/vehicles",
+		defaults: {
+			"id": null,
+			"name": ""
+		}
+	});
+
+	window.VehicleCollection = Backbone.Collection.extend({
+		mode: Vehicle,
+
+		url: "api/vehicles"
+	});
+
 	window.Trip = Backbone.Model.extend({
 		urlRoot: "api/trips",
 		defaults: {
@@ -112,6 +126,51 @@ window.et = _.extend(window.et || {}, {
 	});
 
 	// Views
+	window.VehicleListView = Backbone.View.extend({
+	    tagName: 'tbody',
+	    id: "vehicleList",
+
+	    initialize: function() {
+			this.model.on("reset", this.render, this);
+			this.model.on("add", this.render, this);
+	    },
+
+	    render: function(eventName) {
+	    	$(this.el).empty();
+	    	_.each(this.model.models, function(vehicle) {
+	            $(this.el).append(new VehicleListItemView({model: vehicle}).render().el);
+	        }, this);
+	        return this;
+	    }
+	});
+
+	window.VehicleListItemView = Backbone.View.extend({
+	    tagName: "tr",
+	 
+	    template: _.template($('#tpl-vehicle-list-item').html()),
+
+	    initialize: function() {
+	    	this.model.on("change", this.render, this);
+	    },
+
+	    events: {
+	    	"click .removeVehicle": "remove"
+	    },
+
+	    remove: function() {
+	    	this.$el.remove();
+	    	this.model.destroy();
+	    },
+	 
+	    render: function(eventName) {
+	    	var data = this.model.toJSON();
+
+	        $(this.el).
+	        	html(this.template(data));
+	        return this;
+	    }
+	});
+
 	window.TripListView = Backbone.View.extend({
 	    tagName: 'tbody',
 	    id: "tripList",
@@ -119,17 +178,6 @@ window.et = _.extend(window.et || {}, {
 	    initialize: function() {
 			this.model.on("reset", this.render, this);
 			this.model.on("add", this.render, this);
-	    },
-
-	    events: {
-	    	"click .removeTrip": "removeTrip"
-	    },
-
-	    removeTrip: function(e) {
-	    	var id = $(e.target).attr('data-id');
-	   		var trip = this.model.get(id);
-	   		this.model.remove(trip);
-	   		trip.destroy();
 	    },
 	 
 	    render: function(eventName) {
@@ -147,12 +195,16 @@ window.et = _.extend(window.et || {}, {
 	    template: _.template($('#tpl-trip-list-item').html()),
 
 	    initialize: function() {
-	    	this.model.on("remove", this.remove, this);
 	    	this.model.on("change", this.render, this);
+	    },
+
+	    events: {
+	    	"click .removeTrip": "remove"
 	    },
 
 	    remove: function() {
 	    	this.$el.remove();
+	    	this.model.destroy();
 	    },
 	 
 	    render: function(eventName) {
@@ -434,10 +486,15 @@ window.et = _.extend(window.et || {}, {
 	    	this.destinationCityListView = new CitiesView({el: $("#destination-city"), collection: this.cityList});
 	    	this.cityList.fetch();
 
+	    	this.vehicleList = new VehicleCollection();
+	    	this.vehicleListView = new VehicleListView({model: this.vehicleList});
+	    	this.vehicleList.fetch();
+	    	$("#vehicles").append(this.vehicleListView.render().el);
+
 	        this.tripList = new TripCollection();
 	        this.tripListView = new TripListView({model: this.tripList});
 	        this.tripList.fetch();
-	        $('#routes').append(this.tripListView.render().el);
+	        $("#trips").append(this.tripListView.render().el);
 
 	        this.map = new MapView({el: $('#map'), vehicles: this.tripList});
 	        et.mapView = this.map;

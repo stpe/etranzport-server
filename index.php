@@ -37,6 +37,12 @@
 	<td class="cell-actions"><i class="icon-remove removeTrip" data-id="<%= id %>"></i></td>
 </script>
 
+<script type="text/template" id="tpl-vehicle-list-item">
+	<td class="cell-id"><%= id %></td>
+	<td><%= name %></td>
+	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
+</script>
+
 <script type="text/template" id="tpl-route-search-found">
 	<div id="routeFoundAlert">
 		<p>
@@ -53,23 +59,44 @@
 </script>
 
 <div class="container">
-	<table id="routes" class="table table-condensed">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>State</th>
-				<th>Origin</th>
-				<th>Destination</th>
-				<th>Start</th>
-				<th>Distance</th>
-				<th>Duration</th>
-				<th>Traveled</th>
-				<th>Speed</th>
-			</tr>
-		</thead>
-	</table>
+	<h3>Vehicles</h3>
+	
+	<form id="vehicle-form" class="well form-inline">
 
+		<table id="vehicles" class="table table-condensed">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+				</tr>
+			</thead>
+		</table>
+
+		<div class="btn-group pull-left">
+			<button id="addVehicle" class="btn btn-primary">Add Vehicle</button>
+		</div>
+		<div class="clear"></div>
+	</form>
+
+	<h3>Trips</h3>
 	<form id="route-search" class="well form-inline">
+
+		<table id="trips" class="table table-condensed">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>State</th>
+					<th>Origin</th>
+					<th>Destination</th>
+					<th>Start</th>
+					<th>Distance</th>
+					<th>Duration</th>
+					<th>Traveled</th>
+					<th>Speed</th>
+				</tr>
+			</thead>
+		</table>
+
 		<div class="btn-group pull-left">
 			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 				<span id="origin-city-label" class="dropdown-label">Origin</span>
@@ -89,12 +116,14 @@
 		</div>
 
 		<div class="btn-group pull-left">
-			<button id="findRouteButton" class="btn btn-primary">Find Route</button>
+			<button id="findRouteButton" class="btn btn-primary">Do Haul</button>
 		</div>
 
 		<div class="btn-group pull-left">
 			<span id="findRouteProgress" class="muted">Trying to figure out a route...</span>
 		</div>
+
+		<div class="clear"></div>
 	</form>
 
 	<div id="alert"></div>
