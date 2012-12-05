@@ -43,12 +43,34 @@
 	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
 </script>
 
+<script type="text/template" id="tpl-vehicle-add">
+	<div id="vehicleAdd">
+		<p>
+			Add vehicle to fleet.
+		</p>
+		<p>
+			<label for="vehicleName">Name:</label>
+			<div class="input-append">
+				<input type="text" class="input-small" id="vehicleName" name="vehicleName">
+			</div>
+		</p>
+	</div>
+</script>
+
 <script type="text/template" id="tpl-route-search-found">
 	<div id="routeFoundAlert">
 		<p>
 			From <strong id="add-origin"><%= origin %></strong> to <strong id="add-destination"><%= destination %></strong>.<br>
 			Distance: <strong id="add-distance"><%= distance %></strong>.
 		</p>
+		<div class="btn-group">
+			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+				Vehicle
+				<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu" id="selectVehicle">
+			</ul>
+		</div>
 		<p>
 			<label for="setTruckSpeed">Truck Speed:</label>
 			<div class="input-append">
@@ -67,7 +89,7 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Name</th>
+					<th>Vehicle</th>
 				</tr>
 			</thead>
 		</table>
