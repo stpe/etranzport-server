@@ -58,6 +58,12 @@ window.et = _.extend(window.et || {}, {
 	window.VehicleCollection = Backbone.Collection.extend({
 		mode: Vehicle,
 
+	    initialize: function() {
+			Backbone.EventBroker.on("vehicle:add", function(vehicle) {
+				this.add(vehicle);
+			}, this);
+	    },
+
 		url: "api/vehicles"
 	});
 
@@ -87,10 +93,8 @@ window.et = _.extend(window.et || {}, {
 	    model: Trip,
 
 	    initialize: function() {
-	    	var that = this;
-
 			Backbone.EventBroker.on("trip:add", function(trip) {
-				that.add(trip);
+				this.add(trip);
 			}, this);
 	    },
 
@@ -256,13 +260,76 @@ window.et = _.extend(window.et || {}, {
         }
     });
 
+	window.VehicleAdd = Backbone.View.extend({
+		template: _.template($('#tpl-vehicle-add').html()),
+
+		render: function(eventName) {
+			$(this.el).html(this.template());
+			return this;
+		}
+	});
+
+	window.VehicleAddView = Backbone.View.extend({
+		events: {
+			"click #addVehicle": "addVehicle"
+		},
+
+		addVehicle: function(e) {
+			e.preventDefault();
+
+			var addVehicle = new VehicleAdd({model: new Backbone.Model({})});
+
+			var modal = new Backbone.BootstrapModal({
+				title: "Vehicle",
+				content: addVehicle,
+				okText: "Add Vehicle"
+			}).open();
+
+			modal.on("ok", function() {
+				var name = this.$el.find('#vehicleName').val();
+
+				var vehicle = new Vehicle();
+				vehicle.set({
+					name: name
+				});
+
+				vehicle.save(null, {
+					success: function(model, response) {
+						Backbone.EventBroker.trigger("vehicle:add", model);
+					},
+					error: function(model, response) {
+						alert('Failed to save vehicle!');
+					}
+				});
+
+				addVehicle.remove();
+			});
+			modal.on("cancel", function() {
+				addVehicle.remove();
+			})
+		}
+	});
+
 	window.RouteSearchFound = Backbone.View.extend({
 		el: $('#alert'),
 
 		template: _.template($('#tpl-route-search-found').html()),
 
+		initialize: function() {
+			this.render();
+		},
+
 		render: function(eventName) {
 			$(this.el).html(this.template(this.model.toJSON()));
+
+	    	// populate vehicle list
+	    	var list = $(this.el).find("#selectVehicle");
+            et.vehicleList.each(function(vehicle) {
+				list.append(
+					'<li data-id="' + vehicle.get('id') + '"><a href="#">' + vehicle.get('name') + '</a></li>'
+				);
+            });
+
 			return this;
 		}
 	});
@@ -296,6 +363,9 @@ window.et = _.extend(window.et || {}, {
 					content: alertFound,
 					okText: "Add Route"
 				}).open();
+
+	            // to prevent dropdown box to end up hidden below footer
+	            $("#routeFoundAlert").parents(".modal-body").css("overflow-y", "visible");
 
 				modal.on("ok", function() {
 					var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
@@ -490,6 +560,7 @@ window.et = _.extend(window.et || {}, {
 	    	this.vehicleListView = new VehicleListView({model: this.vehicleList});
 	    	this.vehicleList.fetch();
 	    	$("#vehicles").append(this.vehicleListView.render().el);
+	    	et.vehicleList = this.vehicleList;
 
 	        this.tripList = new TripCollection();
 	        this.tripListView = new TripListView({model: this.tripList});
@@ -500,6 +571,8 @@ window.et = _.extend(window.et || {}, {
 	        et.mapView = this.map;
 
 	        this.routeSearch = new RouteSearchView({ el: $("#route-search") });
+
+	        this.vehicleAdd = new VehicleAddView({ el: $("#vehicle-form") });
 
 	       	et.timeDelta = 1000 / et.tick;
 			$('#timeFactor').val(et.timeFactor);
