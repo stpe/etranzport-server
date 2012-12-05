@@ -19,15 +19,6 @@ body {
 	padding-top: 5px;
 }
 
-.removeVehicle {
-	cursor: pointer;
-	opacity: 0.2;
-}
-
-.removeVehicle:hover {
-	opacity: 0.4;
-}
-
 .label-offduty {
 	background-color: #63878A;
 }
@@ -42,4 +33,25 @@ body {
 
 .label-sleeper {
 	background-color: #0B486B;
+}
+
+/* table cells */
+
+#vehicle-form .cell-id {
+	width: 45px;
+}
+
+.table td.cell-actions {
+	text-align: right;
+}
+
+/* table content */
+
+.table .icon-remove  {
+	cursor: pointer;
+	opacity: 0.2;
+}
+
+.table .icon-remove:hover {
+	opacity: 0.4;
 }
