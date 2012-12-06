@@ -81,7 +81,9 @@ window.et = _.extend(window.et || {}, {
 			"traveled": 0,
 			"speed": 0,
 			"startts": 0,
-			"map": null
+			"map": null,
+			"vehicle": null,
+			"vehicle_name": ""
 		},
 
 		initialize: function() {
@@ -370,6 +372,7 @@ window.et = _.extend(window.et || {}, {
 				modal.on("ok", function() {
 					var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
 					var route = et.latestRoute;
+					var vehicle = this.$el.find('#select-vehicle-label').attr("data-id");
 
 					var trip = new Trip();
 					trip.set({
@@ -380,7 +383,8 @@ window.et = _.extend(window.et || {}, {
 						distance: route.get("distance"),
 						duration: route.get("distance") / speed,
 						speed: speed,
-						state: et.truckStates.DRIVING
+						state: et.truckStates.DRIVING,
+						vehicle: vehicle
 					});
 
 
@@ -580,7 +584,7 @@ window.et = _.extend(window.et || {}, {
 	});
 
 	// set dropdown label to selected
-	$("#route-search").on("click", ".dropdown-menu a", function(e) {
+	$(document.body).on("click", ".change-on-select a", function(e) {
 		var selected = $(this);
 
 		selected

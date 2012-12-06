@@ -119,8 +119,10 @@ $app->get('/trips', function() {
             ->select('trips.*')
             ->select('origin_city.name', 'origin_name')
             ->select('destination_city.name', 'destination_name')
+            ->select('vehicles.name', 'vehicle_name')
             ->join('cities', array('origin_city.id', '=', 'trips.origin'), 'origin_city')
             ->join('cities', array('destination_city.id', '=', 'trips.destination'), 'destination_city')
+            ->join('vehicles', array('vehicles.id', '=', 'trips.vehicle'), 'vehicles')
             ->find_many();
 
     ResponseOk(ormAsArray($trips));
@@ -142,10 +144,16 @@ $app->post('/trips', function() {
     $trip->duration = $data['duration'];
     $trip->speed = $data['speed'];
     $trip->startts = time();
+    $trip->vehicle = $data['vehicle'];
 
     $trip->save();
 
-    ResponseOk($trip->as_array());
+    $result = $trip->as_array();
+
+    $vehicle = ORM::for_table('vehicles')->find_one($trip->vehicle);
+    $result['vehicle_name'] = $vehicle->name;
+
+    ResponseOk($result);
 });
 
 $app->delete('/trips/:id', function($id) {

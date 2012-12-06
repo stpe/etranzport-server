@@ -26,6 +26,7 @@
 
 <script type="text/template" id="tpl-trip-list-item">
 	<td class="cell-id"><%= id %></td>
+	<td class="cell-vehicle"><%= vehicle_name %></td>
 	<td class="cell-state"><span class="label <%= stateCss %>"><%= state %></span></td>
 	<td class="cell-origin"><%= origin_name %></td>
 	<td class="cell-dest"><%= destination_name %></td>
@@ -65,10 +66,10 @@
 		</p>
 		<div class="btn-group">
 			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-				Vehicle
+				<span id="select-vehicle-label" class="dropdown-label">Vehicle</span>
 				<span class="caret"></span>
 			</a>
-			<ul class="dropdown-menu" id="selectVehicle">
+			<ul class="dropdown-menu change-on-select" id="selectVehicle">
 			</ul>
 		</div>
 		<p>
@@ -107,6 +108,7 @@
 			<thead>
 				<tr>
 					<th>#</th>
+					<th>Vehicle</th>
 					<th>State</th>
 					<th>Origin</th>
 					<th>Destination</th>
@@ -124,7 +126,7 @@
 				<span id="origin-city-label" class="dropdown-label">Origin</span>
 				<span class="caret"></span>
 			</a>
-			<ul class="dropdown-menu" id="origin-city">
+			<ul class="dropdown-menu change-on-select" id="origin-city">
 			</ul>
 		</div>
 
@@ -133,7 +135,7 @@
 				<span id="destination-city-label" class="dropdown-label">Destination</span>
 				<span class="caret"></span>
 			</a>
-			<ul class="dropdown-menu" id="destination-city">
+			<ul class="dropdown-menu change-on-select" id="destination-city">
 			</ul>
 		</div>
 
