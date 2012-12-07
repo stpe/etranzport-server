@@ -308,10 +308,6 @@ window.et = _.extend(window.et || {}, {
 			Backbone.EventBroker.on("route:add", this.routeAdded, this);
 	    },
 
-	    events: {
-	    	"click .remove": "remove",
-	    },
-
 		routeAdded: function(route) {
 			this.model.add(route);
 		},
@@ -357,6 +353,12 @@ window.et = _.extend(window.et || {}, {
 	    },
 
 	    remove: function() {
+	    	var route = {
+	    		id: this.model.get('destination'),
+	    		name: this.model.get('destination_name')
+	    	};
+	    	Backbone.EventBroker.trigger("route:remove", route);
+
 	    	this.$el.remove();
 	    	this.model.destroy();
 	    },
@@ -388,6 +390,8 @@ window.et = _.extend(window.et || {}, {
 			this.model.on("reset", this.render, this);
 			this.model.on("add", this.render, this);
 			this.model.on("destroy", this.render, this);
+
+			Backbone.EventBroker.on("route:remove", this.routeRemoved, this);
 	    },
 
 	    events: {
@@ -398,6 +402,12 @@ window.et = _.extend(window.et || {}, {
 	    	var id = $(e.target).attr('data-id');
 	   		var route = this.model.get(id);
 	   		this.model.remove(route);
+	    },
+
+	    // route removed, hence should be added to non-exsting list
+	    routeRemoved: function(route) {
+	    	this.model.add(route);
+	    	this.render();
 	    },
 
 	    render: function(eventName) {
