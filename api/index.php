@@ -115,14 +115,14 @@ $app->get('/trips', function() {
     global $app;
 
     $trips =
-        ORM::for_table('trips')
-            ->select('trips.*')
+        ORM::for_table('trip')
+            ->select('trip.*')
             ->select('origin_city.name', 'origin_name')
             ->select('destination_city.name', 'destination_name')
-            ->select('vehicles.name', 'vehicle_name')
-            ->join('cities', array('origin_city.id', '=', 'trips.origin'), 'origin_city')
-            ->join('cities', array('destination_city.id', '=', 'trips.destination'), 'destination_city')
-            ->join('vehicles', array('vehicles.id', '=', 'trips.vehicle'), 'vehicles')
+            ->select('vehicle.name', 'vehicle_name')
+            ->join('city', array('origin_city.id', '=', 'trip.origin'), 'origin_city')
+            ->join('city', array('destination_city.id', '=', 'trip.destination'), 'destination_city')
+            ->join('vehicle', array('vehicle.id', '=', 'trip.vehicle'), 'vehicle')
             ->find_many();
 
     ResponseOk(ormAsArray($trips));
@@ -135,7 +135,7 @@ $app->post('/trips', function() {
 
     $data = json_decode($env['slim.input'], true);
 
-    $trip = ORM::for_table('trips')->create();
+    $trip = ORM::for_table('trip')->create();
 
     $trip->state = $data['state'];
     $trip->origin = $data['origin'];
@@ -150,14 +150,14 @@ $app->post('/trips', function() {
 
     $result = $trip->as_array();
 
-    $vehicle = ORM::for_table('vehicles')->find_one($trip->vehicle);
+    $vehicle = ORM::for_table('vehicle')->find_one($trip->vehicle);
     $result['vehicle_name'] = $vehicle->name;
 
     ResponseOk($result);
 });
 
 $app->delete('/trips/:id', function($id) {
-    $trip = ORM::for_table('trips')->find_one($id);
+    $trip = ORM::for_table('trip')->find_one($id);
     $trip->delete();
 });
 
@@ -167,7 +167,7 @@ $app->delete('/trips/:id', function($id) {
 $app->get('/vehicles', function() {
     global $app;
 
-    $vehicles = ORM::for_table('vehicles')->find_many();
+    $vehicles = ORM::for_table('vehicle')->find_many();
 
     ResponseOk(ormAsArray($vehicles));
 });
@@ -176,7 +176,7 @@ $app->get('/vehicles', function() {
 $app->post('/vehicles', function() {
     global $app;
 
-    $vehicle = ORM::for_table('vehicles')->create();
+    $vehicle = ORM::for_table('vehicle')->create();
 
     $fields = json_decode($app->request()->getBody());
     populateRecord($vehicle, $fields);
@@ -188,7 +188,7 @@ $app->post('/vehicles', function() {
 
 $app->delete('/vehicles/:id', function($id) {
     // delete vehicle
-    $vehicle = ORM::for_table('vehicles')
+    $vehicle = ORM::for_table('vehicle')
         ->where('id', $id)
         ->find_one();
 
@@ -198,7 +198,7 @@ $app->delete('/vehicles/:id', function($id) {
 // Cities
 
 $app->get('/cities', function() {
-    $cities = ORM::for_table('cities')->find_many();
+    $cities = ORM::for_table('city')->find_many();
 
     ResponseOk(ormAsArray($cities));
 });
@@ -206,7 +206,7 @@ $app->get('/cities', function() {
 $app->post('/cities', function() {
     global $app;
 
-    $city = ORM::for_table('cities')->create();
+    $city = ORM::for_table('city')->create();
 
     $fields = json_decode($app->request()->getBody());
     populateRecord($city, $fields);
@@ -218,14 +218,14 @@ $app->post('/cities', function() {
 
 $app->delete('/cities/:id', function($id) {
     // delete city
-    $city = ORM::for_table('cities')
+    $city = ORM::for_table('city')
         ->where('id', $id)
         ->find_one();
 
     $city->delete();
 
     // delete all routes to/from city
-    $routes = ORM::for_table('routes')
+    $routes = ORM::for_table('route')
         ->where_raw('(`destination` = ? OR `origin` = ?)', array($id, $id))
         ->delete_many();
 });
@@ -233,7 +233,7 @@ $app->delete('/cities/:id', function($id) {
 $app->put('/cities/:id', function($id) {
     global $app;
 
-    $city = ORM::for_table('cities')
+    $city = ORM::for_table('city')
         ->where('id', $id)
         ->find_one();
 
@@ -256,12 +256,12 @@ $app->get('/routes/:origin/:destination', function($origin, $destination) {
     } 
 
     $route = 
-        ORM::for_table('routes')
-            ->select('routes.*')
+        ORM::for_table('route')
+            ->select('route.*')
             ->select('origin_city.name', 'origin_name')
             ->select('destination_city.name', 'destination_name')
-            ->join('cities', array('origin_city.id', '=', 'routes.origin'), 'origin_city')
-            ->join('cities', array('destination_city.id', '=', 'routes.destination'), 'destination_city')
+            ->join('city', array('origin_city.id', '=', 'routes.origin'), 'origin_city')
+            ->join('city', array('destination_city.id', '=', 'routes.destination'), 'destination_city')
             ->where('origin', $origin)
             ->where('destination', $destination)
             ->find_one();
@@ -292,7 +292,7 @@ $app->post('/routes/:origin/:destination', function($origin, $destination) {
     } 
 
     // fetch from db
-    $cities = ORM::for_table('cities')
+    $cities = ORM::for_table('city')
         ->where_raw('(`id` = ? OR `id` = ?)', array($origin, $destination))
         ->order_by_asc('id')
         ->find_array();
@@ -313,7 +313,7 @@ $app->post('/routes/:origin/:destination', function($origin, $destination) {
         return;
     }
 
-    $route = ORM::for_table('routes')->create();
+    $route = ORM::for_table('route')->create();
 
     $route->origin = $origin;
     $route->destination = $destination;
@@ -331,7 +331,7 @@ $app->delete('/routes/:origin/:destination', function($origin, $destination) {
     } 
 
     $route = 
-        ORM::for_table('routes')
+        ORM::for_table('route')
             ->where('origin', $origin)
             ->where('destination', $destination)
             ->find_one();
@@ -341,7 +341,7 @@ $app->delete('/routes/:origin/:destination', function($origin, $destination) {
 
 $app->get('/routes/:id', function($id) {
     $routes =
-        ORM::for_table('routes')
+        ORM::for_table('route')
             ->raw_query('SELECT routes.id, :id AS origin, cities.id AS destination, cities.name AS destination_name, routes.distance, routes.polyline FROM routes LEFT JOIN cities ON cities.id=IF(origin = :id, destination, origin) WHERE routes.origin = :id OR routes.destination = :id', array(':id' => $id))
             ->find_many();
 
@@ -351,7 +351,7 @@ $app->get('/routes/:id', function($id) {
 // list of cities where there is no route to from given city
 $app->get('/routes/nonexisting/:id', function($id) {
     $routes =
-        ORM::for_table('cities')
+        ORM::for_table('city')
             ->raw_query('SELECT id, name FROM cities WHERE id != :id AND id NOT IN (SELECT IF(origin = :id, destination, origin) AS id FROM routes WHERE origin = :id OR destination = :id)', array(':id' => $id))
             ->find_many();
 
