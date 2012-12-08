@@ -260,8 +260,8 @@ $app->get('/routes/:origin/:destination', function($origin, $destination) {
             ->select('route.*')
             ->select('origin_city.name', 'origin_name')
             ->select('destination_city.name', 'destination_name')
-            ->join('city', array('origin_city.id', '=', 'routes.origin'), 'origin_city')
-            ->join('city', array('destination_city.id', '=', 'routes.destination'), 'destination_city')
+            ->join('city', array('origin_city.id', '=', 'route.origin'), 'origin_city')
+            ->join('city', array('destination_city.id', '=', 'route.destination'), 'destination_city')
             ->where('origin', $origin)
             ->where('destination', $destination)
             ->find_one();
@@ -342,7 +342,7 @@ $app->delete('/routes/:origin/:destination', function($origin, $destination) {
 $app->get('/routes/:id', function($id) {
     $routes =
         ORM::for_table('route')
-            ->raw_query('SELECT routes.id, :id AS origin, cities.id AS destination, cities.name AS destination_name, routes.distance, routes.polyline FROM routes LEFT JOIN cities ON cities.id=IF(origin = :id, destination, origin) WHERE routes.origin = :id OR routes.destination = :id', array(':id' => $id))
+            ->raw_query('SELECT route.id, :id AS origin, city.id AS destination, city.name AS destination_name, route.distance, route.polyline FROM route LEFT JOIN city ON city.id=IF(origin = :id, destination, origin) WHERE route.origin = :id OR route.destination = :id', array(':id' => $id))
             ->find_many();
 
     ResponseOk(ormAsArray($routes));
@@ -352,7 +352,7 @@ $app->get('/routes/:id', function($id) {
 $app->get('/routes/nonexisting/:id', function($id) {
     $routes =
         ORM::for_table('city')
-            ->raw_query('SELECT id, name FROM cities WHERE id != :id AND id NOT IN (SELECT IF(origin = :id, destination, origin) AS id FROM routes WHERE origin = :id OR destination = :id)', array(':id' => $id))
+            ->raw_query('SELECT id, name FROM city WHERE id != :id AND id NOT IN (SELECT IF(origin = :id, destination, origin) AS id FROM route WHERE origin = :id OR destination = :id)', array(':id' => $id))
             ->find_many();
 
     ResponseOk(ormAsArray($routes));
