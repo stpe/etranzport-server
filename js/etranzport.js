@@ -104,10 +104,10 @@ window.et = _.extend(window.et || {}, {
 
 	    afterFetch: function() {
 	    	this.forEach(function(trip) {
-	    		console.log(trip.get('state'));
 	    		if (trip.get('state') == et.truckStates.DRIVING) {
 	    	  		// todo: add to map
 	    	  		console.log("Loaded Trip in state DRIVING", trip.toJSON());
+	    	  		Backbone.EventBroker.trigger("trip:addtomap", trip);
 	    		}
 	    	});
 	    },
@@ -415,7 +415,7 @@ window.et = _.extend(window.et || {}, {
 				});
 				modal.on("cancel", function() {
 					alertFound.remove();
-				})
+				});
 
 			}, route);
 
@@ -448,9 +448,11 @@ window.et = _.extend(window.et || {}, {
 			map.setView(new L.LatLng(34.705, -97.73), 5);
 
 			// listen to added trips
-			Backbone.EventBroker.on("trip:add", function(trip) {
-				this.vehicleAdd(trip);
-			}, this);
+			Backbone.EventBroker.on("trip:add", this.vehicleAdd, this);
+			Backbone.EventBroker.on("trip:addtomap", function(trip) {
+				// load route data if not exists
+				that.getRouteFromTrip(trip, that.vehicleAdd, that);
+			}, that);
 
 			this.vehicles = options.vehicles;
 
@@ -459,11 +461,6 @@ window.et = _.extend(window.et || {}, {
 
 	 	vehicleAdd: function(trip) {
 	 		var route = trip.get("route");
-	 		if (route === null) {
-	 			console.log("Route null, can't add to map");
-	 			return;
-	 		}
-
 			var map = et.map;
 			var res = this.convertPointsToLatLng(route.get("points"));
 			var latlngs = res.latLngs;
@@ -687,6 +684,29 @@ window.et = _.extend(window.et || {}, {
 				latLngs: latlngs,
 				distance: distance
 			}
+		},
+
+		// populate trip model with route data if missing
+		getRouteFromTrip: function(trip, callback, context) {
+			var route = trip.get("route");
+			if (route !== null) {
+				callback.call(context, trip);
+			}
+
+			var route = new Route({
+				origin: trip.get("origin"),
+				destination: trip.get("destination")
+			});
+
+			route.fetch({
+				success: function(model, response, options) {
+					trip.set("route", model);
+					callback.call(context, trip);
+				},
+				error: function(model, xhr, options) {
+					console.log("Could not find route!", trip.toJSON());
+				}
+			});
 		}
 	});
 
