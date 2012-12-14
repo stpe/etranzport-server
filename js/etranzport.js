@@ -25,9 +25,7 @@ window.et = _.extend(window.et || {}, {
 			iconAnchor: new L.Point(16, 16),
 			popupAnchor: new L.Point(0, -16)
 		}
-	}),
-
-	latestRoute: null,
+	})
 });
 
 
@@ -79,9 +77,11 @@ window.et = _.extend(window.et || {}, {
 			"distance": 0,
 			"duration": 0,
 			"traveled": 0,
+			"timefactor": 0,
 			"speed": 0,
 			"startts": 0,
 			"map": null,
+			"route": null,
 			"vehicle": null,
 			"vehicle_name": ""
 		},
@@ -98,6 +98,18 @@ window.et = _.extend(window.et || {}, {
 			Backbone.EventBroker.on("trip:add", function(trip) {
 				this.add(trip);
 			}, this);
+
+			this.on("reset", this.afterFetch, this);
+	    },
+
+	    afterFetch: function() {
+	    	this.forEach(function(trip) {
+	    		console.log(trip.get('state'));
+	    		if (trip.get('state') == et.truckStates.DRIVING) {
+	    	  		// todo: add to map
+	    	  		console.log("Loaded Trip in state DRIVING", trip.toJSON());
+	    		}
+	    	});
 	    },
 
 	    url: "api/trips"
@@ -224,6 +236,7 @@ window.et = _.extend(window.et || {}, {
 	    		stateCss: this.getStateCss(data.state),
 				distance: this.getDistanceString(data.distance),
 				duration: this.getDurationString(data.duration),
+				timefactor: et.timeFactor,
 				startts: this.getDateTimeString(data.startts),
 				speed: this.getSpeedString(data.speed),
 				traveled: traveled
@@ -352,7 +365,7 @@ window.et = _.extend(window.et || {}, {
 			});
 
 			route.on("change", function() {
-				et.latestRoute = this;
+				var currentRoute = this;
 
 				var alertFound = new RouteSearchFound({model: new Backbone.Model({
 					origin: this.get("origin_name"),
@@ -371,7 +384,7 @@ window.et = _.extend(window.et || {}, {
 
 				modal.on("ok", function() {
 					var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
-					var route = et.latestRoute;
+					var route = currentRoute;
 					var vehicle = this.$el.find('#select-vehicle-label').attr("data-id");
 
 					var trip = new Trip();
@@ -382,11 +395,12 @@ window.et = _.extend(window.et || {}, {
 						destination_name: route.get("destination_name"),
 						distance: route.get("distance"),
 						duration: route.get("distance") / speed,
+						timefactor: et.timeFactor,
 						speed: speed,
 						state: et.truckStates.DRIVING,
+						route: route,
 						vehicle: vehicle
 					});
-
 
 					trip.save(null, {
 						success: function(model, response) {
@@ -420,6 +434,7 @@ window.et = _.extend(window.et || {}, {
 	window.MapView = Backbone.View.extend({
 	 	
 	 	initialize: function(options) {
+	 		// init map
 	 		var that = this;
 			var map = new L.Map('map');
 			et.map = map;
@@ -432,16 +447,25 @@ window.et = _.extend(window.et || {}, {
 			map.addLayer(cloudmade);
 			map.setView(new L.LatLng(34.705, -97.73), 5);
 
-			options.vehicles.on("add", this.vehicleAdd, this);
+			// listen to added trips
+			Backbone.EventBroker.on("trip:add", function(trip) {
+				this.vehicleAdd(trip);
+			}, this);
 
 			this.vehicles = options.vehicles;
 
 			this.timer = null;
 	 	},
 
-	 	vehicleAdd: function(vehicle) {
+	 	vehicleAdd: function(trip) {
+	 		var route = trip.get("route");
+	 		if (route === null) {
+	 			console.log("Route null, can't add to map");
+	 			return;
+	 		}
+
 			var map = et.map;
-			var res = this.convertPointsToLatLng(et.latestRoute.get("points"));
+			var res = this.convertPointsToLatLng(route.get("points"));
 			var latlngs = res.latLngs;
 			var distance = res.distance;
 
@@ -458,7 +482,7 @@ window.et = _.extend(window.et || {}, {
 			var marker = new L.Marker(latlngs[0], {icon: new et.truckIcon()});
 			map.addLayer(marker);
 
-			vehicle.get("map").set({
+			trip.get("map").set({
 				marker: marker,
 				route: latlngs,
 				distance: distance,
