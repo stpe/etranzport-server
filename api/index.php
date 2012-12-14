@@ -10,8 +10,9 @@
 require '../libs/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
-require_once('../admin/api/google.php');
+require_once('constants.php');
 
+require_once('../admin/api/google.php');
 require_once '../libs/Idiorm/idiorm.php';
 
 if ($_SERVER['HTTP_HOST'] == 'etranzport.local') {
@@ -123,9 +124,22 @@ $app->get('/trips', function() {
             ->join('city', array('origin_city.id', '=', 'trip.origin'), 'origin_city')
             ->join('city', array('destination_city.id', '=', 'trip.destination'), 'destination_city')
             ->join('vehicle', array('vehicle.id', '=', 'trip.vehicle'), 'vehicle')
-            ->find_many();
+            ->find_array();
 
-    ResponseOk(ormAsArray($trips));
+    $now = time();
+
+    foreach($trips as &$trip) {
+        $lapsed = $now - $trip['startts'];
+        $distance_completed = $lapsed * $trip['speed'] * $trip['timefactor'];
+
+        $trip['state'] = TruckState::OFFDUTY;
+        if ($distance_completed < $trip['distance']) {
+            $trip['state'] = TruckState::DRIVING;
+            $trip['distance_completed'] = $distance_completed;
+        }
+    }
+
+    ResponseOk($trips);
 });
 
 $app->post('/trips', function() {
@@ -142,6 +156,7 @@ $app->post('/trips', function() {
     $trip->destination = $data['destination'];
     $trip->distance = $data['distance'];
     $trip->duration = $data['duration'];
+    $trip->timefactor = $data['timefactor'];
     $trip->speed = $data['speed'];
     $trip->startts = time();
     $trip->vehicle = $data['vehicle'];
