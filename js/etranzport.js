@@ -463,30 +463,54 @@ window.et = _.extend(window.et || {}, {
 	 		var route = trip.get("route");
 			var map = et.map;
 			var res = this.convertPointsToLatLng(route.get("points"));
-			var latlngs = res.latLngs;
+			var route = res.latLngs;
 			var distance = res.distance;
 
 			// create a red polyline from an arrays of LatLng points
-			var polyline = new L.Polyline(latlngs, {color: 'red'});
+			var polyline = new L.Polyline(route, {color: 'red'});
 
 			// zoom the map to the polyline
-			map.fitBounds(new L.LatLngBounds(latlngs));
+			map.fitBounds(new L.LatLngBounds(route));
 
 			// add the polyline to the map
 			map.addLayer(polyline);
 
+			// figure out how far in the polyline the vehicle has travelled
+			var current = 0,
+				distanceLeftOver = 0;
+
+			if (trip.get("distance_completed") > 0 ) {
+				var pos = route[0],
+					len = route.length,
+					i = 0,
+					currentDistance = 0,
+					distanceCompleted = trip.get("distance_completed");
+
+				while (i < len && currentDistance < distanceCompleted) {
+					i++;
+					currentDistance += pos.distanceTo(route[i]);
+					pos = route[i];
+				}
+
+				// set current node in polyline
+				current = i;
+
+				// set left over distance (distance completed in addition to the distance to the current node)
+				distanceLeftOver = currentDistance - distanceCompleted;
+			}
+
 			// add vehicle marker
-			var marker = new L.Marker(latlngs[0], {icon: new et.truckIcon()});
+			var marker = new L.Marker(route[current], {icon: new et.truckIcon()});
 			map.addLayer(marker);
 
 			trip.get("map").set({
 				marker: marker,
-				route: latlngs,
+				route: route,
 				distance: distance,
-				current: 0,
+				current: current,
 				updated: (new Date).getTime(),
 				traveled: 0,
-				distanceLeftOver: 0
+				distanceLeftOver: distanceLeftOver
 			});
 
 			this.start();
