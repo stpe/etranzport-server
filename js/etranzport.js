@@ -105,8 +105,6 @@ window.et = _.extend(window.et || {}, {
 	    afterFetch: function() {
 	    	this.forEach(function(trip) {
 	    		if (trip.get('state') == et.truckStates.DRIVING) {
-	    	  		// todo: add to map
-	    	  		console.log("Loaded Trip in state DRIVING", trip.toJSON());
 	    	  		Backbone.EventBroker.trigger("trip:addtomap", trip);
 	    		}
 	    	});
@@ -509,7 +507,7 @@ window.et = _.extend(window.et || {}, {
 				distance: distance,
 				current: current,
 				updated: (new Date).getTime(),
-				traveled: 0,
+				traveled: distanceCompleted,
 				distanceLeftOver: distanceLeftOver
 			});
 
