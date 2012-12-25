@@ -16,6 +16,14 @@ window.et = _.extend(window.et || {}, {
 	},
 	truckState: ['Off-Duty', 'Driving', 'On-Duty', 'Sleeper Berth'],
 	truckStateCss: ['label-offduty', 'label-driving', 'label-onduty', 'label-sleeper'],
+	tripStates: {
+		IDLE: 0,
+		ENROUTE: 1,
+		ARRIVED: 2,
+		COMPLETED: 3
+	},
+	tripState: ['Idle', 'En route', 'Arrived', 'Completed'],
+	tripStateCss: ['label-offduty', 'label-driving', 'label-onduty', 'label-sleeper'],
 
 	truckIcon: L.Icon.extend({
 		options: {
@@ -49,7 +57,8 @@ window.et = _.extend(window.et || {}, {
 		urlRoot: "api/vehicles",
 		defaults: {
 			"id": null,
-			"name": ""
+			"name": "",
+			"state": 0
 		}
 	});
 
@@ -99,12 +108,35 @@ window.et = _.extend(window.et || {}, {
 				this.add(trip);
 			}, this);
 
+			Backbone.EventBroker.on("trip:arrived", function(trip) {
+				// remove from collection
+				this.remove(trip);
+
+				// update state to completed
+				trip.set("state", et.tripStates.COMPLETED);
+
+				// clear out uneccessary stuff to send to server // todo: override sync (best?) to save only updated state
+				trip.unset("map", { silent: true });
+				trip.unset("route", { silent: true });
+
+				// save
+				trip.save(null, {
+					patch: true,
+					success: function(model, response) {
+						console.log("Saved completed trip.", trip.toJSON());
+					},
+					error: function(model, response) {
+						alert('Failed to save completed trip!');
+					}
+				});
+			}, this);	    	
+
 			this.on("reset", this.afterFetch, this);
 	    },
 
 	    afterFetch: function() {
 	    	this.forEach(function(trip) {
-	    		if (trip.get('state') == et.truckStates.DRIVING) {
+	    		if (trip.get('state') == et.tripStates.ENROUTE) {
 	    	  		Backbone.EventBroker.trigger("trip:addtomap", trip);
 	    		}
 	    	});
@@ -181,6 +213,11 @@ window.et = _.extend(window.et || {}, {
 	    render: function(eventName) {
 	    	var data = this.model.toJSON();
 
+	    	data = _.extend(data, {
+	    		state: this.getVehicleStateString(data.state),
+	    		stateCss: this.getVehicleStateCss(data.state),
+	    	});
+
 	        $(this.el).
 	        	html(this.template(data));
 	        return this;
@@ -227,7 +264,7 @@ window.et = _.extend(window.et || {}, {
 	    	var data = this.model.toJSON();
 
 	    	// calculate estimation of real distance since polyline is optimized
-	    	var traveled = this.model.get("map").get("distance") ? this.getDistanceString((this.model.get("map").get("traveled") / this.model.get("map").get("distance")) * data.distance) : '';
+	    	var traveled = (this.model.get("map") && this.model.get("map").get("distance")) ? this.getDistanceString((this.model.get("map").get("traveled") / this.model.get("map").get("distance")) * data.distance) : '';
 
 	    	data = _.extend(data, {
 	    		state: this.getStateString(data.state),
@@ -475,7 +512,8 @@ window.et = _.extend(window.et || {}, {
 
 			// figure out how far in the polyline the vehicle has travelled
 			var current = 0,
-				distanceLeftOver = 0;
+				distanceLeftOver = 0,
+				distanceCompleted = 0;
 
 			if (trip.get("distance_completed") > 0 ) {
 				var pos = route[0],
@@ -527,18 +565,24 @@ window.et = _.extend(window.et || {}, {
 	 		var vehicles = this.vehicles;
 			var v, len, prevCurrent, timeSinceLastUpdate, distanceSinceLastUpdate, distanceToNextPoint;
 			var now = (new Date).getTime();
+			var activeVehiclesCount = 0;
 
+			console.log("- update -");
 			vehicles.each(function(vehicle) {
 				v = vehicle.get("map").toJSON();
-				len = v.route.length;
 
-				if (v.current < len) {
+				if (vehicle.get("state") == et.tripStates.ENROUTE) {
+					console.log("each id", vehicle.get("id"));
+					activeVehiclesCount++;
+
 					timeSinceLastUpdate = (now - v.updated) / 1000; // in ms
 					distanceSinceLastUpdate = timeSinceLastUpdate * vehicle.get("speed") * et.timeFactor + v.distanceLeftOver;
 
 					distanceToNextPoint = v.marker.getLatLng().distanceTo(v.route[v.current]);
 
 					prevCurrent = v.current;
+
+					len = v.route.length;
 
 					// move through as many points as possible
 					while (distanceSinceLastUpdate >= distanceToNextPoint && v.current < len) {
@@ -559,7 +603,8 @@ window.et = _.extend(window.et || {}, {
 						v.current++;
 						if (v.current >= len) {
 							// reached destination
-							continue;
+							vehicle.set("state", et.tripStates.ARRIVED);
+							break;
 						}
 
 						distanceToNextPoint = v.marker.getLatLng().distanceTo(v.route[v.current]);
@@ -576,11 +621,20 @@ window.et = _.extend(window.et || {}, {
 
 						vehicle.trigger("change");
 					}
+
+					// trigger arrived event if vehicle has arrived
+					if (vehicle.get("state") == et.tripStates.ARRIVED) {
+			    		Backbone.EventBroker.trigger("trip:arrived", vehicle);
+					}
 				} else {
-					// route finished
-					vehicle.set("state", et.truckStates.OFFDUTY);
+					// non active route; ignore
 				}
 			});
+
+			// stop update timer of no more active vehicles
+			if (activeVehiclesCount == 0) {
+				this.stop();
+			}
 	 	},
 
 	 	stop: function() {
@@ -665,10 +719,18 @@ window.et = _.extend(window.et || {}, {
 		},
 
 		getStateString: function(s) {
-			return et.truckState[s];
+			return et.tripState[s];
 		},
 
 		getStateCss: function(s) {
+			return et.tripStateCss[s];
+		},
+
+		getVehicleStateString: function(s) {
+			return et.truckState[s];
+		},
+
+		getVehicleStateCss: function(s) {
 			return et.truckStateCss[s];
 		},
 

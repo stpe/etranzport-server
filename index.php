@@ -41,6 +41,7 @@
 <script type="text/template" id="tpl-vehicle-list-item">
 	<td class="cell-id"><%= id %></td>
 	<td><%= name %></td>
+	<td class="cell-state"><span class="label <%= stateCss %>"><%= state %></span></td>	
 	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
 </script>
 
@@ -91,6 +92,7 @@
 				<tr>
 					<th>#</th>
 					<th>Vehicle</th>
+					<th>State</th>
 				</tr>
 			</thead>
 		</table>

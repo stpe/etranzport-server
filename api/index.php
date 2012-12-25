@@ -132,9 +132,8 @@ $app->get('/trips', function() {
         $lapsed = $now - $trip['startts'];
         $distance_completed = $lapsed * $trip['speed'] * $trip['timefactor'];
 
-        $trip['state'] = TruckState::OFFDUTY;
         if ($distance_completed < $trip['distance']) {
-            $trip['state'] = TruckState::DRIVING;
+            $trip['state'] = TripState::ENROUTE;
             $trip['distance_completed'] = $distance_completed;
         }
     }
@@ -146,7 +145,6 @@ $app->post('/trips', function() {
     global $app;
 
     $env = $app->environment();
-
     $data = json_decode($env['slim.input'], true);
 
     $trip = ORM::for_table('trip')->create();
@@ -176,6 +174,24 @@ $app->delete('/trips/:id', function($id) {
     $trip->delete();
 });
 
+$app->map('/trips/:id', function($id) {
+    global $app;
+
+    $env = $app->environment();
+    $data = json_decode($env['slim.input'], true);
+
+    $trip = ORM::for_table('trip')->find_one($id);
+
+    // todo: perform anti cheat check here
+
+    $trip->state = $data['state'];
+    $trip->save();
+
+    // return result
+    $result = $trip->as_array();
+
+    ResponseOk($result);
+})->via('PATCH');
 
 // Vehicles
 
