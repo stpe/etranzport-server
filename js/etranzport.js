@@ -567,12 +567,10 @@ window.et = _.extend(window.et || {}, {
 			var now = (new Date).getTime();
 			var activeVehiclesCount = 0;
 
-			console.log("- update -");
 			vehicles.each(function(vehicle) {
 				v = vehicle.get("map").toJSON();
 
 				if (vehicle.get("state") == et.tripStates.ENROUTE) {
-					console.log("each id", vehicle.get("id"));
 					activeVehiclesCount++;
 
 					timeSinceLastUpdate = (now - v.updated) / 1000; // in ms
