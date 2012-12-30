@@ -1,0 +1,155 @@
+[
+    {
+        "name": "Dry Van",
+        "code": "DV2",
+        "sizeft": 28
+    },
+    {
+        "name": "Dry Van",
+        "code": "DV4",
+        "sizeft": 48
+    },
+    {
+        "name": "Dry Van",
+        "code": "DV5",
+        "sizeft": 53
+    },
+    {
+        "name": "Flatbed",
+        "code": "FB2",
+        "sizeft": 28
+    },
+    {
+        "name": "Flatbed",
+        "code": "FB4",
+        "sizeft": 48
+    },
+    {
+        "name": "Flatbed",
+        "code": "FB5",
+        "sizeft": 53
+    },
+    {
+        "name": "Reefer",
+        "code": "RF2",
+        "sizeft": 28
+    },
+    {
+        "name": "Reefer",
+        "code": "RF4",
+        "sizeft": 48
+    },
+    {
+        "name": "Reefer",
+        "code": "RF5",
+        "sizeft": 53
+    },
+    {
+        "name": "Step Deck",
+        "code": "SD"
+    },
+    {
+        "name": "Car Hauler",
+        "code": "CH"
+    },
+    {
+        "name": "Lowboy",
+        "code": "LB"
+    },
+    {
+        "name": "Double Drop",
+        "code": "DD"
+    },
+    {
+        "name": "Conestogas",
+        "code": "CO"
+    },
+    {
+        "name": "Container",
+        "code": "CT"
+    },
+    {
+        "name": "Container Reefer",
+        "code": "CTR"
+    },
+    {
+        "name": "Wagon",
+        "code": "WG"
+    },
+    {
+        "name": "Cattle",
+        "code": "CH4",
+        "sizeft": 48
+    },
+    {
+        "name": "Cattle",
+        "code": "CH5",
+        "sizeft": 53
+    },
+    {
+        "name": "Log",
+        "code": "LG",
+        "sizeft": 48
+    },
+    {
+        "name": "Tank (Haz)",
+        "code": "TH"
+    },
+    {
+        "name": "Tank (D) Dairy",
+        "code": "TD"
+    },
+    {
+        "name": "Tank (G)",
+        "code": "TG"
+    },
+    {
+        "name": "Tank (W) Water",
+        "code": "TW"
+    },
+    {
+        "name": "Hopper (Plastic)",
+        "code": "HP",
+        "sizeft": 48
+    },
+    {
+        "name": "Hopper (Cement)",
+        "code": "HC",
+        "sizeft": 45
+    },
+    {
+        "name": "Hopper (Food)",
+        "code": "HF",
+        "sizeft": 48
+    },
+    {
+        "name": "Cylinder (Propane)",
+        "code": "CY"
+    },
+    {
+        "name": "Dump (Tilt)",
+        "code": "DT"
+    },
+    {
+        "name": "Dump (Belly)",
+        "code": "DB"
+    },
+    {
+        "name": "Vacuum",
+        "code": "VA"
+    },
+    {
+        "name": "Boat Hauler",
+        "code": "BH",
+        "sizeft": 48
+    },
+    {
+        "name": "Moving Van",
+        "code": "MV",
+        "sizeft": 48
+    },
+    {
+        "name": "Gooseneck",
+        "code": "GN"
+    }
+]
