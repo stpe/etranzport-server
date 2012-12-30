@@ -1,0 +1,26 @@
+[
+    {
+        "code": "S",
+        "name": "Straight"
+    },
+    {
+        "code": "L",
+        "name": "Local"
+    },
+    {
+        "code": "R",
+        "name": "Regional"
+    },
+    {
+        "code": "MH",
+        "name": "Mid Haul"
+    },
+    {
+        "code": "LH",
+        "name": "Long Haul"
+    },
+    {
+        "code": "EX",
+        "name": "Extreme"
+    }
+]
