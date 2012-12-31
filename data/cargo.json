@@ -1,0 +1,14 @@
+[
+    {
+        "name": "Helicopter",
+        "endorsement": [
+            "O"
+        ],
+        "trailer": [
+            "DD"
+        ],
+        "accessory": [
+            "FLAGS"
+        ]
+    }
+]
