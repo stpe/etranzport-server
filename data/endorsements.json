@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Tank",
+        "code": "T"
+    },
+    {
+        "name": "Hazmat",
+        "code": "H"
+    },
+    {
+        "name": "Oversize",
+        "code": "O"
+    },
+    {
+        "name": "Double",
+        "code": "2"
+    },
+    {
+        "name": "Triple",
+        "code": "3"
+    },
+    {
+        "name": "Security",
+        "code": "S"
+    }
+]
