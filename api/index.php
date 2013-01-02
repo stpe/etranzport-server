@@ -11,6 +11,7 @@ require '../libs/Slim/Slim.php';
 \Slim\Slim::registerAutoloader();
 
 require_once('constants.php');
+require_once('data.php');
 
 require_once('../admin/api/google.php');
 require_once '../libs/Idiorm/idiorm.php';
@@ -109,6 +110,19 @@ function populateRecord($record, $fields) {
 /**
  * Routes
  */
+
+// Data
+
+// Get json data by supplying filename (except .json ending)
+$app->get('/data/:file', function($file) {
+    // strip non alpha characters to avoid haxxors
+    $file = preg_replace('/[^a-z0-9_]/', '', $file);
+
+    $data = new Data("../data/". $file .".json");
+
+    ResponseOk($data->getData());
+});
+
 
 // Trips
 
