@@ -138,6 +138,7 @@ $app->get('/trips', function() {
             ->join('city', array('origin_city.id', '=', 'trip.origin'), 'origin_city')
             ->join('city', array('destination_city.id', '=', 'trip.destination'), 'destination_city')
             ->join('vehicle', array('vehicle.id', '=', 'trip.vehicle'), 'vehicle')
+            ->order_by_desc('trip.id')
             ->find_array();
 
     $now = time();
