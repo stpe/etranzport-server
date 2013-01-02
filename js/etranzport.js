@@ -314,7 +314,40 @@ window.et = _.extend(window.et || {}, {
 		template: _.template($('#tpl-vehicle-add').html()),
 
 		render: function(eventName) {
-			$(this.el).html(this.template());
+			var el = $(this.el);
+
+			el.html(this.template());
+
+			var select2format = function(vehicle) {
+				return vehicle.text + ' (' + vehicle.id + ')'
+			};
+
+			el.find("#vehicle-type").select2({
+				placeholder: "Select Vehicle Type",
+				minimumResultsForSearch: 9999,
+				ajax: {
+					url: "/api/data/vehicle_types",
+					dataType: "json",
+					data: function(term, page) {
+						return {};
+					},
+					results: function(data, page) {
+						var results =  {
+							results: data.map(function(type) {
+								return {
+									id: type.code,
+									text: type.name
+								};
+							}),
+							more: false
+						};
+						return results;
+					}
+				},
+				formatResult: select2format,
+				formatSelection: select2format
+			});
+
 			return this;
 		}
 	});
@@ -330,17 +363,19 @@ window.et = _.extend(window.et || {}, {
 			var addVehicle = new VehicleAdd({model: new Backbone.Model({})});
 
 			var modal = new Backbone.BootstrapModal({
-				title: "Vehicle",
+				title: "Add Vehicle to Fleet",
 				content: addVehicle,
 				okText: "Add Vehicle"
 			}).open();
 
 			modal.on("ok", function() {
-				var name = this.$el.find('#vehicleName').val();
+				var name = this.$el.find("#vehicleName").val(),
+					type = this.$el.find("#vehicle-type").select2("val");
 
 				var vehicle = new Vehicle();
 				vehicle.set({
-					name: name
+					name: name,
+					type: type
 				});
 
 				vehicle.save(null, {

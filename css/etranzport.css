@@ -41,6 +41,18 @@ body {
 	width: 45px;
 }
 
+#vehicle-form .cell-vehicle-type {
+	width: 45px;
+}
+
+#vehicle-form .cell-state {
+	width: 90px;
+}
+
+.table td.cell-vehicle {
+	width: 100px;
+}
+
 .table td.cell-actions {
 	text-align: right;
 }

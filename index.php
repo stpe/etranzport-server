@@ -8,7 +8,7 @@
 	<link href="js/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="css/etranzport.css" rel="stylesheet">
 	<link href="js/libs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-
+	<link href="js/libs/select2/select2.css" rel="stylesheet">
 	<link href="js/libs/leaflet/leaflet.css" rel="stylesheet">
 </head>
 <body>
@@ -40,20 +40,24 @@
 
 <script type="text/template" id="tpl-vehicle-list-item">
 	<td class="cell-id"><%= id %></td>
-	<td><%= name %></td>
+	<td class="cell-vehicle"><%= name %></td>
 	<td class="cell-state"><span class="label <%= stateCss %>"><%= state %></span></td>	
+	<td class="cell-vehicle-type"><span class="badge badge-inverse"><%= type %></span></td>
 	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
 </script>
 
 <script type="text/template" id="tpl-vehicle-add">
 	<div id="vehicleAdd">
 		<p>
-			Add vehicle to fleet.
-		</p>
-		<p>
 			<label for="vehicleName">Name:</label>
 			<div class="input-append">
 				<input type="text" class="input-small" id="vehicleName" name="vehicleName">
+			</div>
+		</p>
+		<p>
+			<label for="vehicleType">Type:</label>
+			<div>
+				<input type="hidden" id="vehicle-type">
 			</div>
 		</p>
 	</div>
@@ -93,6 +97,7 @@
 					<th>#</th>
 					<th>Vehicle</th>
 					<th>State</th>
+					<th>Type</th>
 				</tr>
 			</thead>
 		</table>
@@ -163,7 +168,7 @@
 <script src="js/libs/bootstrap/js/bootstrap.js"></script>
 <script src="js/libs/backbone/addons/backbone.bootstrap-modal.js"></script>
 <script src="js/libs/backbone/addons/backbone-eventbroker.js"></script>
-
+<script src="js/libs/select2/select2.js"></script>
 <script src="js/libs/leaflet/leaflet.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/etranzport.js"></script>
