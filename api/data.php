@@ -51,6 +51,10 @@ class Data {
     public function out() {
         echo json_encode($this->data, JSON_PRETTY_PRINT);
     }
+
+    public function getData() {
+        return $this->data;
+    }
 }
 
 // Specific data type implementations
