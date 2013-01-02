@@ -326,7 +326,7 @@ window.et = _.extend(window.et || {}, {
 				placeholder: "Select Vehicle Type",
 				minimumResultsForSearch: 9999,
 				ajax: {
-					url: "/api/data/vehicle_types",
+					url: "api/data/vehicle_types",
 					dataType: "json",
 					data: function(term, page) {
 						return {};
