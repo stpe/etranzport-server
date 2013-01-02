@@ -93,14 +93,6 @@ function ResponseNotFound($data = null) {
     $app->response()->status(404);    
 }
 
-function ormAsArray($orm) {
-    function rowAsArray($row) {
-        return $row->as_array();
-    }
-
-    return array_map('rowAsArray', $orm);
-}
-
 function populateRecord($record, $fields) {
     foreach($fields as $field => $value) {
         $record->set($field, $value);
@@ -138,7 +130,7 @@ $app->get('/trips', function() {
             ->join('city', array('origin_city.id', '=', 'trip.origin'), 'origin_city')
             ->join('city', array('destination_city.id', '=', 'trip.destination'), 'destination_city')
             ->join('vehicle', array('vehicle.id', '=', 'trip.vehicle'), 'vehicle')
-            ->order_by_desc('trip.id')
+            ->order_by_asc('trip.id')
             ->find_array();
 
     $now = time();
@@ -213,9 +205,9 @@ $app->map('/trips/:id', function($id) {
 $app->get('/vehicles', function() {
     global $app;
 
-    $vehicles = ORM::for_table('vehicle')->find_many();
+    $vehicles = ORM::for_table('vehicle')->find_array();
 
-    ResponseOk(ormAsArray($vehicles));
+    ResponseOk($vehicles);
 });
 
 
@@ -244,9 +236,9 @@ $app->delete('/vehicles/:id', function($id) {
 // Cities
 
 $app->get('/cities', function() {
-    $cities = ORM::for_table('city')->find_many();
+    $cities = ORM::for_table('city')->find_array();
 
-    ResponseOk(ormAsArray($cities));
+    ResponseOk($cities);
 });
 
 $app->post('/cities', function() {
@@ -395,9 +387,9 @@ $app->get('/routes/:id', function($id) {
     $routes =
         ORM::for_table('route')
             ->raw_query('SELECT route.id, :id AS origin, city.id AS destination, city.name AS destination_name, route.distance, route.polyline FROM route LEFT JOIN city ON city.id=IF(origin = :id, destination, origin) WHERE route.origin = :id OR route.destination = :id', array(':id' => $id))
-            ->find_many();
+            ->find_array();
 
-    ResponseOk(ormAsArray($routes));
+    ResponseOk($routes);
 });
 
 // list of cities where there is no route to from given city
@@ -405,9 +397,9 @@ $app->get('/routes/nonexisting/:id', function($id) {
     $routes =
         ORM::for_table('city')
             ->raw_query('SELECT id, name FROM city WHERE id != :id AND id NOT IN (SELECT IF(origin = :id, destination, origin) AS id FROM route WHERE origin = :id OR destination = :id)', array(':id' => $id))
-            ->find_many();
+            ->find_array();
 
-    ResponseOk(ormAsArray($routes));
+    ResponseOk($routes);
 });
 
 /**
