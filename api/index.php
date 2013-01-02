@@ -324,6 +324,12 @@ $app->get('/routes/:origin/:destination', function($origin, $destination) {
     $points = DirectionsAPI::decodePolylineToArray($route->polyline);
     if ($reverse) {
         $points = array_reverse($points);
+
+        // if reversed, switch origin/destination
+        $response["origin"] = $route->destination;
+        $response["origin_name"] = $route->destination_name;
+        $response["destination"] = $route->origin;
+        $response["destination_name"] = $route->origin_name;
     }
     $response['points'] = $points;
 
