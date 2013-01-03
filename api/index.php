@@ -110,9 +110,12 @@ $app->get('/data/:file', function($file) {
     // strip non alpha characters to avoid haxxors
     $file = preg_replace('/[^a-z0-9_]/', '', $file);
 
-    $data = new Data("../data/". $file .".json");
-
-    ResponseOk($data->getData());
+    try {
+        $data = new Data("../data/". $file .".json");
+        ResponseOk($data->getData());
+    } catch(DataException $e) {
+        ResponseNotFound("Data file '$file' not found.");
+    }
 });
 
 

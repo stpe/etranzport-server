@@ -34,7 +34,7 @@ class Data {
     }
 
     private function load($filename) {
-        $contents = file_get_contents($filename);
+        $contents = @file_get_contents($filename);
 
         if (!$contents) {
             throw new DataFileException("Can't open data file '$filename'");
