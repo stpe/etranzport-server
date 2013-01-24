@@ -16,7 +16,7 @@ require_once('data.php');
 require_once('../admin/api/google.php');
 require_once '../libs/Idiorm/idiorm.php';
 
-if ($_SERVER['HTTP_HOST'] == 'etranzport.local') {
+if ($_SERVER['SERVER_ADDR'] == '127.0.0.1') {
     ORM::configure('mysql:host=localhost;dbname=etranzport');
     ORM::configure('username', 'root');
 } else {
