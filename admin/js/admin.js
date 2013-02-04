@@ -447,13 +447,7 @@ window.et = _.extend(window.et || {}, {
 
 	 		route.save({}, {
 	 			success: function(route) {
-	 				route.fetch({
-	 					// fetch from server to get full model
-	 					success: function(route) {
-					 		Backbone.EventBroker.trigger("route:add", route);
-	 					}
-	 				});
-
+			 		Backbone.EventBroker.trigger("route:add", route);
 	 				that.remove();
 	 			},
 	 			error: function(route) {

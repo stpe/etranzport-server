@@ -368,6 +368,12 @@ $app->post('/routes/:origin/:destination', function($origin, $destination) {
     $route->polyline = $polyline['polyline'];
 
     $route->save();
+
+    // return results
+    $result = $route->as_array();
+    $result['destination_name'] = $destination_str;
+
+    ResponseOk($result);    
 })->conditions(array('origin' => '\d+', 'destination' => '\d+'));
 
 $app->delete('/routes/:origin/:destination', function($origin, $destination) {
