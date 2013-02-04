@@ -2,11 +2,11 @@
 
 eTransport Server, including front-end and REST JSON back-end API.
 
-## Staging
+## Staging Server
 
 * http://www.codetouch.com/etranzport
 
-## Infrastructure
+## Deployment Service
 
 * [DeployHQ](https://etranzport.deployhq.com/)
 
@@ -20,6 +20,7 @@ eTransport Server, including front-end and REST JSON back-end API.
 * [Underscore.js](http://underscorejs.org/)
 * [jQuery](http://jquery.com/)
 * [Leaflet](http://leaflet.cloudmade.com/)
+* [Select2](http://ivaynberg.github.com/select2/)
 
 ### Back-End
 * [Slim Framework](http://www.slimframework.com/)
