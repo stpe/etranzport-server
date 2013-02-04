@@ -13,3 +13,8 @@ final class TripState {
     const ARRIVED    = 2;
     const COMPLETED  = 3;
 }
+
+final class VehicleClass {
+    const TRUCK     = 0;
+    const TRAILER   = 1;
+}
