@@ -173,8 +173,14 @@ $app->post('/trips', function() {
 
     $result = $trip->as_array();
 
+    // get vehicle name
     $vehicle = ORM::for_table('vehicle')->find_one($trip->vehicle);
     $result['vehicle_name'] = $vehicle->name;
+
+    // update vehicle state
+    $vehicle->city = $trip->destination;
+    $vehicle->state = TruckState::DRIVING;
+    $vehicle->save();
 
     ResponseOk($result);
 });
@@ -197,6 +203,11 @@ $app->map('/trips/:id', function($id) {
     $trip->state = $data['state'];
     $trip->save();
 
+    // update vehicle
+    $vehicle = ORM::for_table('vehicle')->find_one($trip->vehicle);
+    $vehicle->state = TruckState::OFFDUTY;
+    $vehicle->save();
+
     // return result
     $result = $trip->as_array();
 
@@ -208,23 +219,38 @@ $app->map('/trips/:id', function($id) {
 $app->get('/vehicles', function() {
     global $app;
 
-    $vehicles = ORM::for_table('vehicle')->find_array();
+    $vehicles = ORM::for_table('vehicle')
+        ->select('vehicle.*')
+        ->select('city.name', 'city_name')
+        ->join('city', array('city.id', '=', 'vehicle.city'))
+        ->find_array();
 
     ResponseOk($vehicles);
 });
 
-
 $app->post('/vehicles', function() {
     global $app;
 
+    $env = $app->environment();
+    $data = json_decode($env['slim.input'], true);
+
     $vehicle = ORM::for_table('vehicle')->create();
 
-    $fields = json_decode($app->request()->getBody());
-    populateRecord($vehicle, $fields);
+    $vehicle->name = $data['name'];
+    $vehicle->state = $data['state'];
+    $vehicle->type = $data['type'];
+    $vehicle->vclass = $data['vclass'];
+    $vehicle->city = $data['city'];
 
     $vehicle->save();
 
-    ResponseOk($vehicle->as_array());
+    $result = $vehicle->as_array();
+
+    // get vehicle name
+    $city = ORM::for_table('city')->find_one($vehicle->city);
+    $result['city_name'] = $city->name;
+
+    ResponseOk($result);
 });
 
 $app->delete('/vehicles/:id', function($id) {

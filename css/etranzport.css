@@ -35,6 +35,11 @@ body {
 	background-color: #0B486B;
 }
 
+.vehicle-enroute {
+	color: #999;
+	font-style: italic;
+}
+
 /* table cells */
 
 #vehicle-form .cell-id {
@@ -42,6 +47,10 @@ body {
 }
 
 #vehicle-form .cell-vehicle-type {
+	width: 45px;
+}
+
+#vehicle-form .cell-vehicle-class {
 	width: 45px;
 }
 

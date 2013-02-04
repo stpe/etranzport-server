@@ -40,28 +40,48 @@
 
 <script type="text/template" id="tpl-vehicle-list-item">
 	<td class="cell-id"><%= id %></td>
+	<td class="cell-vehicle-class"><%= vclass == "0" ? "Truck" : "Trailer" %></td>
 	<td class="cell-vehicle"><%= name %></td>
-	<td class="cell-state"><span class="label <%= stateCss %>"><%= state %></span></td>	
 	<td class="cell-vehicle-type"><span class="badge badge-inverse"><%= type %></span></td>
+	<td class="cell-state"><span class="label <%= stateCss %>"><%= stateTitle %></span></td>
+	<td class="cell-city"><span class="<%= parseInt(state) != 0 ? 'vehicle-enroute' : '' %>"><%= city_name %></span></td>
 	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
 </script>
 
-<script type="text/template" id="tpl-vehicle-add">
+<script type="text/template" id="tpl-truck-add">
 	<div id="vehicleAdd">
 		<p>
-			<label for="vehicleName">Name:</label>
+			<label for="vehicle-name">Name:</label>
 			<div class="input-append">
-				<input type="text" class="input-small" id="vehicleName" name="vehicleName">
+				<input type="text" class="input-small" id="vehicle-name" name="vehicle-name">
 			</div>
 		</p>
 		<p>
-			<label for="vehicleType">Type:</label>
-			<div>
-				<input type="hidden" id="vehicle-type">
-			</div>
+			<label for="vehicle-type">Truck Type:</label>
+			<input type="hidden" class="input-large" id="vehicle-type">
+		</p>
+		<p>
+			<label for="vehicle-city">Start City:</label>
+			<input type="text" class="input-large" id="vehicle-city" name="vehicle-city">
 		</p>
 	</div>
 </script>
+
+<script type="text/template" id="tpl-trailer-add">
+	<div id="trailerAdd">
+		<p>
+			<label for="vehicleTrailers">Trailer:</label>
+			<div>
+				<input type="hidden" id="vehicle-trailers" class="input-large">
+			</div>
+		</p>	
+		<p>
+			<label for="vehicle-city">Start City:</label>
+			<input type="text" class="input-large" id="vehicle-city" name="vehicle-city">
+		</p>
+	</div>
+</script>
+
 
 <script type="text/template" id="tpl-route-search-found">
 	<div id="routeFoundAlert">
@@ -95,15 +115,18 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Vehicle</th>
-					<th>State</th>
+					<th>Class</th>
+					<th>Name</th>
 					<th>Type</th>
+					<th>State</th>
+					<th>Current City</th>
 				</tr>
 			</thead>
 		</table>
 
 		<div class="btn-group pull-left">
-			<button id="addVehicle" class="btn btn-primary">Add Vehicle</button>
+			<button id="addTruck" class="btn btn-primary">Add Truck</button>
+			<button id="addTrailer" class="btn btn-primary">Add Trailer</button>
 		</div>
 		<div class="clear"></div>
 	</form>

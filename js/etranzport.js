@@ -8,6 +8,10 @@ window.et = _.extend(window.et || {}, {
 
 	map: null,
 
+	vehicleClass: {
+		TRUCK: 0,
+		TRAILER: 1
+	},
 	truckStates: {
 		OFFDUTY: 0,
 		DRIVING: 1,
@@ -58,7 +62,11 @@ window.et = _.extend(window.et || {}, {
 		defaults: {
 			"id": null,
 			"name": "",
-			"state": 0
+			"state": 0,
+			"type": "",
+			"vclass": 0,
+			"city": 0,
+			"city_name": ""
 		}
 	});
 
@@ -214,7 +222,7 @@ window.et = _.extend(window.et || {}, {
 	    	var data = this.model.toJSON();
 
 	    	data = _.extend(data, {
-	    		state: this.getVehicleStateString(data.state),
+	    		stateTitle: this.getVehicleStateString(data.state),
 	    		stateCss: this.getVehicleStateCss(data.state),
 	    	});
 
@@ -310,20 +318,21 @@ window.et = _.extend(window.et || {}, {
         }
     });
 
-	window.VehicleAdd = Backbone.View.extend({
-		template: _.template($('#tpl-vehicle-add').html()),
+	window.TruckAdd = Backbone.View.extend({
+		template: _.template($('#tpl-truck-add').html()),
 
 		render: function(eventName) {
 			var el = $(this.el);
 
 			el.html(this.template());
 
-			var select2format = function(vehicle) {
+			var vehicleTypeFormat = function(vehicle) {
 				return vehicle.text + ' (' + vehicle.id + ')'
 			};
 
+			// vehicle type select2 box
 			el.find("#vehicle-type").select2({
-				placeholder: "Select Vehicle Type",
+				placeholder: "Select Truck Type",
 				minimumResultsForSearch: 9999,
 				ajax: {
 					url: "api/data/vehicle_types",
@@ -344,8 +353,152 @@ window.et = _.extend(window.et || {}, {
 						return results;
 					}
 				},
-				formatResult: select2format,
-				formatSelection: select2format
+				formatResult: vehicleTypeFormat,
+				formatSelection: vehicleTypeFormat
+			});
+
+			var trailerFormat = function(trailer) {
+				var fmt = trailer.text;
+
+				if (trailer.sizeft) {
+					fmt += ", " + trailer.sizeft + "ft";
+				}
+
+				fmt += ' (' + trailer.id + ')';
+
+				return fmt;
+			}
+
+			// vehicle trailer types select2 box
+			el.find("#vehicle-trailers").select2({
+				placeholder: "Add Trailer",
+				//multiple: true,
+				minimumResultsForSearch: 9999,
+				ajax: {
+					url: "api/data/trailers",
+					dataType: "json",
+					data: function(term, page) {
+						return {};
+					},
+					results: function(data, page) {
+						var results =  {
+							results: data.map(function(trailer) {
+								return {
+									id: trailer.code,
+									text: trailer.name,
+									sizeft: trailer.sizeft
+								};
+							}),
+							more: false
+						};
+						return results;
+					}
+				},
+				formatResult: trailerFormat,
+				formatSelection: trailerFormat				
+			});
+
+			// start city select2 box
+			el.find("#vehicle-city").select2({
+				placeholder: "Select Start City",
+				minimumResultsForSearch: 9999,
+				ajax: {
+					url: "api/cities",
+					dataType: "json",
+					data: function(term, page) {
+						return {};
+					},
+					results: function(data, page) {
+						var results =  {
+							results: data.map(function(city) {
+								return {
+									id: city.id,
+									text: city.name
+								};
+							}),
+							more: false
+						};
+						return results;
+					}
+				}
+			});
+
+			return this;
+		}
+	});
+
+
+	window.TrailerAdd = Backbone.View.extend({
+		template: _.template($('#tpl-trailer-add').html()),
+
+		render: function(eventName) {
+			var el = $(this.el);
+
+			el.html(this.template());
+
+			var trailerFormat = function(trailer) {
+				var fmt = trailer.text;
+
+				if (trailer.sizeft) {
+					fmt += ", " + trailer.sizeft + "ft";
+				}
+
+				fmt += ' (' + trailer.id + ')';
+
+				return fmt;
+			}
+
+			// trailers select2 box
+			el.find("#vehicle-trailers").select2({
+				placeholder: "Add Trailer",
+				minimumResultsForSearch: 9999,
+				ajax: {
+					url: "api/data/trailers",
+					dataType: "json",
+					data: function(term, page) {
+						return {};
+					},
+					results: function(data, page) {
+						var results =  {
+							results: data.map(function(trailer) {
+								return {
+									id: trailer.code,
+									text: trailer.name,
+									sizeft: trailer.sizeft
+								};
+							}),
+							more: false
+						};
+						return results;
+					}
+				},
+				formatResult: trailerFormat,
+				formatSelection: trailerFormat				
+			});
+
+			// start city select2 box
+			el.find("#vehicle-city").select2({
+				placeholder: "Select Start City",
+				minimumResultsForSearch: 9999,
+				ajax: {
+					url: "api/cities",
+					dataType: "json",
+					data: function(term, page) {
+						return {};
+					},
+					results: function(data, page) {
+						var results =  {
+							results: data.map(function(city) {
+								return {
+									id: city.id,
+									text: city.name
+								};
+							}),
+							more: false
+						};
+						return results;
+					}
+				}
 			});
 
 			return this;
@@ -354,28 +507,43 @@ window.et = _.extend(window.et || {}, {
 
 	window.VehicleAddView = Backbone.View.extend({
 		events: {
-			"click #addVehicle": "addVehicle"
+			"click #addTruck": function(e) {
+				this.addVehicle(e, et.vehicleClass.TRUCK);
+			},
+			"click #addTrailer": function(e) {
+				this.addVehicle(e, et.vehicleClass.TRAILER);				
+			}
 		},
 
-		addVehicle: function(e) {
+		addVehicle: function(e, vehicleClass) {
 			e.preventDefault();
 
-			var addVehicle = new VehicleAdd({model: new Backbone.Model({})});
+			var addVehicle = (vehicleClass == et.vehicleClass.TRUCK) ? new TruckAdd({model: new Backbone.Model({})}) : new TrailerAdd({model: new Backbone.Model({})});;
+			var typeString = vehicleClass == et.vehicleClass.TRUCK ? "Truck" : "Trailer";
 
 			var modal = new Backbone.BootstrapModal({
-				title: "Add Vehicle to Fleet",
+				title: "Add " + typeString + " to Fleet",
 				content: addVehicle,
-				okText: "Add Vehicle"
+				okText: "Add " + typeString
 			}).open();
 
 			modal.on("ok", function() {
-				var name = this.$el.find("#vehicleName").val(),
+				var name = "", type, city;
+
+				if (vehicleClass == et.vehicleClass.TRUCK) {
+					name = this.$el.find("#vehicle-name").val(),
 					type = this.$el.find("#vehicle-type").select2("val");
+				} else if (vehicleClass == et.vehicleClass.TRAILER) {
+					type = this.$el.find("#vehicle-trailers").select2("val");
+				}
+				city = this.$el.find("#vehicle-city").select2("val");
 
 				var vehicle = new Vehicle();
 				vehicle.set({
 					name: name,
-					type: type
+					type: type,
+					vclass: vehicleClass,
+					city: city
 				});
 
 				vehicle.save(null, {
