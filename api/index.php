@@ -216,16 +216,19 @@ $app->map('/trips/:id', function($id) {
 
 // Vehicles
 
-$app->get('/vehicles', function() {
+$app->get('/vehicles(/:vclass)', function($vclass = VehicleClass::BOTH) {
     global $app;
 
     $vehicles = ORM::for_table('vehicle')
         ->select('vehicle.*')
         ->select('city.name', 'city_name')
-        ->join('city', array('city.id', '=', 'vehicle.city'))
-        ->find_array();
+        ->join('city', array('city.id', '=', 'vehicle.city'));
 
-    ResponseOk($vehicles);
+    if ($vclass != VehicleClass::BOTH) {
+        $vehicles->where('vclass', $vclass);
+    }
+
+    ResponseOk($vehicles->find_array());
 });
 
 $app->post('/vehicles', function() {

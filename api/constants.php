@@ -15,6 +15,7 @@ final class TripState {
 }
 
 final class VehicleClass {
+    const BOTH      = -1;
     const TRUCK     = 0;
     const TRAILER   = 1;
 }

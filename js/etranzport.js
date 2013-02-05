@@ -578,9 +578,11 @@ window.et = _.extend(window.et || {}, {
 	    	// populate vehicle list
 	    	var list = $(this.el).find("#selectVehicle");
             et.vehicleList.each(function(vehicle) {
-				list.append(
-					'<li data-id="' + vehicle.get('id') + '"><a href="#">' + vehicle.get('name') + '</a></li>'
-				);
+            	if (vehicle.get('vclass') == et.vehicleClass.TRUCK) {
+					list.append(
+						'<li data-id="' + vehicle.get('id') + '"><a href="#">' + vehicle.get('name') + '</a></li>'
+					);
+            	}
             });
 
 			return this;
