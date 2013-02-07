@@ -421,10 +421,25 @@ $app->delete('/routes/:origin/:destination', function($origin, $destination) {
     $route->delete();
 });
 
-$app->get('/routes/:id', function($id) {
+$app->get('/routes/:id(/:verbosity)', function($id, $verbosity = "full") {
+    global $app;
+
+    $select = 'SELECT route.id, :id AS origin, city.id AS destination, city.name AS destination_name, route.distance ';
+
+    // unless verbosity is something else than "full", include polyline in resposne
+    if ($verbosity == "full") {
+        $select .= ', route.polyline ';
+    }
+
     $routes =
         ORM::for_table('route')
-            ->raw_query('SELECT route.id, :id AS origin, city.id AS destination, city.name AS destination_name, route.distance, route.polyline FROM route LEFT JOIN city ON city.id=IF(origin = :id, destination, origin) WHERE route.origin = :id OR route.destination = :id', array(':id' => $id))
+            ->raw_query(
+                $select.
+                'FROM route '.
+                'JOIN city '.
+                    'ON city.id=IF(origin = :id, destination, origin) '.
+                    'WHERE route.origin = :id OR route.destination = :id', array(':id' => $id)
+                )
             ->find_array();
 
     ResponseOk($routes);
