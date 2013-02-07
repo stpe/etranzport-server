@@ -62,7 +62,8 @@ body {
 	width: 100px;
 }
 
-.table td.cell-actions {
+.table td.cell-actions,
+.table td.cell-haul {
 	text-align: right;
 }
 

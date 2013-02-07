@@ -45,6 +45,11 @@
 	<td class="cell-vehicle-type"><span class="badge badge-inverse"><%= type %></span></td>
 	<td class="cell-state"><span class="label <%= stateCss %>"><%= stateTitle %></span></td>
 	<td class="cell-city"><span class="<%= parseInt(state) != 0 ? 'vehicle-enroute' : '' %>"><%= city_name %></span></td>
+	<td class="cell-haul">
+		<% if (vclass == 0 && state == 0) { %>
+			<button class="btn btn-mini btn-primary doHaul" type="button">Do Haul</button>
+		<% } %>
+	</td>
 	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
 </script>
 
@@ -82,27 +87,37 @@
 	</div>
 </script>
 
-
-<script type="text/template" id="tpl-route-search-found">
-	<div id="routeFoundAlert">
-		<p>
-			From <strong id="add-origin"><%= origin %></strong> to <strong id="add-destination"><%= destination %></strong>.<br>
-			Distance: <strong id="add-distance"><%= distance %></strong>.
-		</p>
-		<div class="btn-group">
-			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-				<span id="select-vehicle-label" class="dropdown-label">Vehicle</span>
-				<span class="caret"></span>
-			</a>
-			<ul class="dropdown-menu change-on-select" id="selectVehicle">
-			</ul>
-		</div>
-		<p>
-			<label for="setTruckSpeed">Truck Speed:</label>
-			<div class="input-append">
-				<input type="text" class="input-small" id="setVehicleSpeed" value="55"><span class="add-on">mph</span>
+<script type="text/template" id="tpl-dohaul">
+	<div id="doHaulAlert" class="form-horizontal">
+		<div class="control-group">
+			<label class="control-label">Current Location</label>
+			<div class="controls">
+				<span class="input-large uneditable-input"><%= origin %></span>
 			</div>
-		</p>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Vehicle</label>
+			<div class="controls">
+				<span class="input-large uneditable-input"><%= name %></span>
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="haul-destination-city">Destination</label>
+			<div class="controls">
+				<input type="text" class="input-large" id="haul-destination-city" name="haul-destination-city">
+			</div>
+		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="setVehicleSpeed">Speed</label>
+			<div class="controls">
+				<div class="input-append">
+					<input type="text" class="input-small" id="setVehicleSpeed" value="55"><span class="add-on">mph</span>
+				</div>
+			</div>
+		</div>
 	</div>
 </script>
 
@@ -151,33 +166,6 @@
 			</thead>
 		</table>
 
-		<div class="btn-group pull-left">
-			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-				<span id="origin-city-label" class="dropdown-label">Origin</span>
-				<span class="caret"></span>
-			</a>
-			<ul class="dropdown-menu change-on-select" id="origin-city">
-			</ul>
-		</div>
-
-		<div class="btn-group pull-left">
-			<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-				<span id="destination-city-label" class="dropdown-label">Destination</span>
-				<span class="caret"></span>
-			</a>
-			<ul class="dropdown-menu change-on-select" id="destination-city">
-			</ul>
-		</div>
-
-		<div class="btn-group pull-left">
-			<button id="findRouteButton" class="btn btn-primary">Do Haul</button>
-		</div>
-
-		<div class="btn-group pull-left">
-			<span id="findRouteProgress" class="muted">Trying to figure out a route...</span>
-		</div>
-
-		<div class="clear"></div>
 	</form>
 
 	<div id="alert"></div>

@@ -210,12 +210,99 @@ window.et = _.extend(window.et || {}, {
 	    },
 
 	    events: {
-	    	"click .removeVehicle": "remove"
+	    	"click .removeVehicle": "remove",
+	    	"click .doHaul": "doHaul"
 	    },
 
 	    remove: function() {
 	    	this.$el.remove();
 	    	this.model.destroy();
+	    },
+
+	    doHaul: function() {
+	    	var that = this;
+
+			var haulView = new DoHaulView({model: new Backbone.Model({
+				origin: this.model.get("city_name"),
+				name: this.model.get("name")
+			})});
+
+			var modal = new Backbone.BootstrapModal({
+				title: "Do Haul",
+				content: haulView,
+				okText: "Haul it!"
+			}).open();
+
+			// start city select2 box
+			$("#haul-destination-city").select2({
+				placeholder: "Select Destination City",
+				minimumResultsForSearch: 9999,
+				ajax: {
+					url: "api/routes/" + this.model.get("city") + "/short",
+					dataType: "json",
+					data: function(term, page) {
+						return {};
+					},
+					results: function(data, page) {
+						var results =  {
+							results: data.map(function(city) {
+								return {
+									id: city.destination,
+									text: city.destination_name + " (" + that.getDistanceString(city.distance) + ")"
+								};
+							}),
+							more: false
+						};
+						return results;
+					}
+				}
+			});
+
+			modal.on("ok", function() {
+				var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
+				var vehicle = that.model.get("id");
+
+				var route = new Route({
+					origin: that.model.get("city"),
+					destination: $("#haul-destination-city").select2("val")
+				});
+
+				route.fetch({
+					success: function(model, response, options) {
+						var trip = new Trip();
+						trip.set({
+							origin: route.get("origin"),
+							origin_name: route.get("origin_name"),
+							destination: route.get("destination"),
+							destination_name: route.get("destination_name"),
+							distance: route.get("distance"),
+							duration: route.get("distance") / speed,
+							timefactor: et.timeFactor,
+							speed: speed,
+							state: et.truckStates.DRIVING,
+							route: route,
+							vehicle: vehicle
+						});
+
+						trip.save(null, {
+							success: function(model, response) {
+								Backbone.EventBroker.trigger("trip:add", model);
+							},
+							error: function(model, response) {
+								alert('Failed to save!');
+							}
+						});
+
+						modal.remove();
+					},
+					error: function(model, xhr, options) {
+						alert("Could not find route!");
+					}
+				});
+			});
+			modal.on("cancel", function() {
+				modal.remove();
+			});
 	    },
 	 
 	    render: function(eventName) {
@@ -302,19 +389,6 @@ window.et = _.extend(window.et || {}, {
         render: function(){
             $(this.el).attr('data-id', this.model.get('id')).html('<a href="#">' + this.model.get('name') + '</a>');
             return this;
-        }
-    });
-
-    window.CitiesView = Backbone.View.extend({
-        initialize: function() {
-            this.collection.on("reset", this.render, this);
-        },
-
-        render: function() {
-        	var list = $(this.el);
-            this.collection.each(function(city) {
-				list.append(new CityView({ model: city }).render().el);
-            });
         }
     });
 
@@ -563,10 +637,10 @@ window.et = _.extend(window.et || {}, {
 		}
 	});
 
-	window.RouteSearchFound = Backbone.View.extend({
+	window.DoHaulView = Backbone.View.extend({
 		el: $('#alert'),
 
-		template: _.template($('#tpl-route-search-found').html()),
+		template: _.template($('#tpl-dohaul').html()),
 
 		initialize: function() {
 			this.render();
@@ -575,99 +649,7 @@ window.et = _.extend(window.et || {}, {
 		render: function(eventName) {
 			$(this.el).html(this.template(this.model.toJSON()));
 
-	    	// populate vehicle list
-	    	var list = $(this.el).find("#selectVehicle");
-            et.vehicleList.each(function(vehicle) {
-            	if (vehicle.get('vclass') == et.vehicleClass.TRUCK) {
-					list.append(
-						'<li data-id="' + vehicle.get('id') + '"><a href="#">' + vehicle.get('name') + '</a></li>'
-					);
-            	}
-            });
-
 			return this;
-		}
-	});
-
-	window.RouteSearchView = Backbone.View.extend({
-		events: {
-			"click #findRouteButton": "findRoute"
-		},
-
-		findRoute: function(e) {
-			e.preventDefault();
-
-			var that = this;
-
-			var route = new Route({
-				origin: $("#origin-city-label").attr("data-id"),
-				destination: $("#destination-city-label").attr("data-id")
-			});
-
-			route.on("change", function() {
-				var currentRoute = this;
-
-				var alertFound = new RouteSearchFound({model: new Backbone.Model({
-					origin: this.get("origin_name"),
-					destination: this.get("destination_name"),
-					distance: that.getDistanceString(this.get("distance"))
-				})});
-
-				var modal = new Backbone.BootstrapModal({
-					title: "Route found!",
-					content: alertFound,
-					okText: "Add Route"
-				}).open();
-
-	            // to prevent dropdown box to end up hidden below footer
-	            $("#routeFoundAlert").parents(".modal-body").css("overflow-y", "visible");
-
-				modal.on("ok", function() {
-					var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
-					var route = currentRoute;
-					var vehicle = this.$el.find('#select-vehicle-label').attr("data-id");
-
-					var trip = new Trip();
-					trip.set({
-						origin: route.get("origin"),
-						origin_name: route.get("origin_name"),
-						destination: route.get("destination"),
-						destination_name: route.get("destination_name"),
-						distance: route.get("distance"),
-						duration: route.get("distance") / speed,
-						timefactor: et.timeFactor,
-						speed: speed,
-						state: et.truckStates.DRIVING,
-						route: route,
-						vehicle: vehicle
-					});
-
-					trip.save(null, {
-						success: function(model, response) {
-							Backbone.EventBroker.trigger("trip:add", model);
-						},
-						error: function(model, response) {
-							alert('Failed to save!');
-						}
-					});
-
-					alertFound.remove();
-				});
-				modal.on("cancel", function() {
-					alertFound.remove();
-				});
-
-			}, route);
-
-			route.fetch({
-				error: function(model, response) {
-					var modal = new Backbone.BootstrapModal({
-						title: "Could not find route",
-						content: "Fetching route failed. Probably doesn't exist in database.",
-						allowCancel: false
-					}).open();
-				}
-			});
 		}
 	});
 
@@ -855,11 +837,6 @@ window.et = _.extend(window.et || {}, {
 	    },
 	 
 	    main: function () {
-	    	this.cityList = new CityCollection();
-	    	this.originCityListView = new CitiesView({el: $("#origin-city"), collection: this.cityList});
-	    	this.destinationCityListView = new CitiesView({el: $("#destination-city"), collection: this.cityList});
-	    	this.cityList.fetch();
-
 	    	this.vehicleList = new VehicleCollection();
 	    	this.vehicleListView = new VehicleListView({model: this.vehicleList});
 	    	this.vehicleList.fetch();
@@ -873,8 +850,6 @@ window.et = _.extend(window.et || {}, {
 
 	        this.map = new MapView({el: $('#map'), vehicles: this.tripList});
 	        et.mapView = this.map;
-
-	        this.routeSearch = new RouteSearchView({ el: $("#route-search") });
 
 	        this.vehicleAdd = new VehicleAddView({ el: $("#vehicle-form") });
 
