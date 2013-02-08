@@ -286,6 +286,11 @@ window.et = _.extend(window.et || {}, {
 
 						trip.save(null, {
 							success: function(model, response) {
+								that.model.set("city", route.get("destination"));
+								that.model.set("city_name", route.get("destination_name"));
+								that.model.set("state", et.truckStates.DRIVING);
+								//that.render();
+
 								Backbone.EventBroker.trigger("trip:add", model);
 							},
 							error: function(model, response) {
