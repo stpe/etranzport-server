@@ -77,6 +77,11 @@ window.et = _.extend(window.et || {}, {
 			Backbone.EventBroker.on("vehicle:add", function(vehicle) {
 				this.add(vehicle);
 			}, this);
+
+			Backbone.EventBroker.on("vehicle:tripcompleted", function(id) {
+				var vehicle = this.get(id);
+				vehicle.set("state", et.truckStates.OFFDUTY);
+			}, this);
 	    },
 
 		url: "api/vehicles"
@@ -122,6 +127,8 @@ window.et = _.extend(window.et || {}, {
 
 				// update state to completed
 				trip.set("state", et.tripStates.COMPLETED);
+
+				Backbone.EventBroker.trigger("vehicle:tripcompleted", trip.get("vehicle"));
 
 				// clear out uneccessary stuff to send to server // todo: override sync (best?) to save only updated state
 				trip.unset("map", { silent: true });
@@ -289,7 +296,6 @@ window.et = _.extend(window.et || {}, {
 								that.model.set("city", route.get("destination"));
 								that.model.set("city_name", route.get("destination_name"));
 								that.model.set("state", et.truckStates.DRIVING);
-								//that.render();
 
 								Backbone.EventBroker.trigger("trip:add", model);
 							},
