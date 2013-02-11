@@ -735,7 +735,8 @@ window.et = _.extend(window.et || {}, {
 
 			// add vehicle marker
 			var marker = new L.Marker(route[current], {icon: new et.truckIcon()});
-			map.addLayer(marker);
+			marker.addTo(map)
+				.bindPopup("Vehicle ID: " + trip.get("vehicle"));
 
 			trip.get("map").set({
 				marker: marker,
