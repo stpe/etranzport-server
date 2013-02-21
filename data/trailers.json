@@ -46,35 +46,43 @@
     },
     {
         "name": "Step Deck",
-        "code": "SD"
+        "code": "SD",
+		"sizeft": 45
     },
     {
         "name": "Car Hauler",
-        "code": "CH"
+        "code": "CH",
+		"sizeft": 53
     },
     {
         "name": "Lowboy",
-        "code": "LB"
+        "code": "LB",
+		"sizeft": 48
     },
     {
         "name": "Double Drop",
-        "code": "DD"
+        "code": "DD",
+		"sizeft": 53
     },
     {
         "name": "Conestogas",
-        "code": "CO"
+        "code": "CO",
+		"sizeft": 48
     },
     {
         "name": "Container",
-        "code": "CT"
+        "code": "CT",
+		"sizeft": 40
     },
     {
         "name": "Container Reefer",
-        "code": "CTR"
+        "code": "CTR",
+		"sizeft": 40
     },
     {
         "name": "Wagon",
-        "code": "WG"
+        "code": "WG",
+		"sizeft": 45
     },
     {
         "name": "Cattle",
@@ -93,19 +101,23 @@
     },
     {
         "name": "Tank (Haz)",
-        "code": "TH"
+        "code": "TH",
+		"sizeft": 45
     },
     {
         "name": "Tank (D) Dairy",
-        "code": "TD"
+        "code": "TD",
+		"sizeft": 48
     },
     {
         "name": "Tank (G)",
-        "code": "TG"
+        "code": "TG",
+		"sizeft": 48
     },
     {
         "name": "Tank (W) Water",
-        "code": "TW"
+        "code": "TW",
+		"sizeft": 45
     },
     {
         "name": "Hopper (Plastic)",
@@ -124,19 +136,23 @@
     },
     {
         "name": "Cylinder (Propane)",
-        "code": "CY"
+        "code": "CY",
+		"sizeft": 45
     },
     {
         "name": "Dump (Tilt)",
-        "code": "DT"
+        "code": "DT",
+		"sizeft": 45
     },
     {
         "name": "Dump (Belly)",
-        "code": "DB"
+        "code": "DB",
+		"sizeft": 42
     },
     {
         "name": "Vacuum",
-        "code": "VA"
+        "code": "VA",
+		"sizeft": 42
     },
     {
         "name": "Boat Hauler",
@@ -150,6 +166,7 @@
     },
     {
         "name": "Gooseneck",
-        "code": "GN"
+        "code": "GN",
+		"sizeft": 49
     }
 ]
