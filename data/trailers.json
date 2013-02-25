@@ -163,10 +163,5 @@
         "name": "Moving Van",
         "code": "MV",
         "sizeft": 48
-    },
-    {
-        "name": "Gooseneck",
-        "code": "GN",
-		"sizeft": 49
     }
 ]
