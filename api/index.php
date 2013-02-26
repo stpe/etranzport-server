@@ -168,6 +168,7 @@ $app->post('/trips', function() {
     $trip->speed = $data['speed'];
     $trip->startts = time();
     $trip->vehicle = $data['vehicle'];
+    $trip->attr = $data['attr'];
 
     $trip->save();
 
@@ -181,6 +182,16 @@ $app->post('/trips', function() {
     $vehicle->city = $trip->destination;
     $vehicle->state = TruckState::DRIVING;
     $vehicle->save();
+
+    // connect trailer(s) to vehicle
+    $trailers = json_decode($data['attr'], true)['trailers'];
+    if ($trailers) {
+        $trailers_str = implode(",", $trailers);
+
+        ORM::raw_execute(
+            'UPDATE vehicle SET connected = ? WHERE id IN ('. $trailers_str .')', array($data['vehicle'])
+        );
+    }
 
     ResponseOk($result);
 });
@@ -207,6 +218,11 @@ $app->map('/trips/:id', function($id) {
     $vehicle = ORM::for_table('vehicle')->find_one($trip->vehicle);
     $vehicle->state = TruckState::OFFDUTY;
     $vehicle->save();
+
+    // disconnect trailers connected to vehicle
+    ORM::raw_execute(
+        'UPDATE vehicle SET connected = NULL WHERE connected = ?', array($vehicle->id)
+    );
 
     // return result
     $result = $trip->as_array();

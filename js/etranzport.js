@@ -105,11 +105,35 @@ window.et = _.extend(window.et || {}, {
 			"map": null,
 			"route": null,
 			"vehicle": null,
-			"vehicle_name": ""
+			"vehicle_name": "",
+			"attr": "{}"
 		},
 
 		initialize: function() {
 	    	this.set('map', new VehicleMap());
+		},
+
+	    save: function(attrs, options) {
+	        options || (options = {});
+
+	        // filter out data not needed in backend
+	        var data = this.toJSON();
+	        delete data.route;
+	        delete data.map;
+
+	        options.data = JSON.stringify(data);
+
+	        Backbone.Model.prototype.save.call(this, attrs, options);
+	    },
+
+	    setTripAttributes: function(key, value) {
+			var current = this.getTripAttributes();
+			current[key] = value;
+			this.set("attr", JSON.stringify(current));
+	    },
+
+	    getTripAttributes: function() {
+			return JSON.parse(this.get("attr"));
 		}
 	});
 
@@ -245,7 +269,7 @@ window.et = _.extend(window.et || {}, {
 				placeholder: "Select Destination City",
 				minimumResultsForSearch: 9999,
 				ajax: {
-					url: "api/routes/" + this.model.get("city") + "/short",
+					url: "api/routes/" + that.model.get("city") + "/short",
 					dataType: "json",
 					data: function(term, page) {
 						return {};
@@ -265,6 +289,34 @@ window.et = _.extend(window.et || {}, {
 				}
 			});
 
+			$("#haul-trailer").select2({
+				placeholder: "Select Trailers",
+				minimumResultsForSearch: 9999,
+				multiple: true,
+				query: function(query) {
+					var trailers = et.vehicleList.filter(
+						function(vehicle) {
+							return vehicle.get("vclass") == et.vehicleClass.TRAILER
+								&& vehicle.get("city") == that.model.get("city")
+								&& vehicle.get("state") == et.truckStates.OFFDUTY;
+						}
+					);
+
+					var results = {
+						results:
+							trailers.map(function(trailer) {
+								return {
+									id: trailer.get("id"),
+									text: trailer.get("type")
+								}
+							}),
+						more: false
+					};
+
+					query.callback(results);
+				}
+			});
+
 			modal.on("ok", function() {
 				var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
 				var vehicle = that.model.get("id");
@@ -276,6 +328,8 @@ window.et = _.extend(window.et || {}, {
 
 				route.fetch({
 					success: function(model, response, options) {
+						var trailers = $("#haul-trailer").select2("val");
+
 						var trip = new Trip();
 						trip.set({
 							origin: route.get("origin"),
@@ -291,7 +345,9 @@ window.et = _.extend(window.et || {}, {
 							vehicle: vehicle
 						});
 
-						trip.save(null, {
+						trip.setTripAttributes("trailers", trailers);
+
+						trip.save({}, {
 							success: function(model, response) {
 								that.model.set("city", route.get("destination"));
 								that.model.set("city_name", route.get("destination_name"));
@@ -852,6 +908,7 @@ window.et = _.extend(window.et || {}, {
 	    	this.vehicleList = new VehicleCollection();
 	    	this.vehicleListView = new VehicleListView({model: this.vehicleList});
 	    	this.vehicleList.fetch();
+	    	et.vehicleList = this.vehicleList;
 	    	$("#vehicles").append(this.vehicleListView.render().el);
 	    	et.vehicleList = this.vehicleList;
 

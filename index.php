@@ -118,6 +118,14 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="control-group">
+			<label class="control-label" for="haul-trailer">Trailers</label>
+			<div class="controls">
+				<input type="text" class="input-large" id="haul-trailer" name="haul-trailer">
+			</div>
+		</div>
+
 	</div>
 </script>
 
