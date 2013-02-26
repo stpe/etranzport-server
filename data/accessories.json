@@ -1,6 +1,54 @@
 [
-    {
-        "name:" "Swinging Beef Rack",
+{
+        "name": "Flags",
+        "code": "FLAGS"
+    },
+{
+        "name": "Swinging Beef Rack ",
         "code": "SWBEEFR"
+    },
+{
+        "name": "Forklift/license",
+        "code": "FORKLIC"
+    },
+{
+        "name": "Pallet Jack",
+        "code": "PALLJK"
+    },
+{
+        "name": "Flatbed Tarp",
+        "code": "TARPFLAT"
+    },
+{
+        "name": "Dump Trail Tarp",
+        "code": "TARPDUMP"
+    },
+{
+        "name": "Wagon Tarp",
+        "code": "TARPWAG"
+    },
+{
+        "name": "Animal Crates",
+        "code": "ANCRATES"
+    },
+{
+        "name": "Corner Protectors",
+        "code": "CORNPROT"
+    },
+{
+        "name": "Deck Wheel Ramps",
+        "code": "DWRAMPS"
+    },
+{
+        "name": "Car Rig",
+        "code": "CARRIG"
+    },
+{
+        "name": "Furniture Pads",
+        "code": "FURNPAD"
+    },
+{
+        "name": "Tarp Roller Kit",
+        "code": "TARPROLL"
     }
 ]
