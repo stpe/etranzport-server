@@ -66,7 +66,8 @@ window.et = _.extend(window.et || {}, {
 			"type": "",
 			"vclass": 0,
 			"city": 0,
-			"city_name": ""
+			"city_name": "",
+			"connected": null
 		}
 	});
 
@@ -81,6 +82,23 @@ window.et = _.extend(window.et || {}, {
 			Backbone.EventBroker.on("vehicle:tripcompleted", function(id) {
 				var vehicle = this.get(id);
 				vehicle.set("state", et.truckStates.OFFDUTY);
+
+				if (vehicle.get("vclass") == et.vehicleClass.TRAILER) {
+					vehicle.set("connected", null);
+				}
+			}, this);
+
+			Backbone.EventBroker.on("vehicle:begintrip", function(data) {
+				var vehicle = this.get(data.vehicle),
+					trip = data.trip;
+
+				vehicle.set("city", trip.get("destination"));
+				vehicle.set("city_name", trip.get("destination_name"));
+				vehicle.set("state", et.truckStates.DRIVING);
+
+				if (vehicle.get("vclass") == et.vehicleClass.TRAILER) {
+					vehicle.set("connected", trip.vehicle);
+				}
 			}, this);
 	    },
 
@@ -154,9 +172,13 @@ window.et = _.extend(window.et || {}, {
 
 				Backbone.EventBroker.trigger("vehicle:tripcompleted", trip.get("vehicle"));
 
-				// clear out uneccessary stuff to send to server // todo: override sync (best?) to save only updated state
-				trip.unset("map", { silent: true });
-				trip.unset("route", { silent: true });
+				// update trailers
+				var attr = trip.getTripAttributes();
+				if (attr.trailers) {
+					for (var i = 0; i < attr.trailers.length; i++) {
+						Backbone.EventBroker.trigger("vehicle:tripcompleted", attr.trailers[i]);
+					}					
+				}
 
 				// save
 				trip.save(null, {
@@ -349,9 +371,19 @@ window.et = _.extend(window.et || {}, {
 
 						trip.save({}, {
 							success: function(model, response) {
-								that.model.set("city", route.get("destination"));
-								that.model.set("city_name", route.get("destination_name"));
-								that.model.set("state", et.truckStates.DRIVING);
+								// update truck
+								Backbone.EventBroker.trigger("vehicle:begintrip", {
+									vehicle: vehicle,
+									trip: trip
+								});								
+
+								// update trailers
+								for (var i = 0; i < trailers.length; i++) {
+									Backbone.EventBroker.trigger("vehicle:begintrip", {
+										vehicle: trailers[i],
+										trip: trip
+									});								
+								}
 
 								Backbone.EventBroker.trigger("trip:add", model);
 							},

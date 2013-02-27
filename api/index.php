@@ -189,7 +189,7 @@ $app->post('/trips', function() {
         $trailers_str = implode(",", $trailers);
 
         ORM::raw_execute(
-            'UPDATE vehicle SET connected = ? WHERE id IN ('. $trailers_str .')', array($data['vehicle'])
+            'UPDATE vehicle SET connected = ?, city = ?, state = ? WHERE id IN ('. $trailers_str .')', array($data['vehicle'], $data['destination'], TruckState::DRIVING)
         );
     }
 
@@ -221,7 +221,7 @@ $app->map('/trips/:id', function($id) {
 
     // disconnect trailers connected to vehicle
     ORM::raw_execute(
-        'UPDATE vehicle SET connected = NULL WHERE connected = ?', array($vehicle->id)
+        'UPDATE vehicle SET connected = NULL, state = ? WHERE connected = ?', array(TruckState::OFFDUTY, $vehicle->id)
     );
 
     // return result
