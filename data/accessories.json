@@ -50,5 +50,13 @@
 {
         "name": "Tarp Roller Kit",
         "code": "TARPROLL"
+    },
+{
+        "name": "Single Axle Dolly",
+        "code": "DOLLYS"
+    },
+{
+        "name": "Tandem Axle Dolly",
+        "code": "DOLLYT"
     }
 ]
