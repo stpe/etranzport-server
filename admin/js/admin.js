@@ -274,8 +274,8 @@ window.et = _.extend(window.et || {}, {
 					success: function(model, response) {
 						that.$el.modal("hide");
 					},
-					error: function(model, response) {
-						alert('Failed to save!');
+					error: function(model, xhr, options) {
+						alert('Failed to save! Ohnoez!');
 					}
 				});
 			}
