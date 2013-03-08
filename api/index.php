@@ -459,7 +459,7 @@ $app->get('/routes/:id(/:verbosity)', function($id, $verbosity = "full") {
             ->find_array();
 
     ResponseOk($routes);
-});
+})->conditions(array('id' => '\d+'));
 
 // list of cities where there is no route to from given city
 $app->get('/routes/nonexisting/:id', function($id) {
@@ -469,7 +469,7 @@ $app->get('/routes/nonexisting/:id', function($id) {
             ->find_array();
 
     ResponseOk($routes);
-});
+})->conditions(array('id' => '\d+'));
 
 /**
  * Step 4: Run the Slim application
