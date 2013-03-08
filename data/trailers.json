@@ -161,7 +161,12 @@
     },
     {
         "name": "Moving Van",
-        "code": "MV",
+        "code": "MV4",
         "sizeft": 48
+    },
+    {
+        "name": "Moving Van",
+        "code": "MV5",
+        "sizeft": 53
     }
 ]
