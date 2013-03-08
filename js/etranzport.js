@@ -4,7 +4,7 @@ window.et = _.extend(window.et || {}, {
 
 	tick: 1000,
 	timeDelta: 0,	// seconds elapsed per update (calulated in init function)
-	timeFactor: 500,	// factor time is sped up with
+	timeFactor: 1,	// factor time is sped up with
 
 	map: null,
 
@@ -385,7 +385,7 @@ window.et = _.extend(window.et || {}, {
 									});								
 								}
 
-								Backbone.EventBroker.trigger("trip:add", model);
+								Backbone.EventBroker.trigger("trip:add", trip);
 							},
 							error: function(model, response) {
 								alert('Failed to save!');
