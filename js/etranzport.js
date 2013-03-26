@@ -347,11 +347,11 @@ window.et = _.extend(window.et || {}, {
 					origin: that.model.get("city"),
 					destination: $("#haul-destination-city").select2("val")
 				});
+				
+				var trailers = $("#haul-trailer").select2("val");
 
 				route.fetch({
 					success: function(model, response, options) {
-						var trailers = $("#haul-trailer").select2("val");
-
 						var trip = new Trip();
 						trip.set({
 							origin: route.get("origin"),

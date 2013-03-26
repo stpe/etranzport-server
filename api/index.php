@@ -196,9 +196,9 @@ $app->post('/trips', function() {
     $vehicle->save();
 
     // connect trailer(s) to vehicle
-    $trailers = json_decode($data['attr'], true)['trailers'];
-    if ($trailers) {
-        $trailers_str = implode(",", $trailers);
+    $attr = json_decode($data['attr'], true);
+    if ($attr['trailers']) {
+        $trailers_str = implode(",", $attr['trailers']);
 
         ORM::raw_execute(
             'UPDATE vehicle SET connected = ?, city = ?, state = ? WHERE id IN ('. $trailers_str .')', array($data['vehicle'], $data['destination'], TruckState::DRIVING)

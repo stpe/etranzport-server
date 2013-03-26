@@ -106,7 +106,7 @@
 		<div class="control-group">
 			<label class="control-label" for="haul-destination-city">Destination</label>
 			<div class="controls">
-				<input type="text" class="input-large" id="haul-destination-city" name="haul-destination-city">
+				<input type="hidden" class="input-large" id="haul-destination-city" name="haul-destination-city">
 			</div>
 		</div>
 
@@ -122,7 +122,7 @@
 		<div class="control-group">
 			<label class="control-label" for="haul-trailer">Trailers</label>
 			<div class="controls">
-				<input type="text" class="input-large" id="haul-trailer" name="haul-trailer">
+				<input type="hidden" class="input-large" id="haul-trailer" name="haul-trailer">
 			</div>
 		</div>
 
