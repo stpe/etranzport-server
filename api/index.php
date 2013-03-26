@@ -13,6 +13,8 @@ require '../libs/Slim/Slim.php';
 require_once('constants.php');
 require_once('data.php');
 
+require_once('middleware/CustomErrorMiddleware.php');
+
 require_once('../admin/api/google.php');
 require_once '../libs/Idiorm/idiorm.php';
 
@@ -37,6 +39,16 @@ ORM::configure('logging', true); // only for debugging; echo ORM::get_last_query
  * Refer to the online documentation for available settings.
  */
 $app = new \Slim\Slim();
+
+$app->add(new CustomErrorMiddleware());
+$app->config('debug', true);
+
+$log = $app->getLog();
+$log->setLevel(\Slim\Log::INFO);
+$log->setEnabled(true);
+
+$log->info("Instantiate...");
+$log->error("slim error");
 
 /**
  * Step 3: Define the Slim application routes
