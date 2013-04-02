@@ -769,7 +769,7 @@ window.et = _.extend(window.et || {}, {
 			map.setView(new L.LatLng(34.705, -97.73), 5);
 
 			// listen to added trips
-			Backbone.EventBroker.on("trip:add", this.vehicleAdd, this);
+			Backbone.EventBroker.on("trip:add", this.vehicleAdd, that);
 			Backbone.EventBroker.on("trip:addtomap", function(trip) {
 				// load route data if not exists
 				that.getRouteFromTrip(trip, that.vehicleAdd, that);
@@ -858,58 +858,62 @@ window.et = _.extend(window.et || {}, {
 				v = vehicle.get("map").toJSON();
 
 				if (vehicle.get("state") == et.tripStates.ENROUTE) {
-					activeVehiclesCount++;
+					if (v.marker != null) {
+						activeVehiclesCount++;
 
-					timeSinceLastUpdate = (now - v.updated) / 1000; // in ms
-					distanceSinceLastUpdate = timeSinceLastUpdate * vehicle.get("speed") * et.timeFactor + v.distanceLeftOver;
-
-					distanceToNextPoint = v.marker.getLatLng().distanceTo(v.route[v.current]);
-
-					prevCurrent = v.current;
-
-					len = v.route.length;
-
-					// move through as many points as possible
-					while (distanceSinceLastUpdate >= distanceToNextPoint && v.current < len) {
-						// add to traveled distance
-						v.traveled += distanceToNextPoint;
-
-						distanceSinceLastUpdate -= distanceToNextPoint;
-						v.distanceLeftOver = distanceSinceLastUpdate;
-
-						// update position
-						v.marker.setLatLng(v.route[v.current]);
-
-						// pan map to make car visible
-						if (v.follow && !et.map.getBounds().contains(v.marker.getLatLng())) {
-							et.map.panTo(v.marker.getLatLng());
-						}
-
-						v.current++;
-						if (v.current >= len) {
-							// reached destination
-							vehicle.set("state", et.tripStates.ARRIVED);
-							break;
-						}
+						timeSinceLastUpdate = (now - v.updated) / 1000; // in ms
+						distanceSinceLastUpdate = timeSinceLastUpdate * vehicle.get("speed") * et.timeFactor + v.distanceLeftOver;
 
 						distanceToNextPoint = v.marker.getLatLng().distanceTo(v.route[v.current]);
-					}
 
-					if (v.current > prevCurrent) {
-						// vehicle moved
-						vehicle.get("map").set({
-							current: v.current,
-							traveled: v.traveled,
-							distanceLeftOver: v.distanceLeftOver,
-							updated: now
-						});
+						prevCurrent = v.current;
 
-						vehicle.trigger("change");
-					}
+						len = v.route.length;
 
-					// trigger arrived event if vehicle has arrived
-					if (vehicle.get("state") == et.tripStates.ARRIVED) {
-			    		Backbone.EventBroker.trigger("trip:arrived", vehicle);
+						// move through as many points as possible
+						while (distanceSinceLastUpdate >= distanceToNextPoint && v.current < len) {
+							// add to traveled distance
+							v.traveled += distanceToNextPoint;
+
+							distanceSinceLastUpdate -= distanceToNextPoint;
+							v.distanceLeftOver = distanceSinceLastUpdate;
+
+							// update position
+							v.marker.setLatLng(v.route[v.current]);
+
+							// pan map to make car visible
+							if (v.follow && !et.map.getBounds().contains(v.marker.getLatLng())) {
+								et.map.panTo(v.marker.getLatLng());
+							}
+
+							v.current++;
+							if (v.current >= len) {
+								// reached destination
+								vehicle.set("state", et.tripStates.ARRIVED);
+								break;
+							}
+
+							distanceToNextPoint = v.marker.getLatLng().distanceTo(v.route[v.current]);
+						}
+
+						if (v.current > prevCurrent) {
+							// vehicle moved
+							vehicle.get("map").set({
+								current: v.current,
+								traveled: v.traveled,
+								distanceLeftOver: v.distanceLeftOver,
+								updated: now
+							});
+
+							vehicle.trigger("change");
+						}
+
+						// trigger arrived event if vehicle has arrived
+						if (vehicle.get("state") == et.tripStates.ARRIVED) {
+				    		Backbone.EventBroker.trigger("trip:arrived", vehicle);
+						}
+					} else {
+						console.log("Active trip, but no route data!", vehicle);
 					}
 				} else {
 					// non active route; ignore
