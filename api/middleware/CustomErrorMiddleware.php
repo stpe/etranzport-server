@@ -5,7 +5,7 @@ class CustomErrorMiddleware extends \Slim\Middleware
     {
         // Set new error output
         $env = $this->app->environment();
-        $env['slim.errors'] = fopen('/usr/local/var/log/slim_etranzport.log', 'w');
+        $env['slim.errors'] = fopen('slim_etranzport.log', 'w');
 
         // Call next middleware
         $this->next->call();
