@@ -100,6 +100,8 @@ window.et = _.extend(window.et || {}, {
 					vehicle.set("connected", trip.vehicle);
 				}
 			}, this);
+
+			this.fetch();
 	    },
 
 		url: "api/vehicles"
@@ -192,15 +194,15 @@ window.et = _.extend(window.et || {}, {
 				});
 			}, this);	    	
 
-			this.on("reset", this.afterFetch, this);
-	    },
-
-	    afterFetch: function() {
-	    	this.forEach(function(trip) {
-	    		if (trip.get('state') == et.tripStates.ENROUTE) {
-	    	  		Backbone.EventBroker.trigger("trip:addtomap", trip);
-	    		}
-	    	});
+			this.fetch({
+				success: function(collection, response, options) {
+			    	collection.forEach(function(trip) {
+			    		if (trip.get('state') == et.tripStates.ENROUTE) {
+			    	  		Backbone.EventBroker.trigger("trip:addtomap", trip);
+			    		}
+			    	});
+				}
+			});
 	    },
 
 	    url: "api/trips"
@@ -943,14 +945,11 @@ window.et = _.extend(window.et || {}, {
 	    main: function () {
 	    	this.vehicleList = new VehicleCollection();
 	    	this.vehicleListView = new VehicleListView({model: this.vehicleList});
-	    	this.vehicleList.fetch();
-	    	et.vehicleList = this.vehicleList;
 	    	$("#vehicles").append(this.vehicleListView.render().el);
 	    	et.vehicleList = this.vehicleList;
 
 	        this.tripList = new TripCollection();
 	        this.tripListView = new TripListView({model: this.tripList});
-	        this.tripList.fetch();
 	        $("#trips").append(this.tripListView.render().el);
 
 	        this.map = new MapView({el: $('#map'), vehicles: this.tripList});
