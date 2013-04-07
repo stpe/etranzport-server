@@ -341,6 +341,31 @@ window.et = _.extend(window.et || {}, {
 				}
 			});
 
+			$("#haul-cargo").select2({
+				placeholder: "Select Cargo",
+				minimumResultsForSearch: 9999,
+				multiple: true,
+				ajax: {
+					url: "api/data/cargo",
+					dataType: "json",
+					data: function(term, page) {
+						return {};
+					},
+					results: function(data, page) {
+						var results =  {
+							results: data.map(function(cargo) {
+								return {
+									id: cargo.name,
+									text: cargo.name
+								};
+							}),
+							more: false
+						};
+						return results;
+					}
+				}
+			});
+
 			modal.on("ok", function() {
 				var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
 				var vehicle = that.model.get("id");

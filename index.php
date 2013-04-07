@@ -126,6 +126,13 @@
 			</div>
 		</div>
 
+		<div class="control-group">
+			<label class="control-label" for="haul-cargo">Cargo</label>
+			<div class="controls">
+				<input type="hidden" class="input-large" id="haul-cargo" name="haul-cargo">
+			</div>
+		</div>
+
 	</div>
 </script>
 
