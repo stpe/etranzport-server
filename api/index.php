@@ -41,14 +41,18 @@ ORM::configure('logging', true); // only for debugging; echo ORM::get_last_query
 $app = new \Slim\Slim();
 
 $app->add(new CustomErrorMiddleware());
-$app->config('debug', true);
+
+$app->config(array(
+    'log.enabled' => true,
+    'log.level' => 4,
+    'debug' => true
+));
 
 $log = $app->getLog();
-$log->setLevel(\Slim\Log::INFO);
-$log->setEnabled(true);
 
 $log->info("Instantiate...");
-$log->error("slim error");
+$log->error("Slim test error");
+$log->debug("Slim test debug");
 
 /**
  * Step 3: Define the Slim application routes
