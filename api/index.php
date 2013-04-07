@@ -137,6 +137,12 @@ $app->get('/data/:file', function($file) {
 
 // Trips
 
+// get currently completed distance for trip based on lapsed time since start
+function getTripCurrentDistance($trip) {
+    $lapsed = time() - $trip->startts;
+    return $lapsed * $trip->speed * $trip->timefactor;
+}
+
 $app->get('/trips', function() {
     global $app;
 
@@ -150,21 +156,31 @@ $app->get('/trips', function() {
             ->join('city', array('destination_city.id', '=', 'trip.destination'), 'destination_city')
             ->join('vehicle', array('vehicle.id', '=', 'trip.vehicle'), 'vehicle')
             ->order_by_asc('trip.id')
-            ->find_array();
+            ->find_many();
 
     $now = time();
 
-    foreach($trips as &$trip) {
-        $lapsed = $now - $trip['startts'];
-        $distance_completed = $lapsed * $trip['speed'] * $trip['timefactor'];
+    foreach($trips as $trip) {
+        $distance_completed = getTripCurrentDistance($trip);
 
-        if ($distance_completed < $trip['distance']) {
-            $trip['state'] = TripState::ENROUTE;
-            $trip['distance_completed'] = $distance_completed;
+        // trip still not yet finished
+        if ($distance_completed < $trip->distance) {
+            $trip->state = TripState::ENROUTE;
+            $trip->distance_completed = $distance_completed;
+        } else {
+            // trip finished, but state is en route
+            if ($trip->state == TripState::ENROUTE) {
+                endTrip($trip, TripState::COMPLETED);
+            }
         }
     }
 
-    ResponseOk($trips);
+    // convert to array
+    $result = array_map(function($trip) {
+        return $trip->as_array();
+    }, $trips);
+
+    ResponseOk($result);
 });
 
 $app->post('/trips', function() {
@@ -225,9 +241,22 @@ $app->map('/trips/:id', function($id) {
 
     $trip = ORM::for_table('trip')->find_one($id);
 
-    // todo: perform anti cheat check here
+    $result = endTrip($trip, $data['state']);
 
-    $trip->state = $data['state'];
+    ResponseOk($result);
+})->via('PATCH');
+
+
+function endTrip($trip, $state) {
+    global $log;
+
+    // perform anti cheat check here
+    $distance_completed = getTripCurrentDistance($trip);
+    if ($distance_completed < $trip->distance) {
+        $log->error("Trying to end non-completed trip. Cheating? " . json_encode($trip->as_array()));
+    }
+
+    $trip->state = $state;
     $trip->save();
 
     // update vehicle
@@ -240,11 +269,8 @@ $app->map('/trips/:id', function($id) {
         'UPDATE vehicle SET connected = NULL, state = ? WHERE connected = ?', array(TruckState::OFFDUTY, $vehicle->id)
     );
 
-    // return result
-    $result = $trip->as_array();
-
-    ResponseOk($result);
-})->via('PATCH');
+    return $trip->as_array();
+}
 
 // Vehicles
 
