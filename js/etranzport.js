@@ -489,6 +489,34 @@ window.et = _.extend(window.et || {}, {
 	    	// calculate estimation of real distance since polyline is optimized
 	    	var traveled = (this.model.get("map") && this.model.get("map").get("distance")) ? this.getDistanceString((this.model.get("map").get("traveled") / this.model.get("map").get("distance")) * data.distance) : '';
 
+	    	var cargoStr = "",
+	    		attr = this.model.getTripAttributes(),
+	    		trailerList = [],
+	    		cargoList = [];
+
+	    	if (attr.trailers) {
+	    		for (var i = 0; i < attr.trailers.length; i++) {
+	    			var trailer = et.vehicleList.get(attr.trailers[i]);
+	    			trailerList.push(trailer ? trailer.get("type") : attr.trailers[i]);
+	    		}
+	    		if (trailerList.length == 0) {
+	    			cargoStr += "<i>Deadheading</i>";
+	    		} else {
+		    		cargoStr += trailerList.join(", ") + ": ";
+	    		}
+	    	}
+
+	    	if (attr.cargo) {
+	    		for (var i = 0; i < attr.cargo.length; i++) {
+	    			cargoList.push(attr.cargo[i]);
+	    		}
+	    		if (cargoList.length == 0) {
+	    			cargoStr += "<i>No cargo</i>";
+	    		} else {
+		    		cargoStr += cargoList.join(", ");
+	    		}
+	    	}
+
 	    	data = _.extend(data, {
 	    		state: this.getStateString(data.state),
 	    		stateCss: this.getStateCss(data.state),
@@ -497,7 +525,8 @@ window.et = _.extend(window.et || {}, {
 				timefactor: et.timeFactor,
 				startts: this.getDateTimeString(data.startts),
 				speed: this.getSpeedString(data.speed),
-				traveled: traveled
+				traveled: traveled,
+				cargo: cargoStr
 	    	});
 
 	        $(this.el).

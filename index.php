@@ -27,6 +27,7 @@
 <script type="text/template" id="tpl-trip-list-item">
 	<td class="cell-id"><%= id %></td>
 	<td class="cell-vehicle"><%= vehicle_name %></td>
+	<td class="cell-cargo"><%= cargo %></td>
 	<td class="cell-state"><span class="label <%= stateCss %>"><%= state %></span></td>
 	<td class="cell-origin"><%= origin_name %></td>
 	<td class="cell-dest"><%= destination_name %></td>
