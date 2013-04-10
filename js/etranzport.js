@@ -1,6 +1,6 @@
 
 window.et = _.extend(window.et || {}, {
-	apikey: 'BC9A493B41014CAABB98F0471D759707', // '9990e43c062744c58347d5c013ff8739';
+	apikey: 'BC9A493B41014CAABB98F0471D759707', // '9990e43c062744c58347d5c013ff8739'; // cloudmade
 
 	tick: 1000,
 	timeDelta: 0,	// seconds elapsed per update (calulated in init function)
@@ -788,13 +788,20 @@ window.et = _.extend(window.et || {}, {
 	 		var that = this;
 			var map = new L.Map('map');
 			et.map = map;
-
+/*
+			// cloudmade tiles
 			var cloudmade = new L.TileLayer('http://{s}.tile.cloudmade.com/' + et.apikey + '/997/256/{z}/{x}/{y}.png', {
 				attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, <a href="http://cloudmade.com">CloudMade</a>',
 				maxZoom: 18
 			});
+*/
+			// Open MapQuest tiles
+			var mapquestUrl = 'http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+				subDomains = ['otile1','otile2','otile3','otile4'],
+				mapquestAttrib = 'Data, imagery and map information provided by <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>, <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors.';
+			var mapquest = new L.TileLayer(mapquestUrl, {maxZoom: 18, attribution: mapquestAttrib, subdomains: subDomains});
 
-			map.addLayer(cloudmade);
+			map.addLayer(mapquest);
 			map.setView(new L.LatLng(34.705, -97.73), 5);
 
 			// listen to added trips
