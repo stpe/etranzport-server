@@ -375,7 +375,8 @@ window.et = _.extend(window.et || {}, {
 					destination: $("#haul-destination-city").select2("val")
 				});
 				
-				var trailers = $("#haul-trailer").select2("val");
+				var trailers = $("#haul-trailer").select2("val"),
+					cargo = $("#haul-cargo").select2("val");
 
 				route.fetch({
 					success: function(model, response, options) {
@@ -395,6 +396,7 @@ window.et = _.extend(window.et || {}, {
 						});
 
 						trip.setTripAttributes("trailers", trailers);
+						trip.setTripAttributes("cargo", cargo);
 
 						trip.save({}, {
 							success: function(model, response) {
