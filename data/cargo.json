@@ -1,6 +1,7 @@
 [
     {
         "name": "Action Figures",
+        "code": "ACFI",
         "trailer": [
             "DV2",
             "DV4",
@@ -9,6 +10,7 @@
     },
     {
         "name": "Adhesives",
+        "code": "ADHES",
         "trailer": [
             "DV2",
             "DV4",
@@ -17,6 +19,7 @@
     },
     {
         "name": "Air Purifiers",
+        "code": "AIRPUR",
         "trailer": [
             "DV2",
             "DV4",
@@ -25,6 +28,7 @@
     },
     {
         "name": "Air Tools",
+        "code": "AIRTO",
         "trailer": [
             "DV2",
             "DV4",
@@ -33,6 +37,7 @@
     },
     {
         "name": "All-in-One Computers",
+        "code": "AIOPC",
         "trailer": [
             "DV2",
             "DV4",
@@ -41,6 +46,7 @@
     },
     {
         "name": "Aluminum Ingots",
+        "code": "ALMIN",
         "trailer": [
             "DV2",
             "DV4",
@@ -49,6 +55,7 @@
     },
     {
         "name": "Amplifiers",
+        "code": "AMPLI",
         "trailer": [
             "DV2",
             "DV4",
@@ -57,6 +64,7 @@
     },
     {
         "name": "Appliances",
+        "code": "APPLI",
         "trailer": [
             "DV2",
             "DV4",
@@ -65,6 +73,7 @@
     },
     {
         "name": "Audio Components",
+        "code": "ACOMP",
         "trailer": [
             "DV2",
             "DV4",
@@ -73,6 +82,7 @@
     },
     {
         "name": "Audio Equipment",
+        "code": "AEQUI",
         "trailer": [
             "DV2",
             "DV4",
@@ -81,6 +91,7 @@
     },
     {
         "name": "Auto GPS Units",
+        "code": "AGPSU",
         "trailer": [
             "DV2",
             "DV4",
@@ -89,6 +100,7 @@
     },
     {
         "name": "Auto Parts",
+        "code": "APTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -97,6 +109,7 @@
     },
     {
         "name": "Backpacks",
+        "code": "BKPKS",
         "trailer": [
             "DV2",
             "DV4",
@@ -105,6 +118,7 @@
     },
     {
         "name": "Bakeware",
+        "code": "BKWR",
         "trailer": [
             "DV2",
             "DV4",
@@ -113,6 +127,7 @@
     },
     {
         "name": "Bath Accessories",
+        "code": "BATHA",
         "trailer": [
             "DV2",
             "DV4",
@@ -121,6 +136,7 @@
     },
     {
         "name": "Bath Mat",
+        "code": "BATHM",
         "trailer": [
             "DV2",
             "DV4",
@@ -129,6 +145,7 @@
     },
     {
         "name": "Bath Towels",
+        "code": "BATHT",
         "trailer": [
             "DV2",
             "DV4",
@@ -137,6 +154,7 @@
     },
     {
         "name": "Batteries",
+        "code": "BATTE",
         "trailer": [
             "DV2",
             "DV4",
@@ -145,6 +163,7 @@
     },
     {
         "name": "Beer",
+        "code": "BEER",
         "trailer": [
             "DV2",
             "DV4",
@@ -153,6 +172,7 @@
     },
     {
         "name": "Belts",
+        "code": "BELT",
         "trailer": [
             "DV2",
             "DV4",
@@ -161,6 +181,7 @@
     },
     {
         "name": "Binoculars",
+        "code": "BINO",
         "trailer": [
             "DV2",
             "DV4",
@@ -169,6 +190,7 @@
     },
     {
         "name": "Blender",
+        "code": "BLEND",
         "trailer": [
             "DV2",
             "DV4",
@@ -177,6 +199,7 @@
     },
     {
         "name": "Bookcases",
+        "code": "BOOKC",
         "trailer": [
             "DV2",
             "DV4",
@@ -185,6 +208,7 @@
     },
     {
         "name": "Books",
+        "code": "BOOKS",
         "trailer": [
             "DV2",
             "DV4",
@@ -193,6 +217,7 @@
     },
     {
         "name": "Bottles",
+        "code": "BOTTL",
         "trailer": [
             "DV2",
             "DV4",
@@ -201,6 +226,7 @@
     },
     {
         "name": "Boxes",
+        "code": "BOXES",
         "trailer": [
             "DV2",
             "DV4",
@@ -209,6 +235,7 @@
     },
     {
         "name": "Briefcases",
+        "code": "BRFCS",
         "trailer": [
             "DV2",
             "DV4",
@@ -217,6 +244,7 @@
     },
     {
         "name": "Buckets",
+        "code": "BKTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -225,6 +253,7 @@
     },
     {
         "name": "Building Materials",
+        "code": "BUMAT",
         "trailer": [
             "DV2",
             "DV4",
@@ -233,6 +262,7 @@
     },
     {
         "name": "Cabinets",
+        "code": "CBNTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -241,6 +271,7 @@
     },
     {
         "name": "Calculators",
+        "code": "CALCU",
         "trailer": [
             "DV2",
             "DV4",
@@ -249,6 +280,7 @@
     },
     {
         "name": "Calendars",
+        "code": "CALEN",
         "trailer": [
             "DV2",
             "DV4",
@@ -257,6 +289,7 @@
     },
     {
         "name": "Camcorders",
+        "code": "CAMCO",
         "trailer": [
             "DV2",
             "DV4",
@@ -265,6 +298,7 @@
     },
     {
         "name": "Camera & Camcorder Accessories",
+        "code": "CNCACC",
         "trailer": [
             "DV2",
             "DV4",
@@ -273,6 +307,7 @@
     },
     {
         "name": "Camping Gear",
+        "code": "CAMPG",
         "trailer": [
             "DV2",
             "DV4",
@@ -281,6 +316,7 @@
     },
     {
         "name": "Can Opener",
+        "code": "CANOP",
         "trailer": [
             "DV2",
             "DV4",
@@ -289,6 +325,7 @@
     },
     {
         "name": "Candles",
+        "code": "CANDL",
         "trailer": [
             "DV2",
             "DV4",
@@ -297,6 +334,7 @@
     },
     {
         "name": "Canisters",
+        "code": "CANIS",
         "trailer": [
             "DV2",
             "DV4",
@@ -305,6 +343,7 @@
     },
     {
         "name": "Canned Fruit",
+        "code": "CANFR",
         "trailer": [
             "DV2",
             "DV4",
@@ -313,6 +352,7 @@
     },
     {
         "name": "Car Audio",
+        "code": "CARAU",
         "trailer": [
             "DV2",
             "DV4",
@@ -321,6 +361,7 @@
     },
     {
         "name": "Car DVD & Video",
+        "code": "CDVDV",
         "trailer": [
             "DV2",
             "DV4",
@@ -329,6 +370,7 @@
     },
     {
         "name": "Car Seats",
+        "code": "CARSE",
         "trailer": [
             "DV2",
             "DV4",
@@ -337,6 +379,7 @@
     },
     {
         "name": "Car Speakers",
+        "code": "CSPEAK",
         "trailer": [
             "DV2",
             "DV4",
@@ -345,6 +388,7 @@
     },
     {
         "name": "Carpet",
+        "code": "CARPE",
         "trailer": [
             "DV2",
             "DV4",
@@ -353,6 +397,7 @@
     },
     {
         "name": "Cases & Bags",
+        "code": "CASBA",
         "trailer": [
             "DV2",
             "DV4",
@@ -361,6 +406,7 @@
     },
     {
         "name": "Cash Registers",
+        "code": "CASHRE",
         "trailer": [
             "DV2",
             "DV4",
@@ -369,6 +415,7 @@
     },
     {
         "name": "Cat Food",
+        "code": "CATFO",
         "trailer": [
             "DV2",
             "DV4",
@@ -377,6 +424,7 @@
     },
     {
         "name": "Cell Phone Accessories",
+        "code": "CELLPA",
         "trailer": [
             "DV2",
             "DV4",
@@ -385,6 +433,7 @@
     },
     {
         "name": "Cell Phones",
+        "code": "CELLPH",
         "trailer": [
             "DV2",
             "DV4",
@@ -393,6 +442,7 @@
     },
     {
         "name": "Chain Saws",
+        "code": "CHSAW",
         "trailer": [
             "DV2",
             "DV4",
@@ -401,6 +451,7 @@
     },
     {
         "name": "Chemical Resin",
+        "code": "CHEMRE",
         "trailer": [
             "DV2",
             "DV4",
@@ -412,6 +463,7 @@
     },
     {
         "name": "Chocolate",
+        "code": "CHOCO",
         "trailer": [
             "DV2",
             "DV4",
@@ -420,6 +472,7 @@
     },
     {
         "name": "Clocks",
+        "code": "CLOCK",
         "trailer": [
             "DV2",
             "DV4",
@@ -428,6 +481,7 @@
     },
     {
         "name": "Clothing",
+        "code": "CLTHNG",
         "trailer": [
             "DV2",
             "DV4",
@@ -436,6 +490,7 @@
     },
     {
         "name": "Cocktail Shaker",
+        "code": "CKTSH",
         "trailer": [
             "DV2",
             "DV4",
@@ -444,6 +499,7 @@
     },
     {
         "name": "Coffee",
+        "code": "COFFE",
         "trailer": [
             "DV2",
             "DV4",
@@ -452,6 +508,7 @@
     },
     {
         "name": "Coffee Pot",
+        "code": "COFPT",
         "trailer": [
             "DV2",
             "DV4",
@@ -460,6 +517,7 @@
     },
     {
         "name": "Coffee Thermos",
+        "code": "COFTH",
         "trailer": [
             "DV2",
             "DV4",
@@ -468,6 +526,7 @@
     },
     {
         "name": "Comforters",
+        "code": "CMTRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -476,6 +535,7 @@
     },
     {
         "name": "Compact System Cameras",
+        "code": "COMSC",
         "trailer": [
             "DV2",
             "DV4",
@@ -484,6 +544,7 @@
     },
     {
         "name": "Computer Accessories",
+        "code": "PCACC",
         "trailer": [
             "DV2",
             "DV4",
@@ -492,6 +553,7 @@
     },
     {
         "name": "Computer Armoires",
+        "code": "PCARM",
         "trailer": [
             "DV2",
             "DV4",
@@ -500,6 +562,7 @@
     },
     {
         "name": "Computer Desks",
+        "code": "PCDSK",
         "trailer": [
             "DV2",
             "DV4",
@@ -508,6 +571,7 @@
     },
     {
         "name": "Computer Keyboards",
+        "code": "PCKBS",
         "trailer": [
             "DV2",
             "DV4",
@@ -516,6 +580,7 @@
     },
     {
         "name": "Computer Mice",
+        "code": "PCMICE",
         "trailer": [
             "DV2",
             "DV4",
@@ -524,6 +589,7 @@
     },
     {
         "name": "Computer Software",
+        "code": "PCSFT",
         "trailer": [
             "DV2",
             "DV4",
@@ -532,6 +598,7 @@
     },
     {
         "name": "Cookbook Rack/Holder",
+        "code": "CBHOLD",
         "trailer": [
             "DV2",
             "DV4",
@@ -540,6 +607,7 @@
     },
     {
         "name": "Cookbooks",
+        "code": "CKBKS",
         "trailer": [
             "DV2",
             "DV4",
@@ -548,6 +616,7 @@
     },
     {
         "name": "Cookware",
+        "code": "CKWRE",
         "trailer": [
             "DV2",
             "DV4",
@@ -556,6 +625,7 @@
     },
     {
         "name": "Copper Sulphate",
+        "code": "COPSUL",
         "trailer": [
             "DV2",
             "DV4",
@@ -567,6 +637,7 @@
     },
     {
         "name": "Costumes",
+        "code": "CSTMES",
         "trailer": [
             "DV2",
             "DV4",
@@ -575,6 +646,7 @@
     },
     {
         "name": "Cups & Plates",
+        "code": "CUPLS",
         "trailer": [
             "DV2",
             "DV4",
@@ -583,6 +655,7 @@
     },
     {
         "name": "Cutting Board",
+        "code": "CUTBO",
         "trailer": [
             "DV2",
             "DV4",
@@ -591,6 +664,7 @@
     },
     {
         "name": "Cycling",
+        "code": "CYCL",
         "trailer": [
             "DV2",
             "DV4",
@@ -599,6 +673,7 @@
     },
     {
         "name": "Deep Fryer",
+        "code": "DEFRY",
         "trailer": [
             "DV2",
             "DV4",
@@ -607,6 +682,7 @@
     },
     {
         "name": "Desktop Computers",
+        "code": "DKPC",
         "trailer": [
             "DV2",
             "DV4",
@@ -615,6 +691,7 @@
     },
     {
         "name": "Digital Answering Systems",
+        "code": "DASYS",
         "trailer": [
             "DV2",
             "DV4",
@@ -623,6 +700,7 @@
     },
     {
         "name": "Digital SLR Cameras",
+        "code": "DSLRC",
         "trailer": [
             "DV2",
             "DV4",
@@ -631,6 +709,7 @@
     },
     {
         "name": "Dinner Plates",
+        "code": "DINPLA",
         "trailer": [
             "DV2",
             "DV4",
@@ -639,6 +718,7 @@
     },
     {
         "name": "Dish Towels",
+        "code": "DITOW",
         "trailer": [
             "DV2",
             "DV4",
@@ -647,6 +727,7 @@
     },
     {
         "name": "Dishwashers",
+        "code": "DISHW",
         "trailer": [
             "DV2",
             "DV4",
@@ -655,6 +736,7 @@
     },
     {
         "name": "Drinking Straws",
+        "code": "DRSTR",
         "trailer": [
             "DV2",
             "DV4",
@@ -663,6 +745,7 @@
     },
     {
         "name": "Dryers",
+        "code": "DRYRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -670,7 +753,17 @@
         ]
     },
     {
-        "name": "DVD & Blu-ray Players",
+        "name": "DVD Players",
+        "code": "DVDPL",
+        "trailer": [
+            "DV2",
+            "DV4",
+            "DV5"
+        ]
+    },
+    {
+        "name": "Blu-ray Players",
+        "code": "BLRPL",
         "trailer": [
             "DV2",
             "DV4",
@@ -679,6 +772,7 @@
     },
     {
         "name": "DVD Movies",
+        "code": "DVDMV",
         "trailer": [
             "DV2",
             "DV4",
@@ -687,6 +781,7 @@
     },
     {
         "name": "eBook Readers",
+        "code": "EBRED",
         "trailer": [
             "DV2",
             "DV4",
@@ -695,6 +790,7 @@
     },
     {
         "name": "Electric Heaters",
+        "code": "ELCHT",
         "trailer": [
             "DV2",
             "DV4",
@@ -703,6 +799,7 @@
     },
     {
         "name": "Electronic Cleaning Kits",
+        "code": "ELCCK",
         "trailer": [
             "DV2",
             "DV4",
@@ -711,6 +808,7 @@
     },
     {
         "name": "Exercise Equipment",
+        "code": "EXREQ",
         "trailer": [
             "DV2",
             "DV4",
@@ -719,6 +817,7 @@
     },
     {
         "name": "External Hard Drives",
+        "code": "EXHDD",
         "trailer": [
             "DV2",
             "DV4",
@@ -727,6 +826,7 @@
     },
     {
         "name": "Fabric",
+        "code": "FBRIC",
         "trailer": [
             "DV2",
             "DV4",
@@ -735,6 +835,7 @@
     },
     {
         "name": "Farm Tools",
+        "code": "FRMTL",
         "trailer": [
             "DV2",
             "DV4",
@@ -743,14 +844,7 @@
     },
     {
         "name": "Fax Machines",
-        "trailer": [
-            "DV2",
-            "DV4",
-            "DV5"
-        ]
-    },
-    {
-        "name": "Featured Categories",
+        "code": "FXMCH",
         "trailer": [
             "DV2",
             "DV4",
@@ -759,6 +853,7 @@
     },
     {
         "name": "Fiberglass Matting",
+        "code": "FBGMT",
         "trailer": [
             "DV2",
             "DV4",
@@ -767,6 +862,7 @@
     },
     {
         "name": "File Cabinets",
+        "code": "FILCB",
         "trailer": [
             "DV2",
             "DV4",
@@ -775,6 +871,7 @@
     },
     {
         "name": "Film",
+        "code": "FILM",
         "trailer": [
             "DV2",
             "DV4",
@@ -783,6 +880,7 @@
     },
     {
         "name": "Fire Extinguisher",
+        "code": "FREXT",
         "trailer": [
             "DV2",
             "DV4",
@@ -791,6 +889,7 @@
     },
     {
         "name": "First Aid Kits",
+        "code": "1AIDK",
         "trailer": [
             "DV2",
             "DV4",
@@ -799,6 +898,7 @@
     },
     {
         "name": "Fishing Gear",
+        "code": "FSHGR",
         "trailer": [
             "DV2",
             "DV4",
@@ -807,6 +907,7 @@
     },
     {
         "name": "Fittings",
+        "code": "FTNGS",
         "trailer": [
             "DV2",
             "DV4",
@@ -815,6 +916,7 @@
     },
     {
         "name": "Flags",
+        "code": "FLAGS",
         "trailer": [
             "DV2",
             "DV4",
@@ -823,6 +925,7 @@
     },
     {
         "name": "Flashlights",
+        "code": "FSHLT",
         "trailer": [
             "DV2",
             "DV4",
@@ -831,6 +934,7 @@
     },
     {
         "name": "Floor Mats",
+        "code": "FLRMTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -839,6 +943,7 @@
     },
     {
         "name": "Foam Trays",
+        "code": "FMTRY",
         "trailer": [
             "DV2",
             "DV4",
@@ -847,6 +952,7 @@
     },
     {
         "name": "Food Processor",
+        "code": "FDPROC",
         "trailer": [
             "DV2",
             "DV4",
@@ -855,6 +961,7 @@
     },
     {
         "name": "Footwear",
+        "code": "FTWAR",
         "trailer": [
             "DV2",
             "DV4",
@@ -863,6 +970,7 @@
     },
     {
         "name": "Freezers",
+        "code": "FRZRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -871,6 +979,7 @@
     },
     {
         "name": "Fruit Bowl",
+        "code": "FRTBL",
         "trailer": [
             "DV2",
             "DV4",
@@ -879,6 +988,7 @@
     },
     {
         "name": "Frying Pans",
+        "code": "FRYPAN",
         "trailer": [
             "DV2",
             "DV4",
@@ -887,6 +997,7 @@
     },
     {
         "name": "Game Systems",
+        "code": "GMSYS",
         "trailer": [
             "DV2",
             "DV4",
@@ -895,6 +1006,7 @@
     },
     {
         "name": "Eye Glasses",
+        "code": "EYEGL",
         "trailer": [
             "DV2",
             "DV4",
@@ -903,6 +1015,7 @@
     },
     {
         "name": "Glassware",
+        "code": "GLSWR",
         "trailer": [
             "DV2",
             "DV4",
@@ -911,6 +1024,7 @@
     },
     {
         "name": "GPS",
+        "code": "GPS1",
         "trailer": [
             "DV2",
             "DV4",
@@ -919,6 +1033,7 @@
     },
     {
         "name": "Gravy Boat",
+        "code": "GRVYB",
         "trailer": [
             "DV2",
             "DV4",
@@ -927,6 +1042,7 @@
     },
     {
         "name": "Grease (Bulk)",
+        "code": "GRSBLK",
         "trailer": [
             "DV2",
             "DV4",
@@ -938,6 +1054,7 @@
     },
     {
         "name": "Groceries",
+        "code": "GRCRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -946,6 +1063,7 @@
     },
     {
         "name": "Guitar",
+        "code": "GUITR",
         "trailer": [
             "DV2",
             "DV4",
@@ -954,6 +1072,7 @@
     },
     {
         "name": "Guitar Straps",
+        "code": "GTARST",
         "trailer": [
             "DV2",
             "DV4",
@@ -962,6 +1081,7 @@
     },
     {
         "name": "Hair Care",
+        "code": "HRCAR",
         "trailer": [
             "DV2",
             "DV4",
@@ -970,6 +1090,7 @@
     },
     {
         "name": "Hand Mixer",
+        "code": "HNDMX",
         "trailer": [
             "DV2",
             "DV4",
@@ -978,6 +1099,7 @@
     },
     {
         "name": "Hand Tools",
+        "code": "HNDTLS",
         "trailer": [
             "DV2",
             "DV4",
@@ -986,6 +1108,7 @@
     },
     {
         "name": "Handbags",
+        "code": "HNDBGS",
         "trailer": [
             "DV2",
             "DV4",
@@ -994,6 +1117,7 @@
     },
     {
         "name": "Hats",
+        "code": "HATS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1002,6 +1126,7 @@
     },
     {
         "name": "HD Antennas",
+        "code": "HDANT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1010,6 +1135,7 @@
     },
     {
         "name": "Headphones",
+        "code": "HDPHNS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1018,6 +1144,7 @@
     },
     {
         "name": "Highchairs",
+        "code": "HICHRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1026,6 +1153,7 @@
     },
     {
         "name": "Home Phones",
+        "code": "HMPHNS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1034,6 +1162,7 @@
     },
     {
         "name": "Home Theater Systems",
+        "code": "HTSYS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1042,6 +1171,7 @@
     },
     {
         "name": "Horse Supplies",
+        "code": "HRSSUP",
         "trailer": [
             "DV2",
             "DV4",
@@ -1050,6 +1180,7 @@
     },
     {
         "name": "Hot Water Heater",
+        "code": "HWTRHT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1058,6 +1189,7 @@
     },
     {
         "name": "Household Products",
+        "code": "HSEPRO",
         "trailer": [
             "DV2",
             "DV4",
@@ -1066,6 +1198,7 @@
     },
     {
         "name": "Ice Bucket",
+        "code": "ICEBKT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1074,6 +1207,7 @@
     },
     {
         "name": "Ice Crusher",
+        "code": "ICECRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1082,6 +1216,7 @@
     },
     {
         "name": "Ice Skates",
+        "code": "ICESKT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1090,6 +1225,7 @@
     },
     {
         "name": "In-Dash Car Stereos",
+        "code": "INDCST",
         "trailer": [
             "DV2",
             "DV4",
@@ -1098,6 +1234,7 @@
     },
     {
         "name": "In-Wall Speakers",
+        "code": "IDCSTR",
         "trailer": [
             "DV2",
             "DV4",
@@ -1106,6 +1243,7 @@
     },
     {
         "name": "Internal Hard Drives",
+        "code": "INTHDD",
         "trailer": [
             "DV2",
             "DV4",
@@ -1114,6 +1252,7 @@
     },
     {
         "name": "iPad Accessories",
+        "code": "IPDACC",
         "trailer": [
             "DV2",
             "DV4",
@@ -1122,6 +1261,7 @@
     },
     {
         "name": "iPads",
+        "code": "IPADS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1130,6 +1270,7 @@
     },
     {
         "name": "Ironing Board",
+        "code": "IRNBRD",
         "trailer": [
             "DV2",
             "DV4",
@@ -1138,6 +1279,7 @@
     },
     {
         "name": "Irons",
+        "code": "IRONS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1146,6 +1288,7 @@
     },
     {
         "name": "Janitorial Supplies",
+        "code": "JANSUP",
         "trailer": [
             "DV2",
             "DV4",
@@ -1154,6 +1297,7 @@
     },
     {
         "name": "Jewelry",
+        "code": "JWLRY",
         "trailer": [
             "DV2",
             "DV4",
@@ -1162,6 +1306,7 @@
     },
     {
         "name": "Juice",
+        "code": "JUICE",
         "trailer": [
             "DV2",
             "DV4",
@@ -1170,6 +1315,7 @@
     },
     {
         "name": "Jukeboxes",
+        "code": "JKBOX",
         "trailer": [
             "DV2",
             "DV4",
@@ -1178,6 +1324,7 @@
     },
     {
         "name": "Keyboards",
+        "code": "KYBRDS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1186,6 +1333,7 @@
     },
     {
         "name": "Kitchen Scale",
+        "code": "KTSCL",
         "trailer": [
             "DV2",
             "DV4",
@@ -1194,6 +1342,7 @@
     },
     {
         "name": "Kitchen Knives",
+        "code": "KTKNIV",
         "trailer": [
             "DV2",
             "DV4",
@@ -1202,6 +1351,7 @@
     },
     {
         "name": "L-Shaped Desks",
+        "code": "LSDSK",
         "trailer": [
             "DV2",
             "DV4",
@@ -1210,6 +1360,7 @@
     },
     {
         "name": "Label Makers",
+        "code": "LBLMAK",
         "trailer": [
             "DV2",
             "DV4",
@@ -1218,6 +1369,7 @@
     },
     {
         "name": "Laminators",
+        "code": "LMNTR",
         "trailer": [
             "DV2",
             "DV4",
@@ -1226,6 +1378,7 @@
     },
     {
         "name": "Lamps",
+        "code": "LAMPS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1234,6 +1387,7 @@
     },
     {
         "name": "Laptop Cases & Bags",
+        "code": "LPTCNB",
         "trailer": [
             "DV2",
             "DV4",
@@ -1242,14 +1396,7 @@
     },
     {
         "name": "Laptop Computers",
-        "trailer": [
-            "DV2",
-            "DV4",
-            "DV5"
-        ]
-    },
-    {
-        "name": "Laptops",
+        "code": "LPTCOM",
         "trailer": [
             "DV2",
             "DV4",
@@ -1258,6 +1405,7 @@
     },
     {
         "name": "LCD Monitors",
+        "code": "LCDMTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1266,6 +1414,7 @@
     },
     {
         "name": "LED Monitors",
+        "code": "LEDMTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1274,6 +1423,7 @@
     },
     {
         "name": "Luggage",
+        "code": "LUGGG",
         "trailer": [
             "DV2",
             "DV4",
@@ -1282,6 +1432,7 @@
     },
     {
         "name": "Machine Parts",
+        "code": "MCHPTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1290,6 +1441,7 @@
     },
     {
         "name": "Magazines",
+        "code": "MGZNS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1298,6 +1450,7 @@
     },
     {
         "name": "Measuring Cups",
+        "code": "MSRCPS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1306,6 +1459,7 @@
     },
     {
         "name": "Meat Grinder",
+        "code": "MTGRND",
         "trailer": [
             "DV2",
             "DV4",
@@ -1314,6 +1468,7 @@
     },
     {
         "name": "Media Streaming Devices",
+        "code": "MDSTDV",
         "trailer": [
             "DV2",
             "DV4",
@@ -1322,6 +1477,7 @@
     },
     {
         "name": "Megaphones",
+        "code": "MGPHNS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1330,6 +1486,7 @@
     },
     {
         "name": "Memory Cards",
+        "code": "MEMCRD",
         "trailer": [
             "DV2",
             "DV4",
@@ -1338,6 +1495,7 @@
     },
     {
         "name": "Microscopes",
+        "code": "MCSCPS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1346,6 +1504,7 @@
     },
     {
         "name": "Microwaves",
+        "code": "MCWVS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1354,6 +1513,7 @@
     },
     {
         "name": "Mirrors ",
+        "code": "MRRRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1362,6 +1522,7 @@
     },
     {
         "name": "Mixing Bowls",
+        "code": "MXBWLS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1370,6 +1531,7 @@
     },
     {
         "name": "Mobile Carts",
+        "code": "MBLCTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1378,6 +1540,7 @@
     },
     {
         "name": "Modems",
+        "code": "MDMS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1386,6 +1549,7 @@
     },
     {
         "name": "Motor Oil",
+        "code": "MTROIL",
         "trailer": [
             "DV2",
             "DV4",
@@ -1394,6 +1558,7 @@
     },
     {
         "name": "MP3 Player Accessories",
+        "code": "MP3PA",
         "trailer": [
             "DV2",
             "DV4",
@@ -1402,6 +1567,7 @@
     },
     {
         "name": "Musical Instruments",
+        "code": "MSCLIN",
         "trailer": [
             "DV2",
             "DV4",
@@ -1410,22 +1576,7 @@
     },
     {
         "name": "Napkins",
-        "trailer": [
-            "DV2",
-            "DV4",
-            "DV5"
-        ]
-    },
-    {
-        "name": "Network Attached Storage",
-        "trailer": [
-            "DV2",
-            "DV4",
-            "DV5"
-        ]
-    },
-    {
-        "name": "Network Hubs",
+        "code": "NPKNS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1434,6 +1585,7 @@
     },
     {
         "name": "Network Switches",
+        "code": "NTWSWTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1442,6 +1594,7 @@
     },
     {
         "name": "Notebooks",
+        "code": "NTBKS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1450,6 +1603,7 @@
     },
     {
         "name": "Office Chairs",
+        "code": "OFFCHRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1458,6 +1612,7 @@
     },
     {
         "name": "Office Tables",
+        "code": "OFFTBLS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1466,6 +1621,7 @@
     },
     {
         "name": "Outdoor Speakers",
+        "code": "OTDSPK",
         "trailer": [
             "DV2",
             "DV4",
@@ -1474,6 +1630,7 @@
     },
     {
         "name": "Ovens",
+        "code": "OVENS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1482,6 +1639,7 @@
     },
     {
         "name": "Packing Supplies",
+        "code": "PKNSUPP",
         "trailer": [
             "DV2",
             "DV4",
@@ -1490,6 +1648,7 @@
     },
     {
         "name": "Paint",
+        "code": "PAINT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1498,6 +1657,7 @@
     },
     {
         "name": "Paper",
+        "code": "PAPER",
         "trailer": [
             "DV2",
             "DV4",
@@ -1506,6 +1666,7 @@
     },
     {
         "name": "Parking Meters",
+        "code": "PKNGMT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1514,14 +1675,7 @@
     },
     {
         "name": "Pellet Stoves",
-        "trailer": [
-            "DV2",
-            "DV4",
-            "DV5"
-        ]
-    },
-    {
-        "name": "Pellet Stoves",
+        "code": "PLLSTV",
         "trailer": [
             "DV2",
             "DV4",
@@ -1530,6 +1684,7 @@
     },
     {
         "name": "Pepper Mills",
+        "code": "PPPMLL",
         "trailer": [
             "DV2",
             "DV4",
@@ -1538,6 +1693,7 @@
     },
     {
         "name": "Pet Supplies",
+        "code": "PTSUPP",
         "trailer": [
             "DV2",
             "DV4",
@@ -1546,6 +1702,7 @@
     },
     {
         "name": "Photo Frames",
+        "code": "PHTFRM",
         "trailer": [
             "DV2",
             "DV4",
@@ -1554,6 +1711,7 @@
     },
     {
         "name": "Photo Scanners",
+        "code": "PHTSCN",
         "trailer": [
             "DV2",
             "DV4",
@@ -1562,6 +1720,7 @@
     },
     {
         "name": "Piano",
+        "code": "PIANO",
         "trailer": [
             "DV2",
             "DV4",
@@ -1570,6 +1729,7 @@
     },
     {
         "name": "Pigment (block color bulk)",
+        "code": "PGMTB",
         "trailer": [
             "DV2",
             "DV4",
@@ -1578,6 +1738,7 @@
     },
     {
         "name": "Pigment (paint color bulk)",
+        "code": "PGMTP",
         "trailer": [
             "DV2",
             "DV4",
@@ -1586,6 +1747,7 @@
     },
     {
         "name": "Pillowcases",
+        "code": "PLLWCS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1594,6 +1756,7 @@
     },
     {
         "name": "Pillows",
+        "code": "PLLWS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1602,6 +1765,7 @@
     },
     {
         "name": "Planners",
+        "code": "PLNNRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1610,6 +1774,7 @@
     },
     {
         "name": "Plastic Bags",
+        "code": "PLSTBGS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1618,6 +1783,7 @@
     },
     {
         "name": "Plastic Binders",
+        "code": "PLSTBND",
         "trailer": [
             "DV2",
             "DV4",
@@ -1626,6 +1792,7 @@
     },
     {
         "name": "Plastic Containers",
+        "code": "PLSTCNT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1634,6 +1801,7 @@
     },
     {
         "name": "Plastic Liners",
+        "code": "PLSTLNS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1642,6 +1810,7 @@
     },
     {
         "name": "Plastic Materials",
+        "code": "PLSTMTR",
         "trailer": [
             "DV2",
             "DV4",
@@ -1650,6 +1819,7 @@
     },
     {
         "name": "Plastic Molding",
+        "code": "PLSTMLD",
         "trailer": [
             "DV2",
             "DV4",
@@ -1658,6 +1828,7 @@
     },
     {
         "name": "Point & Shoot Cameras",
+        "code": "PNSCMR",
         "trailer": [
             "DV2",
             "DV4",
@@ -1666,6 +1837,7 @@
     },
     {
         "name": "Potatoes (bags)",
+        "code": "PTTSBG",
         "trailer": [
             "DV2",
             "DV4",
@@ -1674,6 +1846,7 @@
     },
     {
         "name": "Pots And Pans",
+        "code": "PTSNPNS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1682,6 +1855,7 @@
     },
     {
         "name": "Pottery",
+        "code": "PTTRY",
         "trailer": [
             "DV2",
             "DV4",
@@ -1690,6 +1864,7 @@
     },
     {
         "name": "Power Tools",
+        "code": "PWRTLS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1698,6 +1873,7 @@
     },
     {
         "name": "Printer Ink",
+        "code": "PRNTINK",
         "trailer": [
             "DV2",
             "DV4",
@@ -1706,6 +1882,7 @@
     },
     {
         "name": "Printer Paper",
+        "code": "PRNTPPR",
         "trailer": [
             "DV2",
             "DV4",
@@ -1714,6 +1891,7 @@
     },
     {
         "name": "Printer Stands",
+        "code": "PRNTSTD",
         "trailer": [
             "DV2",
             "DV4",
@@ -1722,6 +1900,7 @@
     },
     {
         "name": "Printer Toners",
+        "code": "PRNTTN",
         "trailer": [
             "DV2",
             "DV4",
@@ -1730,6 +1909,7 @@
     },
     {
         "name": "Printers",
+        "code": "PRNTRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1738,6 +1918,7 @@
     },
     {
         "name": "Projector Mounts",
+        "code": "PRJTMTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1746,6 +1927,7 @@
     },
     {
         "name": "Projector Screens",
+        "code": "PRJTSCR",
         "trailer": [
             "DV2",
             "DV4",
@@ -1754,6 +1936,7 @@
     },
     {
         "name": "Projectors",
+        "code": "PRJTRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1762,6 +1945,7 @@
     },
     {
         "name": "Propellers",
+        "code": "PRPLLRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1770,6 +1954,7 @@
     },
     {
         "name": "Recipe Holder",
+        "code": "RCPHLD",
         "trailer": [
             "DV2",
             "DV4",
@@ -1778,6 +1963,7 @@
     },
     {
         "name": "Recycled Materials",
+        "code": "RCYCMT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1786,6 +1972,7 @@
     },
     {
         "name": "Refrigerators",
+        "code": "RFRGRT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1794,6 +1981,7 @@
     },
     {
         "name": "Rice (Bag)",
+        "code": "RICEB",
         "trailer": [
             "DV2",
             "DV4",
@@ -1802,6 +1990,7 @@
     },
     {
         "name": "Roller Skates",
+        "code": "RSKTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1810,6 +1999,7 @@
     },
     {
         "name": "Routers",
+        "code": "RUTRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1818,6 +2008,7 @@
     },
     {
         "name": "Rugged & Outdoor Cameras",
+        "code": "RGOTCAM",
         "trailer": [
             "DV2",
             "DV4",
@@ -1826,6 +2017,7 @@
     },
     {
         "name": "Rugs",
+        "code": "RUGS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1834,6 +2026,7 @@
     },
     {
         "name": "Salt (bag)",
+        "code": "SLTBG",
         "trailer": [
             "DV2",
             "DV4",
@@ -1842,6 +2035,7 @@
     },
     {
         "name": "Salt And Pepper Shakers",
+        "code": "SNPSHK",
         "trailer": [
             "DV2",
             "DV4",
@@ -1850,6 +2044,7 @@
     },
     {
         "name": "Satellite Radio",
+        "code": "STRDO",
         "trailer": [
             "DV2",
             "DV4",
@@ -1858,6 +2053,7 @@
     },
     {
         "name": "Saucepans",
+        "code": "SUCPN",
         "trailer": [
             "DV2",
             "DV4",
@@ -1866,6 +2062,7 @@
     },
     {
         "name": "School Supplies",
+        "code": "SCHSUP",
         "trailer": [
             "DV2",
             "DV4",
@@ -1874,6 +2071,7 @@
     },
     {
         "name": "Scrap Metal",
+        "code": "SRPMTL",
         "trailer": [
             "DV2",
             "DV4",
@@ -1882,6 +2080,7 @@
     },
     {
         "name": "Security Safes",
+        "code": "SECSAF",
         "trailer": [
             "DV2",
             "DV4",
@@ -1890,6 +2089,7 @@
     },
     {
         "name": "Sewing Machines",
+        "code": "SEWMCH",
         "trailer": [
             "DV2",
             "DV4",
@@ -1898,6 +2098,7 @@
     },
     {
         "name": "Sheets",
+        "code": "SHEETS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1906,6 +2107,7 @@
     },
     {
         "name": "Shelving",
+        "code": "SHLVNG",
         "trailer": [
             "DV2",
             "DV4",
@@ -1914,6 +2116,7 @@
     },
     {
         "name": "Shredders",
+        "code": "SHRDS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1922,6 +2125,7 @@
     },
     {
         "name": "Skate Boards",
+        "code": "SKTBRDS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1930,6 +2134,7 @@
     },
     {
         "name": "Skillets",
+        "code": "SKLLTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1938,6 +2143,7 @@
     },
     {
         "name": "Slow Cooker/Crock Pot",
+        "code": "SLCKCRPT",
         "trailer": [
             "DV2",
             "DV4",
@@ -1946,14 +2152,7 @@
     },
     {
         "name": "Soda",
-        "trailer": [
-            "DV2",
-            "DV4",
-            "DV5"
-        ]
-    },
-    {
-        "name": "Soda Ash",
+        "code": "SODA",
         "trailer": [
             "DV2",
             "DV4",
@@ -1962,6 +2161,7 @@
     },
     {
         "name": "Software",
+        "code": "SFTWR",
         "trailer": [
             "DV2",
             "DV4",
@@ -1970,6 +2170,7 @@
     },
     {
         "name": "Sound Systems",
+        "code": "SNDSYS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1978,6 +2179,7 @@
     },
     {
         "name": "Speaker Accessories",
+        "code": "SPKACC",
         "trailer": [
             "DV2",
             "DV4",
@@ -1986,6 +2188,7 @@
     },
     {
         "name": "Speakers ",
+        "code": "SPKRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -1994,6 +2197,7 @@
     },
     {
         "name": "Spice Rack",
+        "code": "SPCRK",
         "trailer": [
             "DV2",
             "DV4",
@@ -2002,6 +2206,7 @@
     },
     {
         "name": "Sporting Goods",
+        "code": "SPTGDS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2010,6 +2215,7 @@
     },
     {
         "name": "Steamers",
+        "code": "STMRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2018,6 +2224,7 @@
     },
     {
         "name": "Storage Cabinets",
+        "code": "STRGCBT",
         "trailer": [
             "DV2",
             "DV4",
@@ -2026,6 +2233,7 @@
     },
     {
         "name": "Store Displays",
+        "code": "STRDSP",
         "trailer": [
             "DV2",
             "DV4",
@@ -2034,6 +2242,7 @@
     },
     {
         "name": "Stoves",
+        "code": "STOVES",
         "trailer": [
             "DV2",
             "DV4",
@@ -2042,6 +2251,7 @@
     },
     {
         "name": "Strollers",
+        "code": "STRLLS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2050,6 +2260,7 @@
     },
     {
         "name": "Stuffed Animals",
+        "code": "STFFAN",
         "trailer": [
             "DV2",
             "DV4",
@@ -2058,6 +2269,7 @@
     },
     {
         "name": "Styrofoam (bulk)",
+        "code": "STYFMB",
         "trailer": [
             "DV2",
             "DV4",
@@ -2066,6 +2278,7 @@
     },
     {
         "name": "Sugar (Bags)",
+        "code": "SGRBGS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2074,6 +2287,7 @@
     },
     {
         "name": "Surge Protectors",
+        "code": "SRGPROT",
         "trailer": [
             "DV2",
             "DV4",
@@ -2082,6 +2296,7 @@
     },
     {
         "name": "Tablecloths",
+        "code": "TBLCLT",
         "trailer": [
             "DV2",
             "DV4",
@@ -2090,6 +2305,7 @@
     },
     {
         "name": "Tablet PC Accessories",
+        "code": "TPCACC",
         "trailer": [
             "DV2",
             "DV4",
@@ -2098,6 +2314,7 @@
     },
     {
         "name": "Tablets",
+        "code": "TBLTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2106,6 +2323,7 @@
     },
     {
         "name": "Tanned Skins",
+        "code": "TNNSKN",
         "trailer": [
             "DV2",
             "DV4",
@@ -2114,6 +2332,7 @@
     },
     {
         "name": "Tea Pot",
+        "code": "TEAPT",
         "trailer": [
             "DV2",
             "DV4",
@@ -2122,6 +2341,7 @@
     },
     {
         "name": "Telescopes",
+        "code": "TLSPS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2130,6 +2350,7 @@
     },
     {
         "name": "Televisions",
+        "code": "TLVSNS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2138,6 +2359,7 @@
     },
     {
         "name": "Tires",
+        "code": "TIRES",
         "trailer": [
             "DV2",
             "DV4",
@@ -2146,6 +2368,7 @@
     },
     {
         "name": "Tissue Paper",
+        "code": "TSSPPR",
         "trailer": [
             "DV2",
             "DV4",
@@ -2154,6 +2377,7 @@
     },
     {
         "name": "Totes",
+        "code": "TOTES",
         "trailer": [
             "DV2",
             "DV4",
@@ -2162,6 +2386,7 @@
     },
     {
         "name": "Towels",
+        "code": "TWLS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2170,6 +2395,7 @@
     },
     {
         "name": "Toys",
+        "code": "TOYS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2178,6 +2404,7 @@
     },
     {
         "name": "Tractor Parts",
+        "code": "TRTRPT",
         "trailer": [
             "DV2",
             "DV4",
@@ -2186,6 +2413,7 @@
     },
     {
         "name": "Trash Compactors",
+        "code": "TRHCOMP",
         "trailer": [
             "DV2",
             "DV4",
@@ -2194,6 +2422,7 @@
     },
     {
         "name": "Video Accessories",
+        "code": "VDACCS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2202,6 +2431,7 @@
     },
     {
         "name": "TV Accessories",
+        "code": "TVACCS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2210,6 +2440,7 @@
     },
     {
         "name": "TV Stands",
+        "code": "TVSTNDS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2218,6 +2449,7 @@
     },
     {
         "name": "TV Wall Mounts",
+        "code": "TVWLMTS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2226,6 +2458,7 @@
     },
     {
         "name": "Two Way Radios",
+        "code": "TWRDOS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2234,6 +2467,7 @@
     },
     {
         "name": "Ultra-Zoom Cameras",
+        "code": "UZCAMS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2242,6 +2476,7 @@
     },
     {
         "name": "USB Flash Drives",
+        "code": "USBFD",
         "trailer": [
             "DV2",
             "DV4",
@@ -2250,6 +2485,7 @@
     },
     {
         "name": "USB Network Adapters",
+        "code": "USBNA",
         "trailer": [
             "DV2",
             "DV4",
@@ -2258,6 +2494,7 @@
     },
     {
         "name": "Vacuum Cleaners",
+        "code": "VACCLN",
         "trailer": [
             "DV2",
             "DV4",
@@ -2266,6 +2503,7 @@
     },
     {
         "name": "Vaporizers",
+        "code": "VPRVRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2274,6 +2512,7 @@
     },
     {
         "name": "Video Cables",
+        "code": "VDOCBL",
         "trailer": [
             "DV2",
             "DV4",
@@ -2282,6 +2521,7 @@
     },
     {
         "name": "Video Components",
+        "code": "VDOCOMP",
         "trailer": [
             "DV2",
             "DV4",
@@ -2290,6 +2530,7 @@
     },
     {
         "name": "Video Games",
+        "code": "VDOGMS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2298,6 +2539,7 @@
     },
     {
         "name": "Vitamins",
+        "code": "VTMNS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2306,6 +2548,7 @@
     },
     {
         "name": "Walkers",
+        "code": "WLKRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2314,6 +2557,7 @@
     },
     {
         "name": "Washing Machines",
+        "code": "WSHMCH",
         "trailer": [
             "DV2",
             "DV4",
@@ -2322,6 +2566,7 @@
     },
     {
         "name": "Watches",
+        "code": "WTCHS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2330,6 +2575,7 @@
     },
     {
         "name": "Water (Bottle)",
+        "code": "WTRBTT",
         "trailer": [
             "DV2",
             "DV4",
@@ -2338,6 +2584,7 @@
     },
     {
         "name": "Whiskey",
+        "code": "WHSKY",
         "trailer": [
             "DV2",
             "DV4",
@@ -2346,6 +2593,7 @@
     },
     {
         "name": "Windows",
+        "code": "WNDOWS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2354,6 +2602,7 @@
     },
     {
         "name": "Wine Cooler",
+        "code": "WNCLRS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2362,6 +2611,7 @@
     },
     {
         "name": "Wine Rack",
+        "code": "WNRCK",
         "trailer": [
             "DV2",
             "DV4",
@@ -2370,6 +2620,7 @@
     },
     {
         "name": "Wire Rod",
+        "code": "WRROD",
         "trailer": [
             "DV2",
             "DV4",
@@ -2378,6 +2629,7 @@
     },
     {
         "name": "Wood Stoves",
+        "code": "WDSTVS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2386,6 +2638,7 @@
     },
     {
         "name": "Workstations",
+        "code": "WKSTATS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2394,6 +2647,7 @@
     },
     {
         "name": "Writing Desks",
+        "code": "WRTDSK",
         "trailer": [
             "DV2",
             "DV4",
@@ -2402,6 +2656,7 @@
     },
     {
         "name": "Writing Supplies",
+        "code": "WRTSPLS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2410,6 +2665,7 @@
     },
     {
         "name": "X-Ray Equipment",
+        "code": "XRYQPT",
         "trailer": [
             "DV2",
             "DV4",
@@ -2418,6 +2674,7 @@
     },
     {
         "name": "Yard Tools",
+        "code": "YRDTLS",
         "trailer": [
             "DV2",
             "DV4",
@@ -2426,6 +2683,7 @@
     },
     {
         "name": "ATVs",
+        "code": "ATVS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2437,6 +2695,7 @@
     },
     {
         "name": "Bricks",
+        "code": "BRCKS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2448,6 +2707,7 @@
     },
     {
         "name": "Cement (Bags)",
+        "code": "CMNTBGS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2459,6 +2719,7 @@
     },
     {
         "name": "Cement Blocks",
+        "code": "CMNTBLKS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2470,6 +2731,7 @@
     },
     {
         "name": "Cement Panels",
+        "code": "CMNTPNL",
         "trailer": [
             "FB2",
             "FB4",
@@ -2478,6 +2740,7 @@
     },
     {
         "name": "Chassis",
+        "code": "CHSSS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2486,6 +2749,7 @@
     },
     {
         "name": "Chicken (Live)",
+        "code": "CHKNLV",
         "trailer": [
             "FB2",
             "FB4",
@@ -2497,6 +2761,7 @@
     },
     {
         "name": "Concrete Forms",
+        "code": "CNCRTF",
         "trailer": [
             "FB2",
             "FB4",
@@ -2505,6 +2770,7 @@
     },
     {
         "name": "Concrete Pipe",
+        "code": "CNCRTP",
         "trailer": [
             "FB2",
             "FB4",
@@ -2513,6 +2779,7 @@
     },
     {
         "name": "Copper Tube",
+        "code": "CPPRTB",
         "trailer": [
             "FB2",
             "FB4",
@@ -2524,6 +2791,7 @@
     },
     {
         "name": "Crane Mats",
+        "code": "CRNMTS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2532,6 +2800,7 @@
     },
     {
         "name": "Decorative Stone",
+        "code": "DECSTN",
         "trailer": [
             "FB2",
             "FB4",
@@ -2540,6 +2809,7 @@
     },
     {
         "name": "Fencing",
+        "code": "FNCNG",
         "trailer": [
             "FB2",
             "FB4",
@@ -2551,6 +2821,7 @@
     },
     {
         "name": "Fertilizer (bags)",
+        "code": "FRTLZRB",
         "trailer": [
             "FB2",
             "FB4",
@@ -2559,6 +2830,7 @@
     },
     {
         "name": "Flag Poles",
+        "code": "FLGPLS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2567,6 +2839,7 @@
     },
     {
         "name": "Golf Carts",
+        "code": "GLFCRTS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2578,6 +2851,7 @@
     },
     {
         "name": "Grapestakes",
+        "code": "GRPSTKS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2586,6 +2860,7 @@
     },
     {
         "name": "Hay Bales (rd)",
+        "code": "HYBLRD",
         "trailer": [
             "FB2",
             "FB4",
@@ -2594,6 +2869,7 @@
     },
     {
         "name": "Industrial  Hose",
+        "code": "INDHSE",
         "trailer": [
             "FB2",
             "FB4",
@@ -2602,6 +2878,7 @@
     },
     {
         "name": "Iron",
+        "code": "IRON",
         "trailer": [
             "FB2",
             "FB4",
@@ -2610,6 +2887,7 @@
     },
     {
         "name": "Lawn Mowers",
+        "code": "LWNMRS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2618,6 +2896,7 @@
     },
     {
         "name": "Lime Stone (Bags)",
+        "code": "LMSTNBG",
         "trailer": [
             "FB2",
             "FB4",
@@ -2626,6 +2905,7 @@
     },
     {
         "name": "Lumber",
+        "code": "LMBR",
         "trailer": [
             "FB2",
             "FB4",
@@ -2637,6 +2917,7 @@
     },
     {
         "name": "Machinery Stands",
+        "code": "MCHSTD",
         "trailer": [
             "FB2",
             "FB4",
@@ -2648,6 +2929,7 @@
     },
     {
         "name": "Marble (bags)",
+        "code": "MRBLBG",
         "trailer": [
             "FB2",
             "FB4",
@@ -2656,6 +2938,7 @@
     },
     {
         "name": "Metal Roof Deck",
+        "code": "MTLRDK",
         "trailer": [
             "FB2",
             "FB4",
@@ -2664,6 +2947,7 @@
     },
     {
         "name": "Metal Roofing",
+        "code": "MTLRFNG",
         "trailer": [
             "FB2",
             "FB4",
@@ -2675,6 +2959,7 @@
     },
     {
         "name": "Mulch (Bag)",
+        "code": "MLCHBG",
         "trailer": [
             "FB2",
             "FB4",
@@ -2683,6 +2968,7 @@
     },
     {
         "name": "Pallets",
+        "code": "PLLTS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2691,6 +2977,7 @@
     },
     {
         "name": "Paneling",
+        "code": "PNLNG",
         "trailer": [
             "FB2",
             "FB4",
@@ -2702,6 +2989,7 @@
     },
     {
         "name": "Plastic Pipe",
+        "code": "PLSTBG",
         "trailer": [
             "FB4",
             "FB5"
@@ -2709,6 +2997,7 @@
     },
     {
         "name": "Pre-Fab Walls",
+        "code": "PRFBWLS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2723,6 +3012,7 @@
     },
     {
         "name": "Railroad Rails",
+        "code": "RLRDRLS",
         "trailer": [
             "FB4",
             "FB5"
@@ -2730,6 +3020,7 @@
     },
     {
         "name": "Railroad Ties",
+        "code": "RLRDTS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2738,6 +3029,7 @@
     },
     {
         "name": "Railroad Wheels",
+        "code": "RLRDWH",
         "trailer": [
             "FB2",
             "FB4",
@@ -2746,6 +3038,7 @@
     },
     {
         "name": "Roof Shingles",
+        "code": "RFSHNGS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2757,6 +3050,7 @@
     },
     {
         "name": "Scaffolding",
+        "code": "SCFFLD",
         "trailer": [
             "FB2",
             "FB4",
@@ -2765,6 +3059,7 @@
     },
     {
         "name": "Snowmobiles",
+        "code": "SNMBLS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2776,6 +3071,7 @@
     },
     {
         "name": "Soil (Bag)",
+        "code": "SOLBGS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2784,6 +3080,7 @@
     },
     {
         "name": "Steel Angle Iron",
+        "code": "STLANI",
         "trailer": [
             "FB4",
             "FB5"
@@ -2794,6 +3091,7 @@
     },
     {
         "name": "Steel Bars",
+        "code": "STLBRS",
         "trailer": [
             "FB4",
             "FB5"
@@ -2804,6 +3102,7 @@
     },
     {
         "name": "Steel Beams",
+        "code": "STLBMS",
         "trailer": [
             "FB4",
             "FB5"
@@ -2811,6 +3110,7 @@
     },
     {
         "name": "Steel Coils",
+        "code": "STLCLS",
         "trailer": [
             "FB2",
             "FB4",
@@ -2822,6 +3122,7 @@
     },
     {
         "name": "Steel Fabricated",
+        "code": "STLFAB",
         "trailer": [
             "FB4",
             "FB5"
@@ -2832,6 +3133,7 @@
     },
     {
         "name": "Steel Pipe",
+        "code": "STLPP",
         "trailer": [
             "FB4",
             "FB5"
@@ -2842,6 +3144,7 @@
     },
     {
         "name": "Steel Plates",
+        "code": "STLPLT",
         "trailer": [
             "FB2",
             "FB4",
@@ -2850,6 +3153,7 @@
     },
     {
         "name": "Steel Sheets",
+        "code": "STLSHT",
         "trailer": [
             "FB2",
             "FB4",
@@ -2858,6 +3162,7 @@
     },
     {
         "name": "Steel Trusses",
+        "code": "STLTRS",
         "trailer": [
             "FB4",
             "FB5"
@@ -2865,6 +3170,7 @@
     },
     {
         "name": "Steel Tubing",
+        "code": "STLTUB",
         "trailer": [
             "FB4",
             "FB5"
@@ -2875,6 +3181,7 @@
     },
     {
         "name": "Stone Slabs",
+        "code": "STNSLB",
         "trailer": [
             "FB2",
             "FB4",
@@ -2883,6 +3190,7 @@
     },
     {
         "name": "T-Post",
+        "code": "TPOST",
         "trailer": [
             "FB2",
             "FB4",
@@ -2894,6 +3202,7 @@
     },
     {
         "name": "Turkey (Live)",
+        "code": "TKYLV",
         "trailer": [
             "FB2",
             "FB4",
@@ -2905,6 +3214,7 @@
     },
     {
         "name": "Wire Mesh",
+        "code": "WRMSH",
         "trailer": [
             "FB2",
             "FB4",
@@ -2916,6 +3226,7 @@
     },
     {
         "name": "Agricultural Products",
+        "code": "AGRPRO",
         "trailer": [
             "RF2",
             "RF4",
@@ -2924,6 +3235,7 @@
     },
     {
         "name": "Apples",
+        "code": "APPLS",
         "trailer": [
             "RF2",
             "RF4",
@@ -2932,6 +3244,7 @@
     },
     {
         "name": "Beef (side of)",
+        "code": "BFSDOF",
         "trailer": [
             "RF2",
             "RF4",
@@ -2943,6 +3256,7 @@
     },
     {
         "name": "Candy",
+        "code": "CANDY",
         "trailer": [
             "RF2",
             "RF4",
@@ -2951,6 +3265,7 @@
     },
     {
         "name": "Cherries",
+        "code": "CHRRS",
         "trailer": [
             "RF2",
             "RF4",
@@ -2959,6 +3274,7 @@
     },
     {
         "name": "Chicken (Fresh)",
+        "code": "CHKNFR",
         "trailer": [
             "RF2",
             "RF4",
@@ -2967,6 +3283,7 @@
     },
     {
         "name": "Frozen Cheesecake",
+        "code": "FRZNCHK",
         "trailer": [
             "RF2",
             "RF4",
@@ -2975,6 +3292,7 @@
     },
     {
         "name": "Frozen Dinners",
+        "code": "FRZNDN",
         "trailer": [
             "RF2",
             "RF4",
@@ -2983,6 +3301,7 @@
     },
     {
         "name": "Frozen Foods",
+        "code": "FRZNFD",
         "trailer": [
             "RF2",
             "RF4",
@@ -2991,6 +3310,7 @@
     },
     {
         "name": "Ice",
+        "code": "ICEICE",
         "trailer": [
             "RF2",
             "RF4",
@@ -2999,6 +3319,7 @@
     },
     {
         "name": "Ice Cream",
+        "code": "ICECRM",
         "trailer": [
             "RF2",
             "RF4",
@@ -3007,6 +3328,7 @@
     },
     {
         "name": "Lettuce",
+        "code": "LTTCE",
         "trailer": [
             "RF2",
             "RF4",
@@ -3015,6 +3337,7 @@
     },
     {
         "name": "Milk (Jug)",
+        "code": "MLKJG",
         "trailer": [
             "RF2",
             "RF4",
@@ -3023,6 +3346,7 @@
     },
     {
         "name": "Oranges (Bags)",
+        "code": "ORNGBG",
         "trailer": [
             "RF2",
             "RF4",
@@ -3031,6 +3355,7 @@
     },
     {
         "name": "Pork (Fresh)",
+        "code": "PRKFR",
         "trailer": [
             "RF2",
             "RF4",
@@ -3039,6 +3364,7 @@
     },
     {
         "name": "Produce (Fresh)",
+        "code": "PRODFR",
         "trailer": [
             "RF2",
             "RF4",
@@ -3047,6 +3373,7 @@
     },
     {
         "name": "Turkey (Fresh)",
+        "code": "TKYFR",
         "trailer": [
             "RF2",
             "RF4",
@@ -3055,6 +3382,7 @@
     },
     {
         "name": "Vegetables (Fresh)",
+        "code": "VEGFR",
         "trailer": [
             "RF2",
             "RF4",
@@ -3063,12 +3391,14 @@
     },
     {
         "name": "Drilling Rig",
+        "code": "DRLRIG",
         "trailer": [
             "SD"
         ]
     },
     {
         "name": "Farm Tractors",
+        "code": "FRMTRAC",
         "trailer": [
             "SD"
         ],
@@ -3078,24 +3408,28 @@
     },
     {
         "name": "Hay Bales (sq)",
+        "code": "HYBLSQ",
         "trailer": [
             "SD"
         ]
     },
     {
         "name": "Machinery",
+        "code": "MCHNRY",
         "trailer": [
             "SD"
         ]
     },
     {
         "name": "Playards",
+        "code": "PLYRDS",
         "trailer": [
             "SD"
         ]
     },
     {
         "name": "Steel Buildings",
+        "code": "STLBLD",
         "trailer": [
             "SD"
         ],
@@ -3108,6 +3442,7 @@
     },
     {
         "name": "Automobiles",
+        "code": "AUTOBLS",
         "trailer": [
             "CH"
         ]
@@ -3117,6 +3452,7 @@
         "endorsement": [
             "O"
         ],
+        "code": "HLCOPT",
         "trailer": [
             "DD"
         ],
@@ -3126,24 +3462,28 @@
     },
     {
         "name": "Lumber (Dry)",
+        "code": "LMBRDR",
         "trailer": [
             "CO"
         ]
     },
     {
         "name": "Motorcycles",
+        "code": "MTRCYC",
         "trailer": [
             "CO"
         ]
     },
     {
         "name": "Sheetrock",
+        "code": "SHTRCK",
         "trailer": [
             "CO"
         ]
     },
     {
         "name": "Customer Car",
+        "code": "CSTMCR",
         "trailer": [
             "CO"
         ],
@@ -3153,6 +3493,7 @@
     },
     {
         "name": "Cattle",
+        "code": "CTTLE",
         "trailer": [
             "CH4",
             "CH5"
@@ -3160,6 +3501,7 @@
     },
     {
         "name": "Pigs",
+        "code": "PIGS",
         "trailer": [
             "CH4",
             "CH5"
@@ -3167,6 +3509,7 @@
     },
     {
         "name": "Cut Timber",
+        "code": "CTTMBR",
         "trailer": [
             "LG"
         ],
@@ -3179,6 +3522,7 @@
         "endorsement": [
             "O"
         ],
+        "code": "TLPHPL",
         "trailer": [
             "LG"
         ],
@@ -3188,6 +3532,7 @@
     },
     {
         "name": "Corn",
+        "code": "CORN",
         "trailer": [
             "TG"
         ],
@@ -3197,6 +3542,7 @@
     },
     {
         "name": "Gas",
+        "code": "GASGAS",
         "trailer": [
             "TH"
         ],
@@ -3207,6 +3553,7 @@
     },
     {
         "name": "Raw Oil",
+        "code": "RWOIL",
         "trailer": [
             "TH"
         ],
@@ -3217,6 +3564,7 @@
     },
     {
         "name": "Water (Bulk)",
+        "code": "WTRBLK",
         "trailer": [
             "TW"
         ],
@@ -3226,6 +3574,7 @@
     },
     {
         "name": "Cement (Bulk)",
+        "code": "CMNTBLK",
         "trailer": [
             "HC"
         ],
@@ -3235,6 +3584,7 @@
     },
     {
         "name": "Plastic Pellets",
+        "code": "PLSTPLT",
         "trailer": [
             "HP"
         ],
@@ -3244,6 +3594,7 @@
     },
     {
         "name": "Sugar (Bulk)",
+        "code": "SGRBLK",
         "trailer": [
             "HF"
         ],
@@ -3253,6 +3604,7 @@
     },
     {
         "name": "Liquid Petroleum",
+        "code": "LQDPTM",
         "trailer": [
             "CY"
         ],
@@ -3263,6 +3615,7 @@
     },
     {
         "name": "Propane",
+        "code": "PRPNE",
         "trailer": [
             "CY"
         ],
@@ -3273,48 +3626,56 @@
     },
     {
         "name": "Diamond (Bulk)",
+        "code": "DMDBLK",
         "trailer": [
             "DB"
         ]
     },
     {
         "name": "Dirt (Bulk)",
+        "code": "DRTBLK",
         "trailer": [
             "DT"
         ]
     },
     {
         "name": "Gemstone",
+        "code": "GMSTN",
         "trailer": [
             "DB"
         ]
     },
     {
         "name": "Gold",
+        "code": "GOLD",
         "trailer": [
             "DB"
         ]
     },
     {
         "name": "Gravel",
+        "code": "GRAVL",
         "trailer": [
             "DT"
         ]
     },
     {
         "name": "Hops",
+        "code": "HOPS",
         "trailer": [
             "DB"
         ]
     },
     {
         "name": "Iron Ore",
+        "code": "IRNOR",
         "trailer": [
             "DB"
         ]
     },
     {
         "name": "Lime Stone (Raw)",
+        "code": "LMSTNR",
         "trailer": [
             "DT"
         ],
@@ -3324,18 +3685,21 @@
     },
     {
         "name": "Turquoise",
+        "code": "TRQSE",
         "trailer": [
             "DB"
         ]
     },
     {
         "name": "Boats",
+        "code": "BOATS",
         "trailer": [
             "BH"
         ]
     },
     {
         "name": "Furniture",
+        "code": "FRNTRE",
         "trailer": [
             "MV"
         ],
@@ -3343,8 +3707,9 @@
             "FURNPAD"
         ]
     },
-	{
+    {
         "name": "Combine",
+        "code": "CMBNE",
         "trailer": [
             "LB"
         ],
@@ -3357,6 +3722,7 @@
     },
     {
         "name": "Concrete Tank",
+        "code": "CNCRTK",
         "trailer": [
             "LB"
         ],
