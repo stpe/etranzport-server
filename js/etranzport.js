@@ -355,7 +355,7 @@ window.et = _.extend(window.et || {}, {
 						var results =  {
 							results: data.map(function(cargo) {
 								return {
-									id: cargo.name,
+									id: cargo.code,
 									text: cargo.name
 								};
 							}),
