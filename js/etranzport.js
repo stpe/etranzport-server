@@ -348,6 +348,9 @@ window.et = _.extend(window.et || {}, {
 				var type, 
 					trailer;
 
+				// update disabled state of cargo based on number of trailers
+				$("#haul-cargo").select2("enable", e.val.length > 0);
+
 				// get trailer types
 				that.trailerTypeSelection = [];
 				for (var i = 0; i < e.val.length; i++) {
@@ -373,8 +376,6 @@ window.et = _.extend(window.et || {}, {
 
 				return item.text;
 			}
-
-			// TODO: only enable cargo selection if trailer selection is done
 
 			$("#haul-cargo").select2({
 				placeholder: "Select Cargo",
@@ -408,7 +409,7 @@ window.et = _.extend(window.et || {}, {
 				if (!gameUtils.isValidCargoForTrailers(e.object.id, that.trailerTypeSelection)) {
 					e.preventDefault();
 				}
-			});
+			}).select2("enable", false);
 
 			modal.on("ok", function() {
 				var speed = this.convertMph(this.$el.find('#setVehicleSpeed').val());
