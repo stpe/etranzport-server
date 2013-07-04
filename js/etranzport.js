@@ -33,11 +33,13 @@ window.et = _.extend(window.et || {}, {
 		options: {
 			iconUrl: 'gfx/lorry-icon-32x32.png',
 			shadowUrl: null,
-			iconSize: new L.Point(32, 32),
-			iconAnchor: new L.Point(16, 16),
-			popupAnchor: new L.Point(0, -16)
+			iconSize: [32, 32],
+			iconAnchor: [16, 16],
+			popupAnchor: [0, -16]
 		}
-	})
+	}),
+
+	data: {}
 });
 
 
@@ -277,6 +279,9 @@ window.et = _.extend(window.et || {}, {
 	    doHaul: function() {
 	    	var that = this;
 
+			that.trailerTypeSelection = [],
+			that.cargoSelection = [];
+
 			var haulView = new DoHaulView({model: new Backbone.Model({
 				origin: this.model.get("city_name"),
 				name: this.model.get("name")
@@ -339,7 +344,37 @@ window.et = _.extend(window.et || {}, {
 
 					query.callback(results);
 				}
+			}).on("change", function(e) {
+				var type, 
+					trailer;
+
+				// get trailer types
+				that.trailerTypeSelection = [];
+				for (var i = 0; i < e.val.length; i++) {
+					trailer = et.vehicleList.get(e.val[i]);
+					if (!trailer) {
+						console.log("Error - can't lookup selected trailer");
+						return;
+					}
+
+					// add type if not already there
+					type = trailer.get("type");
+					if (that.trailerTypeSelection.indexOf("type") == -1) {
+						that.trailerTypeSelection.push(type);
+					}
+	    		}
 			});
+
+			function cargoSelectFormat(item, element) {
+				// if cargo not allowed by current trailer type, format as disabled
+				if (!gameUtils.isValidCargoForTrailers(item.id, that.trailerTypeSelection)) {
+					element.css('color', '#ccc');
+				}
+
+				return item.text;
+			}
+
+			// TODO: only enable cargo selection if trailer selection is done
 
 			$("#haul-cargo").select2({
 				placeholder: "Select Cargo",
@@ -363,6 +398,15 @@ window.et = _.extend(window.et || {}, {
 						};
 						return results;
 					}
+				},
+				formatResult: cargoSelectFormat,
+				formatSelection: cargoSelectFormat
+			}).on("change", function(e) {
+				that.cargoSelection = e.val;
+			}).on("select2-selecting", function(e) {
+				// don't allow invalid cargo types for current trailers to be selected
+				if (!gameUtils.isValidCargoForTrailers(e.object.id, that.trailerTypeSelection)) {
+					e.preventDefault();
 				}
 			});
 
@@ -831,7 +875,8 @@ window.et = _.extend(window.et || {}, {
 			var mapquest = new L.TileLayer(mapquestUrl, {maxZoom: 18, attribution: mapquestAttrib, subdomains: subDomains});
 
 			map.addLayer(mapquest);
-			map.setView(new L.LatLng(34.705, -97.73), 5);
+			// default map position (USA)
+			map.setView([34.705, -97.73], 5);
 
 			// listen to added trips
 			Backbone.EventBroker.on("trip:add", this.vehicleAdd, that);
@@ -1005,7 +1050,24 @@ window.et = _.extend(window.et || {}, {
 	        "": "main"
 	    },
 	 
-	    main: function () {
+	    initCargoData: function() {
+	    	// populate code lookup for cargo
+	    	$.getJSON("/api/data/cargo", function(data) {
+	    		et.data.cargo = {};
+	    		for (var i = 0; i < data.length; i++) {
+	    			et.data.cargo[data[i].code] = data[i];
+	    		}
+	    		console.log("Inited cargo: " + data.length + " types.");
+	    	});
+	    },
+
+	    init: function() {
+	    	this.initCargoData();
+	    },
+
+	    main: function() {
+	    	this.init();
+
 	    	this.vehicleList = new VehicleCollection();
 	    	this.vehicleListView = new VehicleListView({model: this.vehicleList});
 	    	$("#vehicles").append(this.vehicleListView.render().el);
@@ -1138,6 +1200,24 @@ window.et = _.extend(window.et || {}, {
 			});
 		}
 	});
+
+	window.gameUtils = {
+		// true if cargo (code) may be loaded on trailers (list of trailer types)
+		isValidCargoForTrailers: function(cargo, trailers) {
+			if (!et.data.cargo[cargo]) {
+				console.log("Invalid cargo, not found in lookup: " + cargo);
+				return false;
+			}
+
+			for (var i = 0; i < trailers.length; i++) {
+				if (et.data.cargo[cargo].trailer.indexOf(trailers[i]) != -1) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+	};
 
 	var app = new AppRouter();
 	Backbone.history.start();
