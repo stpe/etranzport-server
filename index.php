@@ -195,6 +195,7 @@
 <script src="js/libs/bootstrap/js/bootstrap.js"></script>
 <script src="js/libs/backbone/addons/backbone.bootstrap-modal.js"></script>
 <script src="js/libs/backbone/addons/backbone-eventbroker.js"></script>
+<script src="js/libs/backbone/marionette/backbone.marionette.js"></script>
 <script src="js/libs/select2/select2.js"></script>
 <script src="js/libs/leaflet/leaflet.js"></script>
 <script src="js/utils.js"></script>
