@@ -380,24 +380,24 @@ window.et = _.extend(window.et || {}, {
 				placeholder: "Select Cargo",
 				minimumResultsForSearch: 9999,
 				multiple: true,
-				ajax: {
-					url: "api/data/cargo",
-					dataType: "json",
-					data: function(term, page) {
-						return {};
-					},
-					results: function(data, page) {
-						var results =  {
-							results: data.map(function(cargo) {
-								return {
-									id: cargo.code,
-									text: cargo.name
-								};
-							}),
-							more: false
-						};
-						return results;
-					}
+				query: function(query) {
+					var keys = Object.keys(et.data.cargo),
+						cargo = keys.map(function(code) {
+							return {
+								id: code,
+								text: et.data.cargo[code].name
+							}
+						});
+
+					// sort alphabetically
+					cargo.sort(function(a, b) {
+						return (a.text < b.text) ? -1 : (a.text > b.text) ? 1 : 0;
+					});
+
+					query.callback({
+						results: cargo,
+						more: false
+					});
 				},
 				formatResult: cargoSelectFormat,
 				formatSelection: cargoSelectFormat
