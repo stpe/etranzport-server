@@ -186,6 +186,8 @@ $app->get('/trips', function() {
 $app->post('/trips', function() {
     global $app;
 
+    // TODO: anti-cheat check, verify cargo is valid for trailers
+
     $env = $app->environment();
     $data = json_decode($env['slim.input'], true);
 
