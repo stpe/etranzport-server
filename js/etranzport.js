@@ -831,6 +831,7 @@ window.et = _.extend(window.et || {}, {
 
 	 	drawCities: function() {
 	 		var map = et.map;
+	 		// TODO: draw city location on map
 	 	},
 
 	 	vehicleAdd: function(trip) {
