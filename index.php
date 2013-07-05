@@ -18,7 +18,7 @@
 		<div class="container">
 			<span class="brand">eTranzport Experiments</span>
 			<div class="navbar-control input-prepend input-append pull-right">
-				<span class="add-on">Time Factor</span><input type="text" class="span1 disabled" id="timeFactor" disabled>
+				<!-- Previous place for timeFactor input -->
 			</div>
 		</div>
 	</div>

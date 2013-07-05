@@ -1084,7 +1084,6 @@ window.et = _.extend(window.et || {}, {
 	        this.vehicleAdd = new VehicleAddView({ el: $("#vehicle-form") });
 
 	       	et.timeDelta = 1000 / et.tick;
-			$('#timeFactor').val(et.timeFactor);
 	    }
 	});
 
