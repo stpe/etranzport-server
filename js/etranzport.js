@@ -632,25 +632,17 @@ window.et = _.extend(window.et || {}, {
 			el.find("#vehicle-city").select2({
 				placeholder: "Select Start City",
 				minimumResultsForSearch: 9999,
-				ajax: {
-					url: "api/cities",
-					dataType: "json",
-					data: function(term, page) {
-						return {};
-					},
-					results: function(data, page) {
-						var results =  {
-							results: data.map(function(city) {
-								return {
-									id: city.id,
-									text: city.name
-								};
-							}),
-							more: false
-						};
-						return results;
-					}
-				}
+				query: function(query) {
+					query.callback({
+						results: et.data.cities.map(function(city) {
+							return {
+								id: city.id,
+								text: city.name
+							};
+						}),
+						more: false
+					});
+				}	
 			});
 
 			return this;
@@ -710,25 +702,17 @@ window.et = _.extend(window.et || {}, {
 			el.find("#vehicle-city").select2({
 				placeholder: "Select Start City",
 				minimumResultsForSearch: 9999,
-				ajax: {
-					url: "api/cities",
-					dataType: "json",
-					data: function(term, page) {
-						return {};
-					},
-					results: function(data, page) {
-						var results =  {
-							results: data.map(function(city) {
-								return {
-									id: city.id,
-									text: city.name
-								};
-							}),
-							more: false
-						};
-						return results;
-					}
-				}
+				query: function(query) {
+					query.callback({
+						results: et.data.cities.map(function(city) {
+							return {
+								id: city.id,
+								text: city.name
+							};
+						}),
+						more: false
+					});
+				}	
 			});
 
 			return this;
@@ -1016,7 +1000,7 @@ window.et = _.extend(window.et || {}, {
 	    		for (var i = 0; i < data.length; i++) {
 	    			et.data.cargo[data[i].code] = data[i];
 	    		}
-	    		console.log("Inited cargo: " + data.length + " types.");
+	    		console.log("Initialized cargo: " + data.length + " types.");
 	    	});
 	    },
 
@@ -1024,6 +1008,7 @@ window.et = _.extend(window.et || {}, {
 	    	// populate array of cities
 	    	$.getJSON("/api/cities", function(data) {
 	    		et.data.cities = data;
+	    		console.log("Initialized cities: " + data.length + " cities.");
 	    	});
 	    },
 
