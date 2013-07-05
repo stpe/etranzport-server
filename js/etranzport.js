@@ -218,11 +218,6 @@ window.et = _.extend(window.et || {}, {
 		}
 	});
 
-	window.CityCollection = Backbone.Collection.extend({
-		model: City,
-		url: "api/cities"
-	});
-
 	window.Route = Backbone.Model.extend({
 		defaults: {
 			"id": null,
@@ -633,47 +628,6 @@ window.et = _.extend(window.et || {}, {
 				formatSelection: vehicleTypeFormat
 			});
 
-			var trailerFormat = function(trailer) {
-				var fmt = trailer.text;
-
-				if (trailer.sizeft) {
-					fmt += ", " + trailer.sizeft + "ft";
-				}
-
-				fmt += ' (' + trailer.id + ')';
-
-				return fmt;
-			}
-
-			// vehicle trailer types select2 box
-			el.find("#vehicle-trailers").select2({
-				placeholder: "Add Trailer",
-				//multiple: true,
-				minimumResultsForSearch: 9999,
-				ajax: {
-					url: "api/data/trailers",
-					dataType: "json",
-					data: function(term, page) {
-						return {};
-					},
-					results: function(data, page) {
-						var results =  {
-							results: data.map(function(trailer) {
-								return {
-									id: trailer.code,
-									text: trailer.name,
-									sizeft: trailer.sizeft
-								};
-							}),
-							more: false
-						};
-						return results;
-					}
-				},
-				formatResult: trailerFormat,
-				formatSelection: trailerFormat				
-			});
-
 			// start city select2 box
 			el.find("#vehicle-city").select2({
 				placeholder: "Select Start City",
@@ -891,6 +845,10 @@ window.et = _.extend(window.et || {}, {
 			this.timer = null;
 	 	},
 
+	 	drawCities: function() {
+	 		var map = et.map;
+	 	},
+
 	 	vehicleAdd: function(trip) {
 	 		var route = trip.get("route");
 			var map = et.map;
@@ -1062,8 +1020,16 @@ window.et = _.extend(window.et || {}, {
 	    	});
 	    },
 
+	    initCityData: function() {
+	    	// populate array of cities
+	    	$.getJSON("/api/cities", function(data) {
+	    		et.data.cities = data;
+	    	});
+	    },
+
 	    init: function() {
 	    	this.initCargoData();
+	    	this.initCityData();
 	    },
 
 	    main: function() {
@@ -1079,7 +1045,6 @@ window.et = _.extend(window.et || {}, {
 	        $("#trips").append(this.tripListView.render().el);
 
 	        this.map = new MapView({el: $('#map'), vehicles: this.tripList});
-	        et.mapView = this.map;
 
 	        this.vehicleAdd = new VehicleAddView({ el: $("#vehicle-form") });
 
