@@ -170,6 +170,7 @@
 				<tr>
 					<th>#</th>
 					<th>Vehicle</th>
+					<th>Cargo</th>
 					<th>State</th>
 					<th>Origin</th>
 					<th>Destination</th>
