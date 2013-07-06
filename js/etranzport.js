@@ -843,7 +843,12 @@ window.et = _.extend(window.et || {}, {
 
 	 		// TODO: draw city location on map
 	 		for (var i = 0; i < len; i++) {
-	 			console.log(cities[i]);
+	 			var points = decodeLine(cities[i].location),
+	 				latlng = [points[0][0], points[0][1]];
+
+				var marker = new L.Marker(latlng);
+				marker.addTo(map)
+					.bindPopup(cities[i].name);
 	 		}
 	 	},
 
@@ -1057,7 +1062,7 @@ window.et = _.extend(window.et || {}, {
 
 	    	this.vehicleList = new VehicleCollection();
 	    	this.vehicleListView = new VehicleListView({model: this.vehicleList});
-	    	$("#vehicles").append(this.vehicleListView.render().el);
+			$("#vehicles").append(this.vehicleListView.render().el);
 	    	et.vehicleList = this.vehicleList;
 
 	        this.tripList = new TripCollection();
@@ -1065,7 +1070,7 @@ window.et = _.extend(window.et || {}, {
 	        $("#trips").append(this.tripListView.render().el);
 
 	    	this.init().done(function() {
-		        that.map = new MapView({el: $('#map'), vehicles: this.tripList});
+		        that.map = new MapView({el: $('#map'), vehicles: that.tripList});
 	    	});
 
 	        this.vehicleAdd = new VehicleAddView({ el: $("#vehicle-form") });
