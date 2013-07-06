@@ -794,7 +794,7 @@ window.et = _.extend(window.et || {}, {
 	});
 
 	window.MapView = Backbone.View.extend({
-	 	
+
 	 	initialize: function(options) {
 	 		// init map
 	 		var that = this;
@@ -817,6 +817,9 @@ window.et = _.extend(window.et || {}, {
 			// default map position (USA)
 			map.setView([34.705, -97.73], 5);
 
+			// init
+			this.drawCities();
+
 			// listen to added trips
 			Backbone.EventBroker.on("trip:add", this.vehicleAdd, that);
 			Backbone.EventBroker.on("trip:addtomap", function(trip) {
@@ -830,8 +833,18 @@ window.et = _.extend(window.et || {}, {
 	 	},
 
 	 	drawCities: function() {
-	 		var map = et.map;
+	 		if (!et.data.cities) {
+	 			$.error("Cities data empty during MapView init.");
+	 		}
+
+	 		var map = et.map,
+	 			cities = et.data.cities,
+	 			len = et.data.cities.length;
+
 	 		// TODO: draw city location on map
+	 		for (var i = 0; i < len; i++) {
+	 			console.log(cities[i]);
+	 		}
 	 	},
 
 	 	vehicleAdd: function(trip) {
@@ -995,6 +1008,8 @@ window.et = _.extend(window.et || {}, {
 	    },
 	 
 	    initCargoData: function() {
+	    	var dfd = new $.Deferred();
+
 	    	// populate code lookup for cargo
 	    	$.getJSON("/api/data/cargo", function(data) {
 	    		et.data.cargo = {};
@@ -1002,24 +1017,43 @@ window.et = _.extend(window.et || {}, {
 	    			et.data.cargo[data[i].code] = data[i];
 	    		}
 	    		console.log("Initialized cargo: " + data.length + " types.");
+
+	    		dfd.resolve();
 	    	});
+
+	    	return dfd.promise();
 	    },
 
 	    initCityData: function() {
-	    	// populate array of cities
+	    	var dfd = new $.Deferred();
+
+	    	// retrieve and populate array of cities
 	    	$.getJSON("/api/cities", function(data) {
 	    		et.data.cities = data;
 	    		console.log("Initialized cities: " + data.length + " cities.");
+
+	    		dfd.resolve();
 	    	});
+
+	    	return dfd.promise();
 	    },
 
 	    init: function() {
-	    	this.initCargoData();
-	    	this.initCityData();
+	    	var dfd = new $.Deferred();
+
+	    	$.when(
+		    	this.initCargoData(),
+		    	this.initCityData()
+	    	).done(function() {
+	    		console.log("Init done.");
+	    		dfd.resolve();
+	    	});
+
+	    	return dfd.promise();
 	    },
 
 	    main: function() {
-	    	this.init();
+	    	var that = this;
 
 	    	this.vehicleList = new VehicleCollection();
 	    	this.vehicleListView = new VehicleListView({model: this.vehicleList});
@@ -1030,7 +1064,9 @@ window.et = _.extend(window.et || {}, {
 	        this.tripListView = new TripListView({model: this.tripList});
 	        $("#trips").append(this.tripListView.render().el);
 
-	        this.map = new MapView({el: $('#map'), vehicles: this.tripList});
+	    	this.init().done(function() {
+		        that.map = new MapView({el: $('#map'), vehicles: this.tripList});
+	    	});
 
 	        this.vehicleAdd = new VehicleAddView({ el: $("#vehicle-form") });
 
@@ -1170,7 +1206,7 @@ window.et = _.extend(window.et || {}, {
 		}
 	};
 
-	var app = new AppRouter();
+	window.app = new AppRouter();
 	Backbone.history.start();
 
 })(jQuery);
