@@ -1060,16 +1060,19 @@ window.et = _.extend(window.et || {}, {
 	    main: function() {
 	    	var that = this;
 
+	    	// vehicles
 	    	this.vehicleList = new VehicleCollection();
 	    	this.vehicleListView = new VehicleListView({model: this.vehicleList});
 			$("#vehicles").append(this.vehicleListView.render().el);
 	    	et.vehicleList = this.vehicleList;
 
-	        this.tripList = new TripCollection();
-	        this.tripListView = new TripListView({model: this.tripList});
-	        $("#trips").append(this.tripListView.render().el);
-
 	    	this.init().done(function() {
+	    		// trips
+		        that.tripList = new TripCollection();
+		        that.tripListView = new TripListView({model: that.tripList});
+		        $("#trips").append(that.tripListView.render().el);
+
+		        // map
 		        that.map = new MapView({el: $('#map'), vehicles: that.tripList});
 	    	});
 
