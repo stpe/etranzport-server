@@ -17,6 +17,7 @@ eTransport Server, including front-end and REST JSON back-end API.
 * [Backbone.js](http://backbonejs.org/)
  * [Backbone.BootstrapModal](https://github.com/powmedia/backbone.bootstrap-modal)
  * [Backbone.EventBroker](https://github.com/efeminella/backbone-eventbroker)
+* [Marionette.js](http://marionettejs.com/)
 * [Underscore.js](http://underscorejs.org/)
 * [jQuery](http://jquery.com/)
 * [Leaflet](http://leaflet.cloudmade.com/)
