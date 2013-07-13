@@ -10,6 +10,18 @@
 	<link href="js/libs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="js/libs/select2/select2.css" rel="stylesheet">
 	<link href="js/libs/leaflet/leaflet.css" rel="stylesheet">
+
+	<script>
+	var _prum = [['id', '51e1bd6aabe53d4111000000'],
+	             ['mark', 'firstbyte', (new Date()).getTime()]];
+	(function() {
+	    var s = document.getElementsByTagName('script')[0]
+	      , p = document.createElement('script');
+	    p.async = 'async';
+	    p.src = '//rum-static.pingdom.net/prum.min.js';
+	    s.parentNode.insertBefore(p, s);
+	})();
+	</script>
 </head>
 <body>
 
