@@ -6,9 +6,10 @@ eTransport Server, including front-end and REST JSON back-end API.
 
 * http://etranzport.codetouch.com/
 
-## Deployment Service
+## Other Service
 
-* [DeployHQ](https://etranzport.deployhq.com/)
+* Deployment: [DeployHQ](https://etranzport.deployhq.com/)
+* Monitoring: [Pingdom](http://status.etranzport.com/)
 
 ## 3rd Party Components
 
