@@ -493,52 +493,36 @@ window.et = _.extend(window.et || {}, {
 	    }
 	});
 
-	window.TripListView = Backbone.View.extend({
-	    tagName: 'tbody',
-	    id: "tripList",
-	 
-	    initialize: function() {
-			this.model.on("reset", this.render, this);
-			this.model.on("add", this.render, this);
-	    },
-	 
-	    render: function(eventName) {
-	    	$(this.el).empty();
-	    	_.each(this.model.models, function(trip) {
-	            $(this.el).append(new TripListItemView({model: trip}).render().el);
-	        }, this);
-	        return this;
-	    }
-	});
-
-	window.TripListItemView = Backbone.View.extend({
+	window.TripListItemView = Backbone.Marionette.ItemView.extend({
 	    tagName: "tr",
 	 
-	    template: _.template($('#tpl-trip-list-item').html()),
-
-	    initialize: function() {
-	    	this.model.on("change", this.render, this);
-	    },
+	    template: "#tpl-trip-list-item",
 
 	    events: {
 	    	"click .removeTrip": "remove"
+	    },
+
+	    initialize: function() {
+	    	this.listenTo(this.model, "change", this.render);
 	    },
 
 	    remove: function() {
 	    	this.$el.remove();
 	    	this.model.destroy();
 	    },
-	 
-	    render: function(eventName) {
-	    	var data = this.model.toJSON();
+
+	    serializeData: function() {
+	    	var cargoStr = "",
+	    		trailerList = [],
+	    		cargoList = [],
+	    		attr = this.model.getTripAttributes(),
+	    		data = this.model.toJSON();
 
 	    	// calculate estimation of real distance since polyline is optimized
-	    	var traveled = (this.model.get("map") && this.model.get("map").get("distance")) ? this.getDistanceString((this.model.get("map").get("traveled") / this.model.get("map").get("distance")) * data.distance) : '';
-
-	    	var cargoStr = "",
-	    		attr = this.model.getTripAttributes(),
-	    		trailerList = [],
-	    		cargoList = [];
+	    	var traveled = "";
+	    	if (this.model.get("map") && this.model.get("map").get("distance")) {
+	    		traveled = this.getDistanceString((this.model.get("map").get("traveled") / this.model.get("map").get("distance")) * data.distance)
+	    	};
 
 	    	if (attr.trailers) {
 	    		for (var i = 0; i < attr.trailers.length; i++) {
@@ -575,11 +559,18 @@ window.et = _.extend(window.et || {}, {
 				cargo: cargoStr
 	    	});
 
-	        $(this.el).
-	        	attr('id', 'trip-data-' + this.model.get('id')).
-	        	html(this.template(data));
-	        return this;
+	    	return data;
+	    },
+	 
+	    onRender: function(eventName) {
+	        this.$el.attr('id', 'trip-data-' + this.model.get('id'));
 	    }
+	});
+
+	window.TripListView = Backbone.Marionette.CollectionView.extend({
+		itemView: window.TripListItemView,
+	    tagName: 'tbody',
+	    id: "tripList"
 	});
 
     var CityView = Backbone.View.extend({
@@ -595,20 +586,16 @@ window.et = _.extend(window.et || {}, {
         }
     });
 
-	window.TruckAdd = Backbone.View.extend({
-		template: _.template($('#tpl-truck-add').html()),
+	window.TruckAdd = Backbone.Marionette.ItemView.extend({
+		template: "#tpl-truck-add",
 
-		render: function(eventName) {
-			var el = $(this.el);
-
-			el.html(this.template());
-
+		onRender: function(eventName) {
 			var vehicleTypeFormat = function(vehicle) {
 				return vehicle.text + ' (' + vehicle.id + ')'
 			};
 
 			// vehicle type select2 box
-			el.find("#vehicle-type").select2({
+			this.$el.find("#vehicle-type").select2({
 				placeholder: "Select Truck Type",
 				minimumResultsForSearch: 9999,
 				ajax: {
@@ -635,7 +622,7 @@ window.et = _.extend(window.et || {}, {
 			});
 
 			// start city select2 box
-			el.find("#vehicle-city").select2({
+			this.$el.find("#vehicle-city").select2({
 				placeholder: "Select Start City",
 				minimumResultsForSearch: 9999,
 				query: function(query) {
@@ -650,20 +637,14 @@ window.et = _.extend(window.et || {}, {
 					});
 				}	
 			});
-
-			return this;
 		}
 	});
 
 
-	window.TrailerAdd = Backbone.View.extend({
-		template: _.template($('#tpl-trailer-add').html()),
+	window.TrailerAdd = Backbone.Marionette.ItemView.extend({
+		template: "#tpl-trailer-add",
 
-		render: function(eventName) {
-			var el = $(this.el);
-
-			el.html(this.template());
-
+		onRender: function(eventName) {
 			var trailerFormat = function(trailer) {
 				var fmt = trailer.text;
 
@@ -677,7 +658,7 @@ window.et = _.extend(window.et || {}, {
 			}
 
 			// trailers select2 box
-			el.find("#vehicle-trailers").select2({
+			this.$el.find("#vehicle-trailers").select2({
 				placeholder: "Add Trailer",
 				minimumResultsForSearch: 9999,
 				ajax: {
@@ -705,7 +686,7 @@ window.et = _.extend(window.et || {}, {
 			});
 
 			// start city select2 box
-			el.find("#vehicle-city").select2({
+			this.$el.find("#vehicle-city").select2({
 				placeholder: "Select Start City",
 				minimumResultsForSearch: 9999,
 				query: function(query) {
@@ -720,12 +701,10 @@ window.et = _.extend(window.et || {}, {
 					});
 				}	
 			});
-
-			return this;
 		}
 	});
 
-	window.VehicleAddView = Backbone.View.extend({
+	window.VehicleAddView = Backbone.Marionette.ItemView.extend({
 		events: {
 			"click #addTruck": function(e) {
 				this.addVehicle(e, et.vehicleClass.TRUCK);
@@ -738,8 +717,19 @@ window.et = _.extend(window.et || {}, {
 		addVehicle: function(e, vehicleClass) {
 			e.preventDefault();
 
-			var addVehicle = (vehicleClass == et.vehicleClass.TRUCK) ? new TruckAdd({model: new Backbone.Model({})}) : new TrailerAdd({model: new Backbone.Model({})});;
-			var typeString = vehicleClass == et.vehicleClass.TRUCK ? "Truck" : "Trailer";
+			var typeString, addVehicle;
+
+			if (vehicleClass == et.vehicleClass.TRUCK) {
+				addVehicle = new TruckAdd({
+					model: new Backbone.Model({})
+				});
+				typeString = "Truck";
+			} else {
+				addVehicle = new TrailerAdd({
+					model: new Backbone.Model({})
+				});
+				typeString = "Trailer";
+			}
 
 			var modal = new Backbone.BootstrapModal({
 				title: "Add " + typeString + " to Fleet",
@@ -783,20 +773,9 @@ window.et = _.extend(window.et || {}, {
 		}
 	});
 
-	window.DoHaulView = Backbone.View.extend({
+	window.DoHaulView = Backbone.Marionette.ItemView.extend({
 		el: $('#alert'),
-
-		template: _.template($('#tpl-dohaul').html()),
-
-		initialize: function() {
-			this.render();
-		},
-
-		render: function(eventName) {
-			$(this.el).html(this.template(this.model.toJSON()));
-
-			return this;
-		}
+		template: "#tpl-dohaul",
 	});
 
 	window.MapView = Backbone.View.extend({
@@ -1075,7 +1054,9 @@ window.et = _.extend(window.et || {}, {
 	    	this.init().done(function() {
 	    		// trips
 		        that.tripList = new TripCollection();
-		        that.tripListView = new TripListView({model: that.tripList});
+		        that.tripListView = new TripListView({
+		        	collection: that.tripList
+		        });
 		        $("#trips").append(that.tripListView.render().el);
 
 		        // map
