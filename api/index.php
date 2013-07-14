@@ -144,7 +144,7 @@ function getTripCurrentDistance($trip) {
 }
 
 $app->get('/trips', function() {
-    global $app;
+    global $app, $log;
 
     $trips =
         ORM::for_table('trip')
@@ -152,6 +152,7 @@ $app->get('/trips', function() {
             ->select('origin_city.name', 'origin_name')
             ->select('destination_city.name', 'destination_name')
             ->select('vehicle.name', 'vehicle_name')
+            ->select('vehicle.trip', 'vehicle_trip')
             ->join('city', array('origin_city.id', '=', 'trip.origin'), 'origin_city')
             ->join('city', array('destination_city.id', '=', 'trip.destination'), 'destination_city')
             ->join('vehicle', array('vehicle.id', '=', 'trip.vehicle'), 'vehicle')
@@ -168,8 +169,12 @@ $app->get('/trips', function() {
             $trip->state = TripState::ENROUTE;
             $trip->distance_completed = $distance_completed;
         } else {
-            // trip finished, but state is en route
             if ($trip->state == TripState::ENROUTE) {
+                // trip finished, but state is en route
+                endTrip($trip, TripState::COMPLETED);
+            } else if ($trip->vehicle_trip !== null) {
+                // trip finished, but vehicle still en route (something went wrong) - fix it
+                $log->info("Fixing errornous vehicle state of trip " . $trip->id());
                 endTrip($trip, TripState::COMPLETED);
             }
         }
