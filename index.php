@@ -11,6 +11,7 @@
 	<link href="js/libs/select2/select2.css" rel="stylesheet">
 	<link href="js/libs/leaflet/leaflet.css" rel="stylesheet">
 
+	<?php if ($_SERVER['SERVER_ADDR'] != '127.0.0.1') { ?>
 	<script>
 	var _prum = [['id', '51e1bd6aabe53d4111000000'],
 	             ['mark', 'firstbyte', (new Date()).getTime()]];
@@ -22,6 +23,7 @@
 	    s.parentNode.insertBefore(p, s);
 	})();
 	</script>
+	<?php } ?>
 </head>
 <body>
 
