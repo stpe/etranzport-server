@@ -213,6 +213,7 @@ $app->post('/trips', function() {
     $result['vehicle_name'] = $vehicle->name;
 
     // update vehicle state
+    $vehicle->trip = $trip->id();
     $vehicle->city = $trip->destination;
     $vehicle->state = TruckState::DRIVING;
     $vehicle->save();
@@ -223,7 +224,13 @@ $app->post('/trips', function() {
         $trailers_str = implode(",", $attr['trailers']);
 
         ORM::raw_execute(
-            'UPDATE vehicle SET connected = ?, city = ?, state = ? WHERE id IN ('. $trailers_str .')', array($data['vehicle'], $data['destination'], TruckState::DRIVING)
+            'UPDATE vehicle SET trip = ?, connected = ?, city = ?, state = ? WHERE id IN ('. $trailers_str .')',
+            array(
+                $vehicle->trip,
+                $vehicle->id(),
+                $vehicle->city,
+                TruckState::DRIVING
+            )
         );
     }
 
@@ -263,12 +270,17 @@ function endTrip($trip, $state) {
 
     // update vehicle
     $vehicle = ORM::for_table('vehicle')->find_one($trip->vehicle);
+    $vehicle->trip = null;
     $vehicle->state = TruckState::OFFDUTY;
     $vehicle->save();
 
     // disconnect trailers connected to vehicle
     ORM::raw_execute(
-        'UPDATE vehicle SET connected = NULL, state = ? WHERE connected = ?', array(TruckState::OFFDUTY, $vehicle->id)
+        'UPDATE vehicle SET trip = NULL, connected = NULL, state = ? WHERE connected = ?',
+        array(
+            TruckState::OFFDUTY,
+            $vehicle->id
+        )
     );
 
     return $trip->as_array();
