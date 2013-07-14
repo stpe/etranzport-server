@@ -414,6 +414,12 @@ window.et = _.extend(window.et || {}, {
 					origin: that.model.get("city"),
 					destination: $("#haul-destination-city").select2("val")
 				});
+
+				if (!route.get("origin") || !route.get("destination")) {
+					alert("Please set a destination!");
+					modal.preventClose();
+					return;
+				}
 				
 				var trailers = $("#haul-trailer").select2("val"),
 					cargo = $("#haul-cargo").select2("val");
