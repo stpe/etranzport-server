@@ -168,9 +168,6 @@ window.et = _.extend(window.et || {}, {
 			}, this);
 
 			Backbone.EventBroker.on("trip:arrived", function(trip) {
-				// remove from collection
-				this.remove(trip);
-
 				// update state to completed
 				trip.set("state", et.tripStates.COMPLETED);
 
