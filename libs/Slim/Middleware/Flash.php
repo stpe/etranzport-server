@@ -6,7 +6,7 @@
  * @copyright   2011 Josh Lockhart
  * @link        http://www.slimframework.com
  * @license     http://www.slimframework.com/license
- * @version     2.0.0
+ * @version     2.2.0
  * @package     Slim
  *
  * MIT LICENSE
@@ -59,7 +59,6 @@ class Flash extends \Slim\Middleware implements \ArrayAccess, \IteratorAggregate
 
     /**
      * Constructor
-     * @param  \Slim  $app
      * @param  array  $settings
      */
     public function __construct($settings = array())

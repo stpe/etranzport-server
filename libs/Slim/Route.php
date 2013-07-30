@@ -150,9 +150,14 @@ class Route
     /**
      * Set route callable
      * @param  mixed $callable
+     * @throws \InvalidArgumentException If argument is not callable
      */
     public function setCallable($callable)
     {
+        if (!is_callable($callable)) {
+            throw new \InvalidArgumentException('Route callable must be callable');
+        }
+
         $this->callable = $callable;
     }
 
@@ -280,6 +285,7 @@ class Route
 
     /**
      * Detect support for an HTTP method
+     * @param  string $method
      * @return bool
      */
     public function supportsHttpMethod($method)
@@ -303,19 +309,23 @@ class Route
      * If the method argument `is_callable` (including callable arrays!),
      * we directly append the argument to `$this->middleware`. Else, we
      * assume the argument is an array of callables and merge the array
-     * with `$this->middleware`. Even if non-callables are included in the
-     * argument array, we still merge them; we lazily check each item
-     * against `is_callable` during Router::dispatch().
+     * with `$this->middleware`.  Each middleware is checked for is_callable()
+     * and an InvalidArgumentException is thrown immediately if it isn't.
      *
      * @param  Callable|array[Callable]
      * @return \Slim\Route
-     * @throws \InvalidArgumentException If argument is not callable or not an array
+     * @throws \InvalidArgumentException If argument is not callable or not an array of callables.
      */
     public function setMiddleware($middleware)
     {
         if (is_callable($middleware)) {
             $this->middleware[] = $middleware;
         } elseif (is_array($middleware)) {
+            foreach ($middleware as $callable) {
+                if (!is_callable($callable)) {
+                    throw new \InvalidArgumentException('All Route middleware must be callable');
+                }
+            }
             $this->middleware = array_merge($this->middleware, $middleware);
         } else {
             throw new \InvalidArgumentException('Route middleware must be callable or an array of callables');
@@ -338,8 +348,11 @@ class Route
     public function matches($resourceUri)
     {
         //Convert URL params into regex patterns, construct a regex for this route, init params
-        $patternAsRegex = preg_replace_callback('#:([\w]+)\+?#', array($this, 'matchesCallback'),
-            str_replace(')', ')?', (string) $this->pattern));
+        $patternAsRegex = preg_replace_callback(
+            '#:([\w]+)\+?#',
+            array($this, 'matchesCallback'),
+            str_replace(')', ')?', (string) $this->pattern)
+        );
         if (substr($this->pattern, -1) === '/') {
             $patternAsRegex .= '?';
         }
@@ -363,8 +376,8 @@ class Route
 
     /**
      * Convert a URL parameter (e.g. ":id", ":id+") into a regular expression
-     * @param  array    URL parameters
-     * @return string   Regular expression for URL parameter
+     * @param  array    $m  URL parameters
+     * @return string       Regular expression for URL parameter
      */
     protected function matchesCallback($m)
     {
@@ -403,5 +416,24 @@ class Route
         $this->conditions = array_merge($this->conditions, $conditions);
 
         return $this;
+    }
+
+    /**
+     * Dispatch route
+     *
+     * This method invokes the route object's callable. If middleware is
+     * registered for the route, each callable middleware is invoked in
+     * the order specified.
+     *
+     * @return bool
+     */
+    public function dispatch()
+    {
+        foreach ($this->middleware as $mw) {
+            call_user_func_array($mw, array($this));
+        }
+
+        $return = call_user_func_array($this->getCallable(), array_values($this->getParams()));
+        return ($return === false)? false : true;
     }
 }
