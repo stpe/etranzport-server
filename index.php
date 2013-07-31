@@ -7,7 +7,6 @@
 
 	<link href="js/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="css/etranzport.css" rel="stylesheet">
-	<link href="js/libs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="js/libs/select2/select2.css" rel="stylesheet">
 	<link href="js/libs/leaflet/leaflet.css" rel="stylesheet">
 
