@@ -27,14 +27,8 @@
 <body>
 
 <div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-			<span class="brand">eTranzport Experiments</span>
-			<div class="navbar-control input-prepend input-append pull-right">
-				<!-- Previous place for timeFactor input -->
-			</div>
-		</div>
-	</div>
+	<span class="navbar-brand">eTranzport</span>
+	<!-- Previous place for timeFactor input -->
 </div>
 
 <script type="text/template" id="tpl-trip-list-item">
@@ -93,7 +87,7 @@
 			<div>
 				<input type="hidden" id="vehicle-trailers" class="input-large">
 			</div>
-		</p>	
+		</p>
 		<p>
 			<label for="vehicle-city">Start City:</label>
 			<input type="text" class="input-large" id="vehicle-city" name="vehicle-city">
@@ -152,7 +146,7 @@
 
 <div class="container">
 	<h3>Vehicles</h3>
-	
+
 	<form id="vehicle-form" class="well form-inline">
 
 		<table id="vehicles" class="table table-condensed">
