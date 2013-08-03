@@ -62,36 +62,42 @@
 </script>
 
 <script type="text/template" id="tpl-truck-add">
-	<div id="vehicleAdd">
-		<p>
-			<label for="vehicle-name">Name:</label>
-			<div class="input-append">
+	<div id="vehicleAdd" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-name">Name</label>
+			<div class="col-lg-8">
 				<input type="text" class="input-small" id="vehicle-name" name="vehicle-name">
 			</div>
-		</p>
-		<p>
-			<label for="vehicle-type">Truck Type:</label>
-			<input type="hidden" class="input-large" id="vehicle-type">
-		</p>
-		<p>
-			<label for="vehicle-city">Start City:</label>
-			<input type="text" class="input-large" id="vehicle-city" name="vehicle-city">
-		</p>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-type">Truck Type</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="vehicle-type" style="width: 100%">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-city">Start City</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="vehicle-city" name="vehicle-city" style="width: 100%">
+			</div>
+		</div>
 	</div>
 </script>
 
 <script type="text/template" id="tpl-trailer-add">
-	<div id="trailerAdd">
-		<p>
-			<label for="vehicleTrailers">Trailer:</label>
-			<div>
-				<input type="hidden" id="vehicle-trailers" class="input-large">
+	<div id="trailerAdd" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-trailers">Trailer</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="vehicle-trailers" style="width: 100%">
 			</div>
-		</p>
-		<p>
-			<label for="vehicle-city">Start City:</label>
-			<input type="text" class="input-large" id="vehicle-city" name="vehicle-city">
-		</p>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-city">Start City</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="vehicle-city" name="vehicle-city" style="width: 100%">
+			</div>
+		</div>
 	</div>
 </script>
 
