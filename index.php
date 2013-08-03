@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
 	<meta charset="utf-8">
-	<title>eTranzport Experiments</title>
+	<title>eTranzport</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link href="js/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -97,47 +97,46 @@
 
 <script type="text/template" id="tpl-dohaul">
 	<div id="doHaulAlert" class="form-horizontal">
-		<div class="control-group">
-			<label class="control-label">Current Location</label>
-			<div class="controls">
-				<span class="input-large uneditable-input"><%= origin %></span>
+		<div class="form-group">
+			<label class="col-lg-4 control-label">Current Location</label>
+			<div class="col-lg-8">
+				<input class="form-control" type="text" placeholder="<%= origin %>" disabled>
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label">Vehicle</label>
-			<div class="controls">
-				<span class="input-large uneditable-input"><%= name %></span>
+		<div class="form-group">
+			<label class="col-lg-4 control-label">Vehicle</label>
+			<div class="col-lg-8">
+				<input class="form-control" type="text" placeholder="<%= name %>" disabled>
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label" for="haul-destination-city">Destination</label>
-			<div class="controls">
-				<input type="hidden" class="input-large" id="haul-destination-city" name="haul-destination-city">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="haul-destination-city">Destination</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="haul-destination-city" name="haul-destination-city" style="width: 100%">
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label" for="setVehicleSpeed">Speed</label>
-			<div class="controls">
-				<div class="input-append">
-					<input type="text" class="input-small" id="setVehicleSpeed" value="55"><span class="add-on">mph</span>
-				</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="setVehicleSpeed">Speed</label>
+			<div class="col-lg-8 input-group">
+				<input type="text" class="form-control" id="setVehicleSpeed" value="55">
+				<span class="input-group-addon">mph</span>
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label" for="haul-trailer">Trailers</label>
-			<div class="controls">
-				<input type="hidden" class="input-large" id="haul-trailer" name="haul-trailer">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="haul-trailer">Trailers</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="haul-trailer" name="haul-trailer" style="width: 100%">
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label" for="haul-cargo">Cargo</label>
-			<div class="controls">
-				<input type="hidden" class="input-large" id="haul-cargo" name="haul-cargo">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="haul-cargo">Cargo</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="haul-cargo" name="haul-cargo" style="width: 100%">
 			</div>
 		</div>
 
