@@ -11,7 +11,9 @@
 <body>
 
 <div class="navbar navbar-fixed-top">
-	<span class="navbar-brand">eTranzport Admin</span>
+	<div class="navbar-header">
+		<span class="navbar-brand">eTranzport Admin</span>
+	</div>
 
 	<ul class="nav navbar-nav">
 		<li class="active"><a href="index.php">Home</a></li>
