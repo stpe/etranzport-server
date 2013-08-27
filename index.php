@@ -55,7 +55,7 @@
 	<td class="cell-city"><span class="<%= parseInt(state) != 0 ? 'vehicle-enroute' : '' %>"><%= city_name %></span></td>
 	<td class="cell-haul">
 		<% if (vclass == 0 && state == 0) { %>
-			<button class="btn btn-mini btn-primary doHaul" type="button">Do Haul</button>
+			<button class="btn btn-xs btn-primary doHaul" type="button">Do Haul</button>
 		<% } %>
 	</td>
 	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
