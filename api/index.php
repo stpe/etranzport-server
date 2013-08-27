@@ -255,6 +255,16 @@ $app->map('/trips/:id', function($id) {
 
     $trip = ORM::for_table('trip')->find_one($id);
 
+    if (!$trip) {
+        ResponseFail(array(
+            "err" => "Trip empty",
+            "id" => $id,
+            "sql" => ORM::get_last_query(),
+            "data" => $data
+        ));
+        return;
+    }
+
     $result = endTrip($trip, $data['state']);
 
     ResponseOk($result);
