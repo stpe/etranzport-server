@@ -5,8 +5,8 @@
 	<td class="cell-destination" data-route-id="<%= destination %>"><%= destination_name %></td>
 	<td class="cell-distance"><%= distance %></td>
 	<td class="cell-actions right-align">
-		<button class="btn btn-mini map">Map</button>
-		<button class="btn btn-mini btn-danger remove" data-id="<%= destination %>">Remove</button>
+		<button class="btn btn-xs map">Map</button>
+		<button class="btn btn-xs btn-danger remove" data-id="<%= destination %>">Remove</button>
 	</td>
 </script>
 
@@ -14,8 +14,8 @@
 	<td class="cell-destination" data-route-id="<%= id %>"><%= name %></td>
 	<td class="cell-distance"></td>
 	<td class="cell-actions right-align">
-		<!--button class="btn btn-mini map">Map</button-->
-		<button class="btn btn-mini btn-info add" data-id="<%= id %>">Add</button>
+		<!--button class="btn btn-xs map">Map</button-->
+		<button class="btn btn-xs btn-info add" data-id="<%= id %>">Add</button>
 	</td>
 </script>
 
@@ -68,9 +68,9 @@
 	<td class="cell-location"><i class="icon-map-marker cityLocation"></i></td>
 	<!--td class="cell-routes"><%= routescount %></td-->
 	<td class="cell-actions">
-		<button class="btn btn-mini edit">Edit</button>
-		<button class="btn btn-mini routes">Routes</button>
-		<button class="btn btn-mini btn-danger remove" data-id="<%= id %>">Remove</button>
+		<button class="btn btn-xs edit">Edit</button>
+		<button class="btn btn-xs routes">Routes</button>
+		<button class="btn btn-xs btn-danger remove" data-id="<%= id %>">Remove</button>
 	</td>
 </script>
 
