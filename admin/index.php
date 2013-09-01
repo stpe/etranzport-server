@@ -27,7 +27,7 @@
 </script>
 
 <script type="text/template" id="tpl-route-edit">
-	<div class="modal" id="editroutes">
+	<div id="editroutes" class="form-horizontal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">×</button>
 			<h3>Edit Routes: <%= name %></h3>
@@ -48,7 +48,7 @@
 </script>
 
 <script type="text/template" id="tpl-map-view">
-	<div class="modal">
+	<div class="form-horizontal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h3>Route</h3>
@@ -95,39 +95,29 @@
 </script>
 
 <script type="text/template" id="tpl-city-edit">
-	<form class="form-horizontal modal" id="editcity">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Edit City</h3>
+	<div class="form-horizontal">
+		<div class="form-group">
+		  <label class="control-label" for="name">Name</label>
+		  <div class="controls">
+		    <input type="text" id="city-name" class="input-xlarge" name="name" value="<%= name %>">
+		  </div>
 		</div>
-		<fieldset class="modal-body">
-			<div class="control-group">
-			  <label class="control-label" for="name">Name</label>
-			  <div class="controls">
-			    <input type="text" id="city-name" class="input-xlarge" name="name" value="<%= name %>">
-			  </div>
-			</div>
-			<div class="control-group" id="citymap">
-			</div>
-			<div class="control-group">
-			  <label class="control-label" for="location">Location</label>
-			  <div class="controls">
-			    <input type="text" class="input-small" name="location" id="location" value="<%= location %>">
-			    <span class="help-inline">In <a href="https://developers.google.com/maps/documentation/utilities/polylineutility" target="_blank">encoded polyline</a> format</span>
-			  </div>
-			</div>
-			<div class="control-group">
-			  <label class="control-label" for="country">Country</label>
-			  <div class="controls">
-			    <input type="text" class="input-small" name="country" id="country" value="<%= country %>">
-			  </div>
-			</div>
-		</fieldset>
-		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal">Close</a>
-			<a href="#" class="btn btn-primary save">Save changes</a>
+		<div class="form-group" id="citymap">
 		</div>
-	</form>
+		<div class="form-group">
+		  <label class="control-label" for="location">Location</label>
+		  <div class="controls">
+		    <input type="text" class="input-small" name="location" id="location" value="<%= location %>">
+		    <span class="help-inline">In <a href="https://developers.google.com/maps/documentation/utilities/polylineutility" target="_blank">encoded polyline</a> format</span>
+		  </div>
+		</div>
+		<div class="form-group">
+		  <label class="control-label" for="country">Country</label>
+		  <div class="controls">
+		    <input type="text" class="input-small" name="country" id="country" value="<%= country %>">
+		  </div>
+		</div>
+	</div>
 </script>
 
 <div class="container" id="main">
