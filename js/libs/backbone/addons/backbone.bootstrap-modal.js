@@ -22,27 +22,25 @@
   }
 
   var template = _.template('\
-      <div class="modal-dialog">\
-        <div class="modal-content">\
-        <% if (title) { %>\
-          <div class="modal-header">\
-            <% if (allowCancel) { %>\
-              <a class="close">×</a>\
-            <% } %>\
-            <h3>{{title}}</h3>\
-          </div>\
+    <div class="modal-dialog"><div class="modal-content">\
+    <% if (title) { %>\
+      <div class="modal-header">\
+        <% if (allowCancel) { %>\
+          <a class="close">&times;</a>\
         <% } %>\
-        <div class="modal-body">{{content}}</div>\
-        <div class="modal-footer">\
-          <% if (allowCancel) { %>\
-            <% if (cancelText) { %>\
-              <a href="#" class="btn cancel">{{cancelText}}</a>\
-            <% } %>\
-          <% } %>\
-          <a href="#" class="btn ok btn-primary">{{okText}}</a>\
-        </div>\
-        </div>\
+        <h4>{{title}}</h4>\
       </div>\
+    <% } %>\
+    <div class="modal-body">{{content}}</div>\
+    <div class="modal-footer">\
+      <% if (allowCancel) { %>\
+        <% if (cancelText) { %>\
+          <a href="#" class="btn cancel">{{cancelText}}</a>\
+        <% } %>\
+      <% } %>\
+      <a href="#" class="btn ok btn-primary">{{okText}}</a>\
+    </div>\
+    </div></div>\
   ');
 
   //Reset to users' template settings
@@ -180,7 +178,6 @@
           backdropIndex = parseInt($backdrop.css('z-index'),10),
           elIndex = parseInt($backdrop.css('z-index'), 10);
 
-      $backdrop.addClass('fade');
       $backdrop.css('z-index', backdropIndex + numModals);
       this.$el.css('z-index', elIndex + numModals);
 
@@ -229,7 +226,11 @@
         return;
       }
 
-      $el.one('hidden', function() {
+      $el.one('hidden', function onHidden(e) {
+        // Ignore events propagated from interior objects, like bootstrap tooltips
+        if(e.target !== e.currentTarget){
+          return $el.one('hidden', onHidden);
+        }
         self.remove();
 
         if (self.options.content && self.options.content.trigger) {
