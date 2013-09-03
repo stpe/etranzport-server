@@ -152,6 +152,11 @@ window.et = _.extend(window.et || {}, {
 	    			cityId: this.model.get('id')
 	    		}
 	    	);
+			var modal = new Backbone.BootstrapModal({
+				title: "Edit Routes: " + this.model.get('name'),
+				content: routesView,
+				okText: "Close"
+			}).open();
 	    },
 
 	    remove: function() {
@@ -464,16 +469,16 @@ window.et = _.extend(window.et || {}, {
 	    }
 	});
 
-	window.RouteEditView = Backbone.View.extend({
+	window.RouteEditView = Backbone.Marionette.ItemView.extend({
 
-		template: _.template($('#tpl-route-edit').html()),
+		template: "#tpl-route-edit",
 
-	    initialize: function(model, options) {
+		initialize: function(model, options) {
 	    	this.cityId = options.cityId;
 	    	this.cityName = options.name;
+		},
 
-	    	this.render();
-
+	    onRender: function() {
 	    	// list of cities with routes to
 	    	var routeModels = this.model.get("routes");
 	        this.routesListView = new RoutesListView({model: routeModels}, {cityId: this.cityId});
@@ -484,25 +489,9 @@ window.et = _.extend(window.et || {}, {
 	        this.nonExistingRoutesListView = new NonExistingRoutesListView({model: nonExistingRoutesModel}, {cityId: this.cityId});
 	        nonExistingRoutesModel.fetch();
 
-	        $('#routeslist').append(this.routesListView.render().el);
-	        $('#nonexistingrouteslist').append(this.nonExistingRoutesListView.render().el);
+	        this.$el.find('#routeslist').append(this.routesListView.render().el);
+	        this.$el.find('#nonexistingrouteslist').append(this.nonExistingRoutesListView.render().el);
 	    },
-
-		events: {
-			"hidden": "hidden"
-		},
-
-		hidden: function(e) {
-			this.remove();
-		},
-
-		render: function(eventName) {
-			$(this.el).html(this.template({
-				name: this.cityName
-			})).modal();
-
-			return this;
-		}
 	});
 
 

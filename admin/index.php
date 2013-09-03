@@ -28,21 +28,12 @@
 
 <script type="text/template" id="tpl-route-edit">
 	<div id="editroutes" class="form-horizontal">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Edit Routes: <%= name %></h3>
+		<h4>Existing Routes</h4>
+		<div id="routeslist">
 		</div>
-		<div class="modal-body">
-			<h4>Existing Routes</h4>
-			<div id="routeslist">
-			</div>
 
-			<h4>Add New Routes</h4>
-			<div id="nonexistingrouteslist">
-			</div>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal">Close</a>
+		<h4>Add New Routes</h4>
+		<div id="nonexistingrouteslist">
 		</div>
 	</div>
 </script>
