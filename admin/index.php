@@ -40,16 +40,7 @@
 
 <script type="text/template" id="tpl-map-view">
 	<div class="form-horizontal">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3>Route</h3>
-		</div>
-		<div class="">
-			<div id="map"></div>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal">Close</a>
-		</div>
+		<div id="map"></div>
 	</div>
 </script>
 

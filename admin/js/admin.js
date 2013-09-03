@@ -352,6 +352,12 @@ window.et = _.extend(window.et || {}, {
 	    	var map = new MapView({
 	    		model: this.model
 	    	});
+
+			var modal = new Backbone.BootstrapModal({
+				title: "Route",
+				content: map,
+				okText: "Close"
+			}).open();
 	    },
 
 	    remove: function() {
@@ -495,13 +501,10 @@ window.et = _.extend(window.et || {}, {
 	});
 
 
-	window.MapView = Backbone.View.extend({
+	window.MapView = Backbone.Marionette.ItemView.extend({
+		template: "#tpl-map-view",
 
-		template: _.template($('#tpl-map-view').html()),
-
-	 	initialize: function() {
-	 		this.render();
-
+	 	onRender: function() {
 	        var mapOptions = {
 	          center: new google.maps.LatLng(-34.397, 150.644),
 	          zoom: 8,
@@ -510,7 +513,7 @@ window.et = _.extend(window.et || {}, {
 	          	style: google.maps.ZoomControlStyle.SMALL
 	          }
 	        };
-	        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+	        var map = new google.maps.Map(this.$el.find("#map").get(0), mapOptions);
 
 	        // decode and create path out of encoded polyline
 			var decodedPath = google.maps.geometry.encoding.decodePath(this.model.get("polyline"));
@@ -530,21 +533,8 @@ window.et = _.extend(window.et || {}, {
 
 			// move and zoom map to contain route
 			map.fitBounds(bounds);
-	 	},
 
-		events: {
-			"hidden": "hidden"
-		},
-
-		hidden: function(e) {
-			this.remove();
-		},
-
-		render: function(eventName) {
-			$(this.el).html(this.template()).modal();
-
-			return this;
-		}
+	 	}
 	});
 
 //--
