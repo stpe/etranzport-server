@@ -43,7 +43,7 @@
 	<td class="cell-duration"><%= duration %></td>
 	<td class="cell-traveled"><%= traveled %></td>
 	<td class="cell-speed"><%= speed %></td>
-	<td class="cell-actions"><i class="icon-remove removeTrip" data-id="<%= id %>"></i></td>
+	<td class="cell-actions"><span class="glyphicon glyphicon-remove removeTrip" data-id="<%= id %>"></span></td>
 </script>
 
 <script type="text/template" id="tpl-vehicle-list-item">
@@ -58,7 +58,7 @@
 			<button class="btn btn-xs btn-primary doHaul" type="button">Do Haul</button>
 		<% } %>
 	</td>
-	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
+	<td class="cell-actions"><span class="glyphicon glyphicon-remove removeVehicle" data-id="<%= id %>"></span></td>
 </script>
 
 <script type="text/template" id="tpl-truck-add">

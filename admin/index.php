@@ -45,7 +45,7 @@
 <script type="text/template" id="tpl-city-list-item">
 	<td class="cell-id"><%= id %></td>
 	<td class="cell-name"><%= name %></td>
-	<td class="cell-location"><i class="icon-map-marker cityLocation"></i></td>
+	<td class="cell-location"><span class="glyphicon glyphicon-map-marker cityLocation"></span></td>
 	<!--td class="cell-routes"><%= routescount %></td-->
 	<td class="cell-actions">
 		<button class="btn btn-xs edit">Edit</button>
