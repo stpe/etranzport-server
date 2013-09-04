@@ -39,9 +39,7 @@
 </script>
 
 <script type="text/template" id="tpl-map-view">
-	<div class="form-horizontal">
-		<div id="map"></div>
-	</div>
+	<div class="google-map-canvas" id="map"></div>
 </script>
 
 <script type="text/template" id="tpl-city-list-item">
