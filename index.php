@@ -2,12 +2,11 @@
 <html>
 <head lang="en">
 	<meta charset="utf-8">
-	<title>eTranzport Experiments</title>
+	<title>eTranzport</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link href="js/libs/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="css/etranzport.css" rel="stylesheet">
-	<link href="js/libs/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 	<link href="js/libs/select2/select2.css" rel="stylesheet">
 	<link href="js/libs/leaflet/leaflet.css" rel="stylesheet">
 
@@ -28,14 +27,8 @@
 <body>
 
 <div class="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-			<span class="brand">eTranzport Experiments</span>
-			<div class="navbar-control input-prepend input-append pull-right">
-				<!-- Previous place for timeFactor input -->
-			</div>
-		</div>
-	</div>
+	<span class="navbar-brand">eTranzport</span>
+	<!-- Previous place for timeFactor input -->
 </div>
 
 <script type="text/template" id="tpl-trip-list-item">
@@ -62,89 +55,94 @@
 	<td class="cell-city"><span class="<%= parseInt(state) != 0 ? 'vehicle-enroute' : '' %>"><%= city_name %></span></td>
 	<td class="cell-haul">
 		<% if (vclass == 0 && state == 0) { %>
-			<button class="btn btn-mini btn-primary doHaul" type="button">Do Haul</button>
+			<button class="btn btn-xs btn-primary doHaul" type="button">Do Haul</button>
 		<% } %>
 	</td>
 	<td class="cell-actions"><i class="icon-remove removeVehicle" data-id="<%= id %>"></i></td>
 </script>
 
 <script type="text/template" id="tpl-truck-add">
-	<div id="vehicleAdd">
-		<p>
-			<label for="vehicle-name">Name:</label>
-			<div class="input-append">
+	<div id="vehicleAdd" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-name">Name</label>
+			<div class="col-lg-8">
 				<input type="text" class="input-small" id="vehicle-name" name="vehicle-name">
 			</div>
-		</p>
-		<p>
-			<label for="vehicle-type">Truck Type:</label>
-			<input type="hidden" class="input-large" id="vehicle-type">
-		</p>
-		<p>
-			<label for="vehicle-city">Start City:</label>
-			<input type="text" class="input-large" id="vehicle-city" name="vehicle-city">
-		</p>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-type">Truck Type</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="vehicle-type" style="width: 100%">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-city">Start City</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="vehicle-city" name="vehicle-city" style="width: 100%">
+			</div>
+		</div>
 	</div>
 </script>
 
 <script type="text/template" id="tpl-trailer-add">
-	<div id="trailerAdd">
-		<p>
-			<label for="vehicleTrailers">Trailer:</label>
-			<div>
-				<input type="hidden" id="vehicle-trailers" class="input-large">
+	<div id="trailerAdd" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-trailers">Trailer</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="vehicle-trailers" style="width: 100%">
 			</div>
-		</p>	
-		<p>
-			<label for="vehicle-city">Start City:</label>
-			<input type="text" class="input-large" id="vehicle-city" name="vehicle-city">
-		</p>
+		</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="vehicle-city">Start City</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="vehicle-city" name="vehicle-city" style="width: 100%">
+			</div>
+		</div>
 	</div>
 </script>
 
 <script type="text/template" id="tpl-dohaul">
 	<div id="doHaulAlert" class="form-horizontal">
-		<div class="control-group">
-			<label class="control-label">Current Location</label>
-			<div class="controls">
-				<span class="input-large uneditable-input"><%= origin %></span>
+		<div class="form-group">
+			<label class="col-lg-4 control-label">Current Location</label>
+			<div class="col-lg-8">
+				<input class="form-control" type="text" placeholder="<%= origin %>" disabled>
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label">Vehicle</label>
-			<div class="controls">
-				<span class="input-large uneditable-input"><%= name %></span>
+		<div class="form-group">
+			<label class="col-lg-4 control-label">Vehicle</label>
+			<div class="col-lg-8">
+				<input class="form-control" type="text" placeholder="<%= name %>" disabled>
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label" for="haul-destination-city">Destination</label>
-			<div class="controls">
-				<input type="hidden" class="input-large" id="haul-destination-city" name="haul-destination-city">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="haul-destination-city">Destination</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="haul-destination-city" name="haul-destination-city" style="width: 100%">
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label" for="setVehicleSpeed">Speed</label>
-			<div class="controls">
-				<div class="input-append">
-					<input type="text" class="input-small" id="setVehicleSpeed" value="55"><span class="add-on">mph</span>
-				</div>
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="setVehicleSpeed">Speed</label>
+			<div class="col-lg-8 input-group">
+				<input type="text" class="form-control" id="setVehicleSpeed" value="55">
+				<span class="input-group-addon">mph</span>
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label" for="haul-trailer">Trailers</label>
-			<div class="controls">
-				<input type="hidden" class="input-large" id="haul-trailer" name="haul-trailer">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="haul-trailer">Trailers</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="haul-trailer" name="haul-trailer" style="width: 100%">
 			</div>
 		</div>
 
-		<div class="control-group">
-			<label class="control-label" for="haul-cargo">Cargo</label>
-			<div class="controls">
-				<input type="hidden" class="input-large" id="haul-cargo" name="haul-cargo">
+		<div class="form-group">
+			<label class="col-lg-4 control-label" for="haul-cargo">Cargo</label>
+			<div class="col-lg-8">
+				<input type="hidden" id="haul-cargo" name="haul-cargo" style="width: 100%">
 			</div>
 		</div>
 
@@ -153,7 +151,7 @@
 
 <div class="container">
 	<h3>Vehicles</h3>
-	
+
 	<form id="vehicle-form" class="well form-inline">
 
 		<table id="vehicles" class="table table-condensed">

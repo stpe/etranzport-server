@@ -54,7 +54,7 @@ window.et = _.extend(window.et || {}, {
 			current: 0,
 			updated: null,
 			traveled: 0,
-			distanceLeftOver: 0			
+			distanceLeftOver: 0
 		}
 	});
 
@@ -178,7 +178,7 @@ window.et = _.extend(window.et || {}, {
 				if (attr.trailers) {
 					for (var i = 0; i < attr.trailers.length; i++) {
 						Backbone.EventBroker.trigger("vehicle:tripcompleted", attr.trailers[i]);
-					}					
+					}
 				}
 
 				// save
@@ -191,7 +191,7 @@ window.et = _.extend(window.et || {}, {
 						alert('Failed to save completed trip!');
 					}
 				});
-			}, this);	    	
+			}, this);
 
 			this.fetch({
 				success: function(collection, response, options) {
@@ -251,7 +251,7 @@ window.et = _.extend(window.et || {}, {
 
 	window.VehicleListItemView = Backbone.View.extend({
 	    tagName: "tr",
-	 
+
 	    template: _.template($('#tpl-vehicle-list-item').html()),
 
 	    initialize: function() {
@@ -337,7 +337,7 @@ window.et = _.extend(window.et || {}, {
 					query.callback(results);
 				}
 			}).on("change", function(e) {
-				var type, 
+				var type,
 					trailer;
 
 				// update disabled state of cargo based on number of trailers
@@ -417,7 +417,7 @@ window.et = _.extend(window.et || {}, {
 					modal.preventClose();
 					return;
 				}
-				
+
 				var trailers = $("#haul-trailer").select2("val"),
 					cargo = $("#haul-cargo").select2("val");
 
@@ -447,14 +447,14 @@ window.et = _.extend(window.et || {}, {
 								Backbone.EventBroker.trigger("vehicle:begintrip", {
 									vehicle: vehicle,
 									trip: trip
-								});								
+								});
 
 								// update trailers
 								for (var i = 0; i < trailers.length; i++) {
 									Backbone.EventBroker.trigger("vehicle:begintrip", {
 										vehicle: trailers[i],
 										trip: trip
-									});								
+									});
 								}
 
 								Backbone.EventBroker.trigger("trip:add", trip);
@@ -475,7 +475,7 @@ window.et = _.extend(window.et || {}, {
 				modal.remove();
 			});
 	    },
-	 
+
 	    render: function(eventName) {
 	    	var data = this.model.toJSON();
 
@@ -492,7 +492,7 @@ window.et = _.extend(window.et || {}, {
 
 	window.TripListItemView = Backbone.Marionette.ItemView.extend({
 	    tagName: "tr",
-	 
+
 	    template: "#tpl-trip-list-item",
 
 	    events: {
@@ -558,7 +558,7 @@ window.et = _.extend(window.et || {}, {
 
 	    	return data;
 	    },
-	 
+
 	    onRender: function(eventName) {
 	        this.$el.attr('id', 'trip-data-' + this.model.get('id'));
 	    }
@@ -632,7 +632,7 @@ window.et = _.extend(window.et || {}, {
 						}),
 						more: false
 					});
-				}	
+				}
 			});
 		}
 	});
@@ -679,7 +679,7 @@ window.et = _.extend(window.et || {}, {
 					}
 				},
 				formatResult: trailerFormat,
-				formatSelection: trailerFormat				
+				formatSelection: trailerFormat
 			});
 
 			// start city select2 box
@@ -696,7 +696,7 @@ window.et = _.extend(window.et || {}, {
 						}),
 						more: false
 					});
-				}	
+				}
 			});
 		}
 	});
@@ -707,7 +707,7 @@ window.et = _.extend(window.et || {}, {
 				this.addVehicle(e, et.vehicleClass.TRUCK);
 			},
 			"click #addTrailer": function(e) {
-				this.addVehicle(e, et.vehicleClass.TRAILER);				
+				this.addVehicle(e, et.vehicleClass.TRAILER);
 			}
 		},
 
@@ -993,7 +993,7 @@ window.et = _.extend(window.et || {}, {
 	    routes:{
 	        "": "main"
 	    },
-	 
+
 	    initCargoData: function() {
 	    	var dfd = new $.Deferred();
 

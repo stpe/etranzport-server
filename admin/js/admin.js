@@ -56,7 +56,7 @@ window.et = _.extend(window.et || {}, {
 	// Views
 	window.CitiesListView = Backbone.View.extend({
 	    id: "citiesList",
-	 
+
 	    template: _.template($('#tpl-cities-listview').html()),
 
 	    initialize: function() {
@@ -75,6 +75,12 @@ window.et = _.extend(window.et || {}, {
 	 		var editView = new CityEditView({
 	 			model: city
 	 		});
+
+			var modal = new Backbone.BootstrapModal({
+				title: "New City",
+				content: editView,
+				okText: "Save"
+			}).open();
 	 	},
 
 		cityAdded: function(city) {
@@ -96,7 +102,7 @@ window.et = _.extend(window.et || {}, {
 
 	window.CitiesListItemView = Backbone.View.extend({
 	    tagName: "tr",
-	 
+
 	    template: _.template($('#tpl-city-list-item').html()),
 
 	    initialize: function() {
@@ -113,6 +119,12 @@ window.et = _.extend(window.et || {}, {
 	    	var editView = new CityEditView({
 	    		model: this.model
 	    	});
+
+			var modal = new Backbone.BootstrapModal({
+				title: "Edit city",
+				content: editView,
+				okText: "Save changes"
+			}).open();
 	    },
 
 	    routes: function(e) {
@@ -140,16 +152,22 @@ window.et = _.extend(window.et || {}, {
 	    			cityId: this.model.get('id')
 	    		}
 	    	);
+			var modal = new Backbone.BootstrapModal({
+				title: "Edit Routes: " + this.model.get('name'),
+				content: routesView,
+				okText: "Close",
+				cancelText: false
+			}).open();
 	    },
 
 	    remove: function() {
 	    	this.$el.remove();
 	    	this.model.destroy();
 	    },
-	 
+
 	    render: function(eventName) {
 	    	var data = this.model.toJSON();
-	    	
+
 	    	data = _.extend(data, {
 	    		routescount: 0
 	    	});
@@ -162,17 +180,19 @@ window.et = _.extend(window.et || {}, {
 	    }
 	});
 
-	window.CityEditView = Backbone.View.extend({
+	window.CityEditView = Backbone.Marionette.ItemView.extend({
+		template: "#tpl-city-edit",
 
-		template: _.template($('#tpl-city-edit').html()),
+		initialize: function() {
+			this.listenTo(this, "ok", this.save);
+		},
 
-	    initialize: function() {
-	    	this.render();
+	    onRender: function() {
 
 	    	// Use Google Places API to autocomplete city name
 	    	//   https://developers.google.com/maps/documentation/javascript/places#places_autocomplete
 			var autocomplete = new google.maps.places.Autocomplete(
-				$("#city-name").get(0),
+				this.$el.find("#city-name").get(0),
 				{
 					types: ['(cities)']
 				}
@@ -188,14 +208,14 @@ window.et = _.extend(window.et || {}, {
 
 			// init map
 	        var mapOptions = {
-	          center: pos,
-	          zoom: 8,
-	          mapTypeId: google.maps.MapTypeId.ROADMAP,
-	          zoomControlOptions: {
-	          	style: google.maps.ZoomControlStyle.SMALL
-	          }
+				center: pos,
+				zoom: 8,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				zoomControlOptions: {
+					style: google.maps.ZoomControlStyle.SMALL
+				}
 	        };
-	        this.map = new google.maps.Map(document.getElementById("citymap"), mapOptions);
+	        this.map = new google.maps.Map(this.$el.find("#citymap").get(0), mapOptions);
 
 	        // add marker to current city position
 	        this.marker = null;
@@ -204,7 +224,7 @@ window.et = _.extend(window.et || {}, {
 						position: pos,
 						map: this.map,
 						title: "City location"
-					});	        	
+					});
 	        }
 
 	        var that = this;
@@ -250,14 +270,7 @@ window.et = _.extend(window.et || {}, {
 			});
 	    },
 
-		events: {
-			"click .save": "save",
-			"hidden": "hidden"
-		},
-
-		save: function(e) {
-			e.preventDefault();
-
+		save: function() {
 			var that = this;
 
 			// loop input elements and set values to model
@@ -279,16 +292,6 @@ window.et = _.extend(window.et || {}, {
 					}
 				});
 			}
-		},
-
-		hidden: function(e) {
-			this.remove();
-		},
-
-		render: function(eventName) {
-			$(this.el).html(this.template(this.model.toJSON())).modal();
-
-			return this;
 		}
 	});
 
@@ -296,7 +299,7 @@ window.et = _.extend(window.et || {}, {
 
 	window.RoutesListView = Backbone.View.extend({
 	    id: "routes",
-	 
+
 	    template: _.template($('#tpl-routes-listview').html()),
 
 	    initialize: function(model, options) {
@@ -327,7 +330,7 @@ window.et = _.extend(window.et || {}, {
 
 	window.RoutesListItemView = Backbone.View.extend({
 	    tagName: "tr",
-	 
+
 	    template: _.template($('#tpl-route-list-item').html()),
 
 	    initialize: function(model, options) {
@@ -350,6 +353,13 @@ window.et = _.extend(window.et || {}, {
 	    	var map = new MapView({
 	    		model: this.model
 	    	});
+
+			var modal = new Backbone.BootstrapModal({
+				title: "Route",
+				content: map,
+				okText: "Close",
+				cancelText: false
+			}).open();
 	    },
 
 	    remove: function() {
@@ -365,7 +375,7 @@ window.et = _.extend(window.et || {}, {
 
 	    render: function(eventName) {
 	    	var data = this.model.toJSON();
-	    	
+
 	    	data = _.extend(data, {
 				distance: this.getDistanceString(data.distance)
 	    	});
@@ -381,7 +391,7 @@ window.et = _.extend(window.et || {}, {
 
 	window.NonExistingRoutesListView = Backbone.View.extend({
 	    id: "routes",
-	 
+
 	    template: _.template($('#tpl-routes-listview').html()),
 
 	    initialize: function(model, options) {
@@ -425,7 +435,7 @@ window.et = _.extend(window.et || {}, {
 
 	window.NonExistingRoutesListItemView = Backbone.View.extend({
 	    tagName: "tr",
-	 
+
 	    template: _.template($('#tpl-non-existing-route-list-item').html()),
 
 	    initialize: function(model, options) {
@@ -458,7 +468,7 @@ window.et = _.extend(window.et || {}, {
 
 	    render: function(eventName) {
 	    	var data = this.model.toJSON();
-	    	
+
 	        $(this.el).
 	        	attr('id', 'route-data-' + this.model.get('id')).
 	        	html(this.template(data));
@@ -467,16 +477,16 @@ window.et = _.extend(window.et || {}, {
 	    }
 	});
 
-	window.RouteEditView = Backbone.View.extend({
+	window.RouteEditView = Backbone.Marionette.ItemView.extend({
 
-		template: _.template($('#tpl-route-edit').html()),
+		template: "#tpl-route-edit",
 
-	    initialize: function(model, options) {
+		initialize: function(model, options) {
 	    	this.cityId = options.cityId;
 	    	this.cityName = options.name;
+		},
 
-	    	this.render();
-
+	    onRender: function() {
 	    	// list of cities with routes to
 	    	var routeModels = this.model.get("routes");
 	        this.routesListView = new RoutesListView({model: routeModels}, {cityId: this.cityId});
@@ -487,35 +497,16 @@ window.et = _.extend(window.et || {}, {
 	        this.nonExistingRoutesListView = new NonExistingRoutesListView({model: nonExistingRoutesModel}, {cityId: this.cityId});
 	        nonExistingRoutesModel.fetch();
 
-	        $('#routeslist').append(this.routesListView.render().el);
-	        $('#nonexistingrouteslist').append(this.nonExistingRoutesListView.render().el);
+	        this.$el.find('#routeslist').append(this.routesListView.render().el);
+	        this.$el.find('#nonexistingrouteslist').append(this.nonExistingRoutesListView.render().el);
 	    },
-
-		events: {
-			"hidden": "hidden"
-		},
-
-		hidden: function(e) {
-			this.remove();
-		},
-
-		render: function(eventName) {
-			$(this.el).html(this.template({
-				name: this.cityName
-			})).modal();
-
-			return this;
-		}
 	});
 
 
-	window.MapView = Backbone.View.extend({
-	 	
-		template: _.template($('#tpl-map-view').html()),
+	window.MapView = Backbone.Marionette.ItemView.extend({
+		template: "#tpl-map-view",
 
-	 	initialize: function() {
-	 		this.render();
-
+	 	onRender: function() {
 	        var mapOptions = {
 	          center: new google.maps.LatLng(-34.397, 150.644),
 	          zoom: 8,
@@ -524,7 +515,7 @@ window.et = _.extend(window.et || {}, {
 	          	style: google.maps.ZoomControlStyle.SMALL
 	          }
 	        };
-	        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+	        var map = new google.maps.Map(this.$el.find("#map").get(0), mapOptions);
 
 	        // decode and create path out of encoded polyline
 			var decodedPath = google.maps.geometry.encoding.decodePath(this.model.get("polyline"));
@@ -544,21 +535,8 @@ window.et = _.extend(window.et || {}, {
 
 			// move and zoom map to contain route
 			map.fitBounds(bounds);
-	 	},
 
-		events: {
-			"hidden": "hidden"
-		},
-
-		hidden: function(e) {
-			this.remove();
-		},
-
-		render: function(eventName) {
-			$(this.el).html(this.template()).modal();
-
-			return this;
-		}
+	 	}
 	});
 
 //--
@@ -569,7 +547,7 @@ window.et = _.extend(window.et || {}, {
 	        "":			"main",
 	        "cities": 	"cities"
 	    },
-	 
+
 	    main: function () {
 	    	$('#main').empty();
 	    },

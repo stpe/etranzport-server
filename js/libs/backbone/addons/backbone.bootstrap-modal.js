@@ -1,6 +1,6 @@
 /**
  * Bootstrap Modal wrapper for use with Backbone.
- * 
+ *
  * Takes care of instantiation, manages multiple modals,
  * adds several options and removes the element from the DOM when closed
  *
@@ -22,12 +22,13 @@
   }
 
   var template = _.template('\
+    <div class="modal-dialog"><div class="modal-content">\
     <% if (title) { %>\
       <div class="modal-header">\
         <% if (allowCancel) { %>\
-          <a class="close">×</a>\
+          <a class="close">&times;</a>\
         <% } %>\
-        <h3>{{title}}</h3>\
+        <h4>{{title}}</h4>\
       </div>\
     <% } %>\
     <div class="modal-body">{{content}}</div>\
@@ -39,11 +40,12 @@
       <% } %>\
       <a href="#" class="btn ok btn-primary">{{okText}}</a>\
     </div>\
+    </div></div>\
   ');
 
   //Reset to users' template settings
   _.templateSettings = _interpolateBackup;
-  
+
 
   var Modal = Backbone.View.extend({
 
@@ -114,7 +116,7 @@
 
     /**
      * Creates the DOM element
-     * 
+     *
      * @api private
      */
     render: function() {
@@ -187,7 +189,7 @@
 
           self.trigger('cancel');
         });
-        
+
         $(document).one('keyup.dismiss.modal', function (e) {
           e.which == 27 && self.trigger('cancel');
 
@@ -207,7 +209,7 @@
       if (cb) {
         self.on('ok', cb);
       }
-      
+
       return this;
     },
 
@@ -224,7 +226,11 @@
         return;
       }
 
-      $el.one('hidden', function() {
+      $el.one('hidden', function onHidden(e) {
+        // Ignore events propagated from interior objects, like bootstrap tooltips
+        if(e.target !== e.currentTarget){
+          return $el.one('hidden', onHidden);
+        }
         self.remove();
 
         if (self.options.content && self.options.content.trigger) {

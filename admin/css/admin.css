@@ -24,7 +24,7 @@ a.disabled-link:hover {
 }
 
 .cell-distance {
-	width: 60px;
+	width: 80px;
 }
 
 td.right-align {
@@ -32,7 +32,7 @@ td.right-align {
 }
 
 #map {
-	width: 560px;
+	width: 538px;
 	height: 400px;
 }
 

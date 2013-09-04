@@ -5,8 +5,8 @@
 	<td class="cell-destination" data-route-id="<%= destination %>"><%= destination_name %></td>
 	<td class="cell-distance"><%= distance %></td>
 	<td class="cell-actions right-align">
-		<button class="btn btn-mini map">Map</button>
-		<button class="btn btn-mini btn-danger remove" data-id="<%= destination %>">Remove</button>
+		<button class="btn btn-xs map">Map</button>
+		<button class="btn btn-xs btn-danger remove" data-id="<%= destination %>">Remove</button>
 	</td>
 </script>
 
@@ -14,8 +14,8 @@
 	<td class="cell-destination" data-route-id="<%= id %>"><%= name %></td>
 	<td class="cell-distance"></td>
 	<td class="cell-actions right-align">
-		<!--button class="btn btn-mini map">Map</button-->
-		<button class="btn btn-mini btn-info add" data-id="<%= id %>">Add</button>
+		<!--button class="btn btn-xs map">Map</button-->
+		<button class="btn btn-xs btn-info add" data-id="<%= id %>">Add</button>
 	</td>
 </script>
 
@@ -27,38 +27,20 @@
 </script>
 
 <script type="text/template" id="tpl-route-edit">
-	<div class="modal" id="editroutes">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Edit Routes: <%= name %></h3>
+	<div id="editroutes" class="form-horizontal">
+		<h4>Existing Routes</h4>
+		<div id="routeslist">
 		</div>
-		<div class="modal-body">
-			<h4>Existing Routes</h4>
-			<div id="routeslist">
-			</div>
 
-			<h4>Add New Routes</h4>
-			<div id="nonexistingrouteslist">
-			</div>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal">Close</a>
+		<h4>Add New Routes</h4>
+		<div id="nonexistingrouteslist">
 		</div>
 	</div>
 </script>
 
 <script type="text/template" id="tpl-map-view">
-	<div class="modal">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3>Route</h3>
-		</div>
-		<div class="">
-			<div id="map"></div>
-		</div>
-		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal">Close</a>
-		</div>
+	<div class="form-horizontal">
+		<div id="map"></div>
 	</div>
 </script>
 
@@ -68,9 +50,9 @@
 	<td class="cell-location"><i class="icon-map-marker cityLocation"></i></td>
 	<!--td class="cell-routes"><%= routescount %></td-->
 	<td class="cell-actions">
-		<button class="btn btn-mini edit">Edit</button>
-		<button class="btn btn-mini routes">Routes</button>
-		<button class="btn btn-mini btn-danger remove" data-id="<%= id %>">Remove</button>
+		<button class="btn btn-xs edit">Edit</button>
+		<button class="btn btn-xs routes">Routes</button>
+		<button class="btn btn-xs btn-danger remove" data-id="<%= id %>">Remove</button>
 	</td>
 </script>
 
@@ -95,39 +77,29 @@
 </script>
 
 <script type="text/template" id="tpl-city-edit">
-	<form class="form-horizontal modal" id="editcity">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal">×</button>
-			<h3>Edit City</h3>
+	<div class="form-horizontal">
+		<div class="form-group">
+		  <label class="control-label" for="name">Name</label>
+		  <div class="controls">
+		    <input type="text" id="city-name" class="input-xlarge" name="name" value="<%= name %>">
+		  </div>
 		</div>
-		<fieldset class="modal-body">
-			<div class="control-group">
-			  <label class="control-label" for="name">Name</label>
-			  <div class="controls">
-			    <input type="text" id="city-name" class="input-xlarge" name="name" value="<%= name %>">
-			  </div>
-			</div>
-			<div class="control-group" id="citymap">
-			</div>
-			<div class="control-group">
-			  <label class="control-label" for="location">Location</label>
-			  <div class="controls">
-			    <input type="text" class="input-small" name="location" id="location" value="<%= location %>">
-			    <span class="help-inline">In <a href="https://developers.google.com/maps/documentation/utilities/polylineutility" target="_blank">encoded polyline</a> format</span>
-			  </div>
-			</div>
-			<div class="control-group">
-			  <label class="control-label" for="country">Country</label>
-			  <div class="controls">
-			    <input type="text" class="input-small" name="country" id="country" value="<%= country %>">
-			  </div>
-			</div>
-		</fieldset>
-		<div class="modal-footer">
-			<a href="#" class="btn" data-dismiss="modal">Close</a>
-			<a href="#" class="btn btn-primary save">Save changes</a>
+		<div class="form-group" id="citymap">
 		</div>
-	</form>
+		<div class="form-group">
+		  <label class="control-label" for="location">Location</label>
+		  <div class="controls">
+		    <input type="text" class="input-small" name="location" id="location" value="<%= location %>">
+		    <span class="help-inline">In <a href="https://developers.google.com/maps/documentation/utilities/polylineutility" target="_blank">encoded polyline</a> format</span>
+		  </div>
+		</div>
+		<div class="form-group">
+		  <label class="control-label" for="country">Country</label>
+		  <div class="controls">
+		    <input type="text" class="input-small" name="country" id="country" value="<%= country %>">
+		  </div>
+		</div>
+	</div>
 </script>
 
 <div class="container" id="main">
