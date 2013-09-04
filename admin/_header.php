@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="navbar navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 	<div class="navbar-header">
 		<span class="navbar-brand">eTranzport Admin</span>
 	</div>
@@ -40,5 +40,4 @@
 			</ul>
 		</li>
 	</ul>
-
-</div>
+</nav>

@@ -26,10 +26,10 @@
 </head>
 <body>
 
-<div class="navbar navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
 	<span class="navbar-brand">eTranzport</span>
 	<!-- Previous place for timeFactor input -->
-</div>
+</nav>
 
 <script type="text/template" id="tpl-trip-list-item">
 	<td class="cell-id"><%= id %></td>
