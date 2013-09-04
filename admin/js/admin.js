@@ -155,7 +155,8 @@ window.et = _.extend(window.et || {}, {
 			var modal = new Backbone.BootstrapModal({
 				title: "Edit Routes: " + this.model.get('name'),
 				content: routesView,
-				okText: "Close"
+				okText: "Close",
+				cancelText: false
 			}).open();
 	    },
 
@@ -356,7 +357,8 @@ window.et = _.extend(window.et || {}, {
 			var modal = new Backbone.BootstrapModal({
 				title: "Route",
 				content: map,
-				okText: "Close"
+				okText: "Close",
+				cancelText: false
 			}).open();
 	    },
 
