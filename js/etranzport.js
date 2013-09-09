@@ -964,7 +964,8 @@ window.et = _.extend(window.et || {}, {
 
 						// trigger arrived event if vehicle has arrived
 						if (vehicle.get("state") == et.tripStates.ARRIVED) {
-				    		Backbone.EventBroker.trigger("trip:arrived", vehicle);
+							Backbone.EventBroker.trigger("trip:arrived", vehicle);
+							et.map.removeLayer(v.marker);
 						}
 					} else {
 						console.log("Active trip, but no route data!", vehicle);
