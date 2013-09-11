@@ -76,7 +76,7 @@ window.et = _.extend(window.et || {}, {
 	window.VehicleCollection = Backbone.Collection.extend({
 		mode: Vehicle,
 
-	    initialize: function() {
+		initialize: function() {
 			Backbone.EventBroker.on("vehicle:add", function(vehicle) {
 				this.add(vehicle);
 			}, this);
@@ -104,7 +104,7 @@ window.et = _.extend(window.et || {}, {
 			}, this);
 
 			this.fetch();
-	    },
+		},
 
 		url: "api/vehicles"
 	});
@@ -527,7 +527,7 @@ window.et = _.extend(window.et || {}, {
 	    			trailerList.push(trailer ? trailer.get("type") : attr.trailers[i]);
 	    		}
 	    		if (trailerList.length == 0) {
-	    			cargoStr += "<i>Deadheading</i>";
+	    			cargoStr += "<i>Deadheading</i>: ";
 	    		} else {
 		    		cargoStr += trailerList.join(", ") + ": ";
 	    		}
