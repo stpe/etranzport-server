@@ -137,8 +137,8 @@ $app->get('/data/:file', function($file) {
 
 // get currently completed distance for trip based on lapsed time since start
 function getTripCurrentDistance($trip) {
-    $lapsed = time() - $trip->startts;
-    return $lapsed * $trip->speed * $trip->timefactor;
+    $lapsed = time() - $trip['startts'];
+    return $lapsed * $trip['speed'] * $trip['timefactor'];
 }
 
 $app->get('/trips', function() {
@@ -155,35 +155,30 @@ $app->get('/trips', function() {
             ->join('city', array('destination_city.id', '=', 'trip.destination'), 'destination_city')
             ->join('vehicle', array('vehicle.id', '=', 'trip.vehicle'), 'vehicle')
             ->order_by_asc('trip.id')
-            ->find_many();
+            ->find_array();
 
     $now = time();
 
-    foreach($trips as $trip) {
+    foreach($trips as $id => $trip) {
         $distance_completed = getTripCurrentDistance($trip);
 
         // trip still not yet finished
-        if ($distance_completed < $trip->distance) {
-            $trip->state = TripState::ENROUTE;
-            $trip->distance_completed = $distance_completed;
+        if ($distance_completed < $trip['distance']) {
+            $trip['state'] = TripState::ENROUTE;
+            $trip['distance_completed'] = $distance_completed;
         } else {
-            if ($trip->state == TripState::ENROUTE) {
+            if ($trip['state'] == TripState::ENROUTE) {
                 // trip finished, but state is en route
                 endTrip($trip, TripState::COMPLETED);
-            } else if ($trip->vehicle_trip !== null) {
+            } else if ($trip['vehicle_trip'] !== null) {
                 // trip finished, but vehicle still en route (something went wrong) - fix it
-                $log->info("Fixing errornous vehicle state of trip " . $trip->id());
+                $log->info("Fixing errornous vehicle state of trip " . $id);
                 endTrip($trip, TripState::COMPLETED);
             }
         }
     }
 
-    // convert to array
-    $result = array_map(function($trip) {
-        return $trip->as_array();
-    }, $trips);
-
-    ResponseOk($result);
+    ResponseOk($trips);
 });
 
 $app->post('/trips', function() {
