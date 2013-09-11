@@ -170,9 +170,9 @@ $app->get('/trips', function() {
             if ($trip['state'] == TripState::ENROUTE) {
                 // trip finished, but state is en route
                 endTrip($trip, TripState::COMPLETED);
-            } else if ($trip['vehicle_trip'] !== null) {
+            } else if ($trip['vehicle_trip']) {
                 // trip finished, but vehicle still en route (something went wrong) - fix it
-                $log->info("Fixing errornous vehicle state of trip " . $id);
+                $log->info("Fixing errornous vehicle state of trip " . $trip['id']);
                 endTrip($trip, TripState::COMPLETED);
             }
         }
@@ -237,6 +237,12 @@ $app->post('/trips', function() {
 
 $app->delete('/trips/:id', function($id) {
     $trip = ORM::for_table('trip')->find_one($id);
+
+    if ($trip->state !== TripState::COMPLETED) {
+        // update trip's vehicle and rest to off duty to avoid orphan vehicles
+        makeTruckOffDuty($trip->vehicle, $trip->attr);
+    }
+
     $trip->delete();
 });
 
@@ -263,35 +269,48 @@ $app->map('/trips/:id', function($id) {
     ResponseOk($result);
 })->via('PATCH');
 
+function makeTruckOffDuty($vehicleId, $attr = false) {
+    global $log;
+
+    $vehicleIds = array($vehicleId);
+
+    // also update trailer(s) to vehicle, if any
+    if ($attr) {
+        $attr = json_decode($attr, true);
+        if ($attr['trailers']) {
+            $vehicleIds = array_merge($vehicleIds, $attr['trailers']);
+        }
+    }
+
+    $vehicles = ORM::for_table('vehicle')
+                    ->where_in('id', $vehicleIds)
+                    ->find_result_set()
+                    ->set('trip', null)
+                    ->set('connected', null)
+                    ->set('state', TruckState::OFFDUTY)
+                    ->save();
+}
 
 function endTrip($trip, $state) {
     global $log;
 
     // perform anti cheat check here
     $distance_completed = getTripCurrentDistance($trip);
-    if ($distance_completed < $trip->distance) {
-        $log->warn("Trying to end non-completed trip. Cheating? " . json_encode($trip->as_array()));
+    if ($distance_completed < $trip['distance']) {
+        $log->warn("Trying to end non-completed trip (distance left ". ($trip['distance'] - $distance_completed) ."). Cheating? " . json_encode($trip->as_array()));
     }
 
-    $trip->state = $state;
-    $trip->save();
+    // update
+    $t = ORM::for_table('trip')->find_one($trip['id']);
+    $t->state = $state;
+    $t->save();
+
+    $trip['state'] = $state;
 
     // update vehicle
-    $vehicle = ORM::for_table('vehicle')->find_one($trip->vehicle);
-    $vehicle->trip = null;
-    $vehicle->state = TruckState::OFFDUTY;
-    $vehicle->save();
+    makeTruckOffDuty($trip['vehicle'], $trip['attr']);
 
-    // disconnect trailers connected to vehicle
-    ORM::raw_execute(
-        'UPDATE vehicle SET trip = NULL, connected = NULL, state = ? WHERE connected = ?',
-        array(
-            TruckState::OFFDUTY,
-            $vehicle->id
-        )
-    );
-
-    return $trip->as_array();
+    return $trip;
 }
 
 // Vehicles
