@@ -24,7 +24,7 @@ if ($_SERVER['SERVER_ADDR'] == '127.0.0.1') {
 } else {
     ORM::configure('mysql:host=etranz-158379.mysql.binero.se;dbname=158379-etranz');
     ORM::configure('username', '158379_dkcq056');
-    ORM::configure('password', 'Z67KCjga43');    
+    ORM::configure('password', 'Z67KCjga43');
 }
 
 ORM::configure('driver_options', array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8'));
@@ -44,15 +44,13 @@ $app->add(new CustomErrorMiddleware());
 
 $app->config(array(
     'log.enabled' => true,
-    'log.level' => 4,
+    'log.level' => \Slim\Log::DEBUG,
     'debug' => true
 ));
 
 $log = $app->getLog();
 
-$log->info("Instantiate...");
-$log->error("Slim test error");
-$log->debug("Slim test debug");
+$log->info("Slim Framework start");
 
 /**
  * Step 3: Define the Slim application routes
@@ -92,7 +90,7 @@ function ResponseFail($data = null) {
         echo json_encode($data);
     }
 
-    $app->response()->status(400);    
+    $app->response()->status(400);
 }
 
 function ResponseNotFound($data = null) {
@@ -106,7 +104,7 @@ function ResponseNotFound($data = null) {
         echo json_encode($data);
     }
 
-    $app->response()->status(404);    
+    $app->response()->status(404);
 }
 
 function populateRecord($record, $fields) {
@@ -277,7 +275,7 @@ function endTrip($trip, $state) {
     // perform anti cheat check here
     $distance_completed = getTripCurrentDistance($trip);
     if ($distance_completed < $trip->distance) {
-        $log->error("Trying to end non-completed trip. Cheating? " . json_encode($trip->as_array()));
+        $log->warn("Trying to end non-completed trip. Cheating? " . json_encode($trip->as_array()));
     }
 
     $trip->state = $state;
@@ -410,9 +408,9 @@ $app->get('/routes/:origin/:destination', function($origin, $destination) {
     if ($destination < $origin) {
         $reverse = true;
         list($origin, $destination) = array($destination, $origin);
-    } 
+    }
 
-    $route = 
+    $route =
         ORM::for_table('route')
             ->select('route.*')
             ->select('origin_city.name', 'origin_name')
@@ -452,7 +450,7 @@ $app->post('/routes/:origin/:destination', function($origin, $destination) {
     if ($destination < $origin) {
         $reverse = true;
         list($origin, $destination) = array($destination, $origin);
-    } 
+    }
 
     // fetch from db
     $cities = ORM::for_table('city')
@@ -489,7 +487,7 @@ $app->post('/routes/:origin/:destination', function($origin, $destination) {
     $result = $route->as_array();
     $result['destination_name'] = $destination_str;
 
-    ResponseOk($result);    
+    ResponseOk($result);
 })->conditions(array('origin' => '\d+', 'destination' => '\d+'));
 
 $app->delete('/routes/:origin/:destination', function($origin, $destination) {
@@ -497,9 +495,9 @@ $app->delete('/routes/:origin/:destination', function($origin, $destination) {
     if ($destination < $origin) {
         $reverse = true;
         list($origin, $destination) = array($destination, $origin);
-    } 
+    }
 
-    $route = 
+    $route =
         ORM::for_table('route')
             ->where('origin', $origin)
             ->where('destination', $destination)
